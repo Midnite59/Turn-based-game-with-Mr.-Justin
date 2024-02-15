@@ -5,7 +5,7 @@ using BattleLogic; // B)
 
 public class EncountersOhNo : MonoBehaviour
 {
-    public List<Actor> enemies;
+    public List<CharAttr> enemies;
     // Start is called before the first frame update
     void Start()
     {

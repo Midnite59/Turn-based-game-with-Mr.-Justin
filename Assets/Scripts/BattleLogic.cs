@@ -42,11 +42,6 @@ namespace BattleLogic
     {
        None, Self, SingleEnemy, SingleAlly, SplashEnemy, SplashAlly, AoeEnemy, AoeAlly, AoeAll
     }
-    public class CharModifier
-    {
-        public CharAttr baseChar;
-        public int level;
-    }
     [Serializable]
     public class Actor
     {

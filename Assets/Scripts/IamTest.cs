@@ -60,12 +60,12 @@ public class IamTest : MonoBehaviour
     }
     private void Start()
     {
-        Case3();
+        //Case3();
     }
 
     private void Case3()
     {
-        gameloop.CreateBattle(Team.allies, Encounter.enemies);
+        gameloop.CreateBattle(Team.allies, Encounter.enemies, Team.allyhealths);
     }
 
 

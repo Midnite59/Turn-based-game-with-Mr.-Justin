@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using BattleLogic;
 using System.Linq;
-using UnityEditor.PackageManager.UI;
 using System.Collections.Immutable;
 
 public class GameLoop : MonoBehaviour
@@ -20,6 +19,7 @@ public class GameLoop : MonoBehaviour
     public int currentTurn; //index
     public List<int> turnOrder; //ids
     public GameState gs;
+    public Dictionary<int, CharAttr> attrList;
 
     public event Action startBattleStart = () => { };
     public event Action startBattleEnd = () => { };
@@ -92,12 +92,27 @@ public class GameLoop : MonoBehaviour
         return true;
     }
 
-    public void CreateBattle(IEnumerable<Actor> allylist, IEnumerable<Actor> enemylist)
+    public void CreateBattle(List<CharAttr> allylist, List<CharAttr> enemylist, List<float> allyhealths)
     {
         var allyStancePoints = ImmutableDictionary.Create<Stance, float>();
         var enemyStancePoints = ImmutableDictionary.Create<Stance, float>();
-        ImmutableList<Actor> allies = ImmutableList.Create<Actor>(allylist.ToArray());
-        ImmutableList<Actor> enemies = ImmutableList.Create<Actor>(enemylist.ToArray());
+        int id = 1;
+        List<Actor> allyActorList = new List<Actor>();
+        List<Actor> enemyActorList = new List<Actor>();
+
+        for (int i = 0; i < allylist.Count(); i++) 
+        {
+            attrList[id] = allylist[i];
+            allyActorList.Add(new Actor(allylist[i].charname, allylist[i].stats, id++, allyhealths[i] * allylist[i].stats.Maxhp));
+        }
+        for (int i = 0; i < enemylist.Count(); i++)
+        {
+            attrList[id] = enemylist[i];
+            enemyActorList.Add(new Actor(enemylist[i].charname, enemylist[i].stats, id++, enemylist[i].stats.Maxhp));
+        }
+
+        ImmutableList<Actor> allies = ImmutableList.Create<Actor>(allyActorList.ToArray());
+        ImmutableList<Actor> enemies = ImmutableList.Create<Actor>(enemyActorList.ToArray());
         gs = new GameState(allies, enemies, null, Stance.Range, allyStancePoints, enemyStancePoints);
         StartBattle();
     }
