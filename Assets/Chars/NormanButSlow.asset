@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c9eb213c02df014faa91c9eaf8abeaa, type: 3}
+  m_Name: NormanButSlow
+  m_EditorClassIdentifier: 
+  charname: Norman But Slow
+  stats:
+    Maxhp: 100
+    atk: 15
+    def: 15
+    eff: 1
+    spd: 100
+  skills:
+  - {fileID: 11400000, guid: eaf5a5f7cc4ee1248a65f0efbb82ded2, type: 2}
+  - {fileID: 11400000, guid: 3b1ed87aada25e84ea47cb0ab44f330a, type: 2}
