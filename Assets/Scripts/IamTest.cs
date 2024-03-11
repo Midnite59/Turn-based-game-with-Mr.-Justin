@@ -27,7 +27,7 @@ public class IamTest : MonoBehaviour
         enemies = enemies.Add(sample2);
         var allyStancePoints = ImmutableDictionary.Create<Stance, float>();
         var enemyStancePoints = ImmutableDictionary.Create<Stance, float>();
-        GameState gs = new GameState(allies, enemies, sample, Stance.Range, allyStancePoints, enemyStancePoints);
+        GameState gs = new GameState(allies, enemies, sample, Stance.Physical, allyStancePoints, enemyStancePoints);
         GameState gs2;
         if (testSkill.IsUsable(gs, sample2))
         {
@@ -54,13 +54,13 @@ public class IamTest : MonoBehaviour
         enemies = enemies.Add(sample3);
         var allyStancePoints = ImmutableDictionary.Create<Stance, float>();
         var enemyStancePoints = ImmutableDictionary.Create<Stance, float>();
-        GameState gs = new GameState(allies, enemies, sample, Stance.Range, allyStancePoints, enemyStancePoints);
+        GameState gs = new GameState(allies, enemies, sample, Stance.Physical, allyStancePoints, enemyStancePoints);
         gameloop.gs = gs;
         gameloop.StartBattle();
     }
     private void Start()
     {
-        //Case3();
+        Invoke("Case3", 0.1f);
     }
 
     private void Case3()
@@ -73,7 +73,7 @@ public class IamTest : MonoBehaviour
 
     public void TakeTurnButtonEdition()
     {
-        gameloop.TakeTurn(testSkill, gameloop.gs.enemies.Select(a => a.id).ToList());
+        //gameloop.TakeTurn(testSkill, gameloop.gs.enemies.Select(a => a.id).ToList());
     }
 
 

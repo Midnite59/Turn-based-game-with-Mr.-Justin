@@ -22,3 +22,5 @@ MonoBehaviour:
   skills:
   - {fileID: 11400000, guid: eaf5a5f7cc4ee1248a65f0efbb82ded2, type: 2}
   - {fileID: 11400000, guid: 737dc9c562858d341bd40dfb34e624a0, type: 2}
+  - {fileID: 11400000, guid: 737dc9c562858d341bd40dfb34e624a0, type: 2}
+  fallback: {fileID: 0}

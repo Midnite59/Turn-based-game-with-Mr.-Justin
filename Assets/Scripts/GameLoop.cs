@@ -20,6 +20,8 @@ public class GameLoop : MonoBehaviour
     public List<int> turnOrder; //ids
     public GameState gs;
     public Dictionary<int, CharAttr> attrList;
+    public CharAttr currentAttr { get { return attrList[turnOrder[currentTurn]]; } }
+    public List<int> currentTargets;
 
     public event Action startBattleStart = () => { };
     public event Action startBattleEnd = () => { };
@@ -35,19 +37,25 @@ public class GameLoop : MonoBehaviour
     public event Action cutsceneEnd = () => { };
     public event Action battleOverStart = () => { };
     //public event Action battleOverEnd = () => { };
+    public static GameLoop instance;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        
+        instance = this;
+        currentTargets = new List<int>();
+        enemyTurnStart += EnemyTurnVeryBasic;
     }
 
     /* order 
      1. Attack enemy with certian character who's "specialty stance" determines the stance of the start of the battle
-     3. Action is taken for the cycle
+     3. Action is not taken for the cycle
      4. Stance Determines what resource (Stance Points - We can change it later) is regained with skills, 
         and it also increases Efficiency for skills used by specialty characters
      5. Stance points (Title TBD) are the resource that is used to cast skills.
+
+
+    Stance points are now called "Material ammunition needed for abilities" or M.A.N.A
      
     */
     bool TransitionValid(State newState)
@@ -94,6 +102,7 @@ public class GameLoop : MonoBehaviour
 
     public void CreateBattle(List<CharAttr> allylist, List<CharAttr> enemylist, List<float> allyhealths)
     {
+        attrList = new Dictionary<int, CharAttr>();
         var allyStancePoints = ImmutableDictionary.Create<Stance, float>();
         var enemyStancePoints = ImmutableDictionary.Create<Stance, float>();
         int id = 1;
@@ -108,12 +117,14 @@ public class GameLoop : MonoBehaviour
         for (int i = 0; i < enemylist.Count(); i++)
         {
             attrList[id] = enemylist[i];
+            currentTargets.Add(id); // For Dev Purposes only
             enemyActorList.Add(new Actor(enemylist[i].charname, enemylist[i].stats, id++, enemylist[i].stats.Maxhp));
         }
+        //currentTargets.Add(1); pre enemey ai test
 
         ImmutableList<Actor> allies = ImmutableList.Create<Actor>(allyActorList.ToArray());
         ImmutableList<Actor> enemies = ImmutableList.Create<Actor>(enemyActorList.ToArray());
-        gs = new GameState(allies, enemies, null, Stance.Range, allyStancePoints, enemyStancePoints);
+        gs = new GameState(allies, enemies, null, Stance.Physical, allyStancePoints, enemyStancePoints);
         StartBattle();
     }
 
@@ -175,11 +186,22 @@ public class GameLoop : MonoBehaviour
         var currentactor = gs.currentActor;
         var targetsIE = targetIDs.Select(tid => gs.actors.First(a => a.id == tid));
         var targets = targetsIE.ToList();
-        gs = skill.Execute(gs, currentactor, targets);
+        if (skill)
+        {
+            gs = skill.Execute(gs, currentactor, targets);
+        } else
+        {
+            Debug.LogWarning(gs.currentActor.name + " used splash. (This is a fallback. Are u sure this was intentional?)");
+        }
         currentTurn++;
         StartTurn();
     }
     
+
+    public void EnemyTurnVeryBasic()
+    {
+        TakeTurn(currentAttr.GetBasic(), gs.allies.Select(a => a.id).ToList());
+    }
     
     // Update is called once per frame
     void Update()

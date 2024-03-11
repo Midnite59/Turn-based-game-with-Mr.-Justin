@@ -36,7 +36,7 @@ namespace BattleLogic
     }
     public enum Stance
     {
-        None, Melee, Range, Denfensive, Evasive
+        None, Physical, Mental, Electrical, Chemical, Nuclear, Natural
     }
     public enum TargetType
     {

@@ -10,6 +10,7 @@ public class CharSkill : ScriptableObject
     //public Stance reqStance;
     public Stance prefStance;
     public TargetType targetType;
+    public Sprite icon;
 
     public virtual bool IsRestricted(GameState state, Actor user)
     {
@@ -26,6 +27,10 @@ public class CharSkill : ScriptableObject
     public bool IsUsable(GameState state, Actor user)
     {
         return !IsRestricted(state, user) && HasEnoughResources(state, user) && HasValidTargets(state, user);
+    }
+    public virtual Sprite GetIcon(GameState state, Actor user)
+    {
+        return null;
     }
     public virtual GameState Execute(GameState state, Actor user, List<Actor> targets)
     {
