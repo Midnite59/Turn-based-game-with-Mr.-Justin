@@ -598,6 +598,8 @@ MonoBehaviour:
   CamDistance: 0
   CamDesiredDistance: 7
   CamDesiredDirection: {x: 0, y: 0, z: 0}
+  CamYawMultiplier: 1
+  CamPitchMultiplier: 0.5
 --- !u!1 &1048583796
 GameObject:
   m_ObjectHideFlags: 0
