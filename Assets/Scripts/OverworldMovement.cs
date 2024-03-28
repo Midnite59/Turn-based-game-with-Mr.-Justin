@@ -6,6 +6,7 @@ public class OverworldMovement : MonoBehaviour
 {
     public float speed;
     public Transform cameraPos;
+    public Rigidbody rb;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,8 +17,9 @@ public class OverworldMovement : MonoBehaviour
     void FixedUpdate()
     {
         Vector3 movement = Vector3.zero;
-        movement += Input.GetAxis("Vertical") * Vector3.ProjectOnPlane(cameraPos.forward, Vector3.up).normalized * speed;
-        movement += Input.GetAxis("Horizontal") * Vector3.ProjectOnPlane(cameraPos.right, Vector3.up).normalized * speed;
-        transform.Translate(movement*Time.fixedDeltaTime);
+        movement += Input.GetAxis("Vertical") * Vector3.ProjectOnPlane(cameraPos.forward, Vector3.up).normalized;
+        movement += Input.GetAxis("Horizontal") * Vector3.ProjectOnPlane(cameraPos.right, Vector3.up).normalized;
+        //transform.Translate(movement*Time.fixedDeltaTime);
+        rb.velocity = movement * speed;
     }
 }

@@ -14,7 +14,10 @@ public class OverworldCamCtrl : MonoBehaviour
     private float CamPitch;
     public float CamYawMultiplier;
     public float CamPitchMultiplier;
-
+    public float CastRadius;
+    public float minZoom;
+    public float maxZoom;
+    public float zoomInterpSpeed;
 
     // Start is called before the first frame update
     void Start()
@@ -34,6 +37,10 @@ public class OverworldCamCtrl : MonoBehaviour
     {
         float InputY = Input.GetAxis("Mouse X");
         float InputX = -Input.GetAxis("Mouse Y");
+        //float Scroll2 = -Input.GetAxis("Mouse ScrollWheel");
+        float Scroll = Input.mouseScrollDelta.y == 0? 0 : -Mathf.Sign(Input.mouseScrollDelta.y);
+        //Debug.Log(Scroll);
+        CamDesiredDistance = Mathf.Clamp(CamDesiredDistance + Scroll * zoomInterpSpeed, minZoom, maxZoom);
         CamYaw += InputY * CamYawMultiplier;
         CamPitch = Mathf.Clamp(CamPitch + InputX * CamPitchMultiplier, -89, 89);
         if (CamYaw > 180)
@@ -46,7 +53,19 @@ public class OverworldCamCtrl : MonoBehaviour
         }
         Quaternion CamNewEuler = Quaternion.Euler(CamPitch, CamYaw, 0);
         CamDesiredDirection = CamNewEuler * -Vector3.forward;
-        Camera.transform.position = CameraTarget.position + CamDesiredDirection * CamDesiredDistance;
+        RaycastHit hit;
+        if (Physics.SphereCast(CameraTarget.position, CastRadius, CamDesiredDirection, out hit, CamDesiredDistance))
+        {
+            CamDistance = hit.distance;
+        }
+        else
+        {
+            CamDistance = CamDesiredDistance;
+        }
+        Camera.transform.position = CameraTarget.position + CamDesiredDirection * CamDistance;
         Camera.transform.LookAt(CameraTarget.position);
     }
+
+    
+
 }
