@@ -36,7 +36,7 @@ namespace BattleLogic
     }
     public enum Stance
     {
-        None, Physical, Mental, Electrical, Chemical, Nuclear, Natural
+        None, Physical, Mental, Electric, Chemical, Chaotic, Natural, Super
     }
     public enum TargetType
     {
@@ -49,6 +49,7 @@ namespace BattleLogic
         public CharStats stats;
         public int id;
         public float hp;
+        public Stance stance;
         // M means modified
         public float Mmhp;
         // Modified Max Hit Points
@@ -56,12 +57,13 @@ namespace BattleLogic
         public float Mdef;
         public float Meff;
         public float Mspd;
-        public Actor(string name, CharStats stats, int id, float hp, float mmhp = 1, float matk = 1, float mdef = 1, float meff = 1, float mspd = 1)
+        public Actor(string name, CharStats stats, int id, float hp, Stance stance, float mmhp = 1, float matk = 1, float mdef = 1, float meff = 1, float mspd = 1)
         {
             this.name = name;
             this.stats = stats;
             this.id = id;
             this.hp = hp;
+            this.stance = stance;
             Matk = matk;
             Mdef = mdef;
             Meff = meff;
@@ -73,7 +75,7 @@ namespace BattleLogic
         {
             float newHP = hp - damage;
             if (newHP <= 0) { Debug.Log(name + " is Dead!"); }
-            return new Actor(name, stats, id, newHP, Matk, Mdef, Meff, Mspd);  
+            return new Actor(name, stats, id, newHP, stance, Matk, Mdef, Meff, Mspd);  
         }
     }
     [Serializable]
@@ -140,7 +142,7 @@ namespace BattleLogic
             }
             return new GameState(allies, enemies, newCurrentActor, currentStance, allyStancePoints, enemyStancePoints);
         }
-        public CharStats GetStats(int id) 
+        public Actor GetActor(int id) 
         {
             var foundActor = allies.FirstOrDefault(a => a.id == id) ?? enemies.FirstOrDefault(a => a.id == id);
             if (foundActor == null)
@@ -148,7 +150,11 @@ namespace BattleLogic
                 Debug.LogError("Error in GetStats: Invalid ID :(");
                 throw new ArgumentOutOfRangeException();
             }
-            return foundActor.stats;
+            return foundActor;
+        }
+        public CharStats GetStats(int id)
+        {
+            return GetActor(id).stats;
         }
         public GameState WithAllies(ImmutableList<Actor> Mallies) 
         {
@@ -169,6 +175,26 @@ namespace BattleLogic
         {
             return enemies.Any(a => a.id == id);
         }
+        public TypeCombo FindCharWeakness(int id) 
+        {
+            Stance charStance = GetActor(id).stance;
+            Stance stateStance = currentStance;
+            List<Stance> StanceWeaks = new List<Stance>();
+            StanceWeaks.Add(Helper.FindWeakness(charStance));
+            StanceWeaks.Add(Helper.FindWeakness(stateStance));
+            List<Stance> StanceRes = new List<Stance>();
+            StanceRes.Add(Helper.FindResistance(charStance));
+            StanceRes.Add(Helper.FindResistance(stateStance));
+            foreach (Stance stance in StanceWeaks)
+            {
+                if (StanceRes.Contains(stance))
+                {
+                    StanceWeaks.Remove(stance);
+                    StanceRes.Remove(stance);
+                }
+            }
+            return new TypeCombo(StanceWeaks, StanceRes);
+        }
         
        /* public bool? IsIDAlly2(int id)
         {
@@ -177,5 +203,44 @@ namespace BattleLogic
             else { return null; }
         } */
     }
-    
+    public class TypeCombo 
+    {
+        public TypeCombo (List<Stance> weaknesses, List<Stance> resistances)
+        {
+            this.weaknesses = weaknesses;
+            this.resistances = resistances;
+        }
+
+        public List<Stance> weaknesses;
+        public List<Stance> resistances;
+    }
+    static class Helper
+    {
+        public static Stance FindWeakness(Stance stance)
+        {
+            switch (stance)
+            {
+                case Stance.Electric: return Stance.Natural;
+                case Stance.Natural: return Stance.Chemical;
+                case Stance.Chemical: return Stance.Electric;
+                case Stance.Physical: return Stance.Mental;
+                case Stance.Mental: return Stance.Chaotic;
+                case Stance.Chaotic: return Stance.Physical;
+                default : return Stance.None;
+            }
+        }
+        public static Stance FindResistance(Stance stance)
+        {
+            switch (stance)
+            {
+                case Stance.Electric: return Stance.Chemical;
+                case Stance.Natural: return Stance.Electric;
+                case Stance.Chemical: return Stance.Natural;
+                case Stance.Physical: return Stance.Chaotic;
+                case Stance.Mental: return Stance.Physical;
+                case Stance.Chaotic: return Stance.Mental;
+                default: return Stance.None;
+            }
+        }
+    }
 }

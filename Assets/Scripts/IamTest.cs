@@ -19,8 +19,8 @@ public class IamTest : MonoBehaviour
     // Start is called before the first frame update
     void TestCaseNoGameLoop()
     {
-        Actor sample = new Actor("sample", new CharStats(100, 15, 15, 1, 10), 1, 100, 15, 15, 1, 10);
-        Actor sample2 = new Actor("sample2", new CharStats(100, 15, 15, 1, 10), 2, 100, 15, 15, 1, 10);
+        Actor sample = new Actor("sample", new CharStats(100, 15, 15, 1, 10), 1, 100, Stance.None, 15, 15, 1, 10);
+        Actor sample2 = new Actor("sample2", new CharStats(100, 15, 15, 1, 10), 2, 100, Stance.None, 15, 15, 1, 10);
         ImmutableList<Actor> allies = ImmutableList.Create<Actor>();
         allies = allies.Add(sample);
         ImmutableList<Actor> enemies = ImmutableList.Create<Actor>();
@@ -42,10 +42,10 @@ public class IamTest : MonoBehaviour
     }
     void TestCase2()
     {
-        Actor sample = new Actor(Norman.charname, Norman.stats, 1, 100);
-        Actor sample2 = new Actor(NormanButSlow.charname, NormanButSlow.stats, 2, 40);
-        Actor sample3 = new Actor(NormanButEvenSlower.charname, NormanButEvenSlower.stats, 3, 50);
-        Actor MarlanActor = new Actor(Marlan.charname, Marlan.stats, 4, 130);
+        Actor sample = new Actor(Norman.charname, Norman.stats, 1, 100, Stance.None);
+        Actor sample2 = new Actor(NormanButSlow.charname, NormanButSlow.stats, 2, 40, Stance.None);
+        Actor sample3 = new Actor(NormanButEvenSlower.charname, NormanButEvenSlower.stats, 3, 50, Stance.None);
+        Actor MarlanActor = new Actor(Marlan.charname, Marlan.stats, 4, 130, Stance.None);
         ImmutableList<Actor> allies = ImmutableList.Create<Actor>();
         allies = allies.Add(sample);
         allies = allies.Add(MarlanActor);

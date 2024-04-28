@@ -12,7 +12,7 @@ public class CharAttr : ScriptableObject
     public CharStats stats;
     public List<CharSkill> skills;
     public CharSkill fallback = null;
-
+    public Stance characterArt;
 
 
     public CharSkill GetBasic() 

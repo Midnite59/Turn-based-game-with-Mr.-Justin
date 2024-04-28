@@ -7,11 +7,10 @@ using BattleLogic;
 //[CreateAssetMenu(menuName = "Battle Logic/Skill")]
 public class CharSkill : ScriptableObject
 {
-    //public Stance reqStance;
-    public Stance prefStance;
     public TargetType targetType;
     public Sprite icon;
 
+    public Stance art;
     public virtual bool IsRestricted(GameState state, Actor user)
     {
         return false;
@@ -31,6 +30,10 @@ public class CharSkill : ScriptableObject
     public virtual Sprite GetIcon(GameState state, Actor user)
     {
         return null;
+    }
+    public virtual Stance GetArt(GameState state, Actor user) 
+    {
+        return art;
     }
     public virtual GameState Execute(GameState state, Actor user, List<Actor> targets)
     {

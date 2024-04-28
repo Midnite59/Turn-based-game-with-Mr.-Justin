@@ -19,4 +19,8 @@ public class CharSkillEnemyAttack : CharSkill
         }
         return state;
     }
+    public override Stance GetArt(GameState state, Actor user)
+    {
+        return user.stance;
+    }
 }

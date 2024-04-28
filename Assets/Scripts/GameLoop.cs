@@ -112,13 +112,13 @@ public class GameLoop : MonoBehaviour
         for (int i = 0; i < allylist.Count(); i++) 
         {
             attrList[id] = allylist[i];
-            allyActorList.Add(new Actor(allylist[i].charname, allylist[i].stats, id++, allyhealths[i] * allylist[i].stats.Maxhp));
+            allyActorList.Add(new Actor(allylist[i].charname, allylist[i].stats, id++, allyhealths[i] * allylist[i].stats.Maxhp, allylist[i].characterArt));
         }
         for (int i = 0; i < enemylist.Count(); i++)
         {
             attrList[id] = enemylist[i];
             currentTargets.Add(id); // For Dev Purposes only
-            enemyActorList.Add(new Actor(enemylist[i].charname, enemylist[i].stats, id++, enemylist[i].stats.Maxhp));
+            enemyActorList.Add(new Actor(enemylist[i].charname, enemylist[i].stats, id++, enemylist[i].stats.Maxhp, enemylist[i].characterArt));
         }
         //currentTargets.Add(1); pre enemey ai test
 
