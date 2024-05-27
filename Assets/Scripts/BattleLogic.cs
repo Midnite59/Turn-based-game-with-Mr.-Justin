@@ -34,14 +34,74 @@ namespace BattleLogic
             return string.Format("Maxhp: {0}, atk: {1}, def: {2}, eff: {3}, spd: {4}", Maxhp, atk, def, eff, spd);
         }
     }
+
+    public class ActorStatus
+    {
+        public bool downed = false;
+        public bool dead = false;
+        // Effects may go here but idk
+        public ActorStatus()
+        {
+            downed = false;
+            dead = false;
+        }
+        public ActorStatus(bool downed, bool dead)
+        {
+            this.downed = downed;
+            this.dead = dead;
+        }
+
+        public ActorStatus Down() 
+        {
+            return new ActorStatus(true, dead);
+        }
+
+        public ActorStatus Recover()
+        {
+            return new ActorStatus(false, dead);
+        }
+        public ActorStatus Die()
+        {
+            return new ActorStatus(downed, true);
+        }
+        public ActorStatus UnDie()
+        {
+            return new ActorStatus(downed, false);
+        }
+
+    }
+
+
     public enum Stance
     {
         None, Physical, Mental, Electric, Chemical, Chaotic, Natural, Super
+    }
+    [Flags]
+    public enum BattleFlags
+    {
+        None, CharDowned
     }
     public enum TargetType
     {
        None, Self, SingleEnemy, SingleAlly, SplashEnemy, SplashAlly, AoeEnemy, AoeAlly, AoeAll
     }
+
+    public class BattleEvent
+    {
+        public BattleEvent(Type type, int ActorID)
+        {
+            this.type = type;
+            this.actorids = new List<int> { ActorID };
+        }
+        public enum Type
+        {
+            Down, Dead
+        }
+        public Type type;
+        public List<int> actorids;
+        public Func<GameState, GameState> execute = (gs) => { return gs; };
+    }
+
     [Serializable]
     public class Actor
     {
@@ -50,6 +110,7 @@ namespace BattleLogic
         public int id;
         public float hp;
         public Stance stance;
+        public ActorStatus status;
         // M means modified
         public float Mmhp;
         // Modified Max Hit Points
@@ -57,13 +118,14 @@ namespace BattleLogic
         public float Mdef;
         public float Meff;
         public float Mspd;
-        public Actor(string name, CharStats stats, int id, float hp, Stance stance, float mmhp = 1, float matk = 1, float mdef = 1, float meff = 1, float mspd = 1)
+        public Actor(string name, CharStats stats, int id, float hp, Stance stance, ActorStatus status, float mmhp = 1, float matk = 1, float mdef = 1, float meff = 1, float mspd = 1)
         {
             this.name = name;
             this.stats = stats;
             this.id = id;
             this.hp = hp;
             this.stance = stance;
+            this.status = status;
             Matk = matk;
             Mdef = mdef;
             Meff = meff;
@@ -73,10 +135,48 @@ namespace BattleLogic
 
         public Actor TakeDmg(float damage)
         {
+            if (status.downed)
+            {
+                damage *= 1.3f;
+            }
             float newHP = hp - damage;
-            if (newHP <= 0) { Debug.Log(name + " is Dead!"); }
-            return new Actor(name, stats, id, newHP, stance, Matk, Mdef, Meff, Mspd);  
+            if (newHP <= 0) { 
+                Debug.Log(name + " is Dead!");
+                GameLoop.instance.EventStack(new BattleEvent(BattleEvent.Type.Dead, id));
+                return new Actor(name, stats, id, newHP, stance, status.Die(), Matk, Mdef, Meff, Mspd);
+            }
+            return new Actor(name, stats, id, newHP, stance, status, Matk, Mdef, Meff, Mspd);  
         }
+        public Actor TakeStanceDmg(float damage, Stance stance, GameState gs, out BattleFlags flags) 
+        {
+            flags = BattleFlags.None;
+            TypeCombo damagedTC = gs.FindCharWeakness(id);
+            if (damagedTC.resistances.Contains(stance))
+            {
+                Debug.Log("It's not very effective...");
+                damage *= 0.5f;
+            }
+            if (damagedTC.weaknesses.Contains(stance))
+            {
+                damage *= 1.5f;
+                Debug.Log("It's super effective!!");
+
+                if (!status.downed) 
+                {
+                    flags = BattleFlags.CharDowned;
+                    GameLoop.instance.EventStack(new BattleEvent(BattleEvent.Type.Down, id));
+                    Debug.Log(name + " was downed :O");
+                }
+                return TakeDmg(damage).WithStatus(status.Down());
+            }
+            return TakeDmg(damage);
+        }
+
+        public Actor WithStatus(ActorStatus status) 
+        {
+            return new Actor(name, stats, id, hp, stance, status, Matk, Mdef, Meff, Mspd);
+        }
+
     }
     [Serializable]
     public class GameState
@@ -132,6 +232,12 @@ namespace BattleLogic
 
             throw new NotImplementedException();
         }
+
+        public GameState WithStance(Stance stance)
+        {
+            return new GameState(allies, enemies, currentActor, stance, allyStancePoints, enemyStancePoints);
+        }
+
         public GameState SetCurrentActor(int id)
         {
             var newCurrentActor = allies.FirstOrDefault(a => a.id == id) ?? enemies.FirstOrDefault(a => a.id == id);

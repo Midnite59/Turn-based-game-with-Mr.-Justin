@@ -11,15 +11,16 @@ public class CutHealthForDmg : CharSkill
     // Damage
     public float dmg = 30;
     public float sacrifice = 10;
-    public override GameState Execute(GameState state, Actor user, List<Actor> targets)
+    public override GameState Execute(GameState state, Actor user, List<Actor> targets, out BattleFlags flags)
     {
+        flags = BattleFlags.None;
         Debug.Log(user.name + " (" + user.id + ") attacked " + string.Join(", ", targets.Select(a => a.name + " (" + a.id + ")").ToList()));
 
         state = state.WithActor(user.TakeDmg(Mathf.Min(sacrifice, user.hp - 1)));
 
         foreach (var target in targets)
         {
-            state = state.WithActor(target.TakeDmg(dmg));
+            state = state.WithActor(target.TakeStanceDmg(dmg, art, state, out flags));
         }
         return state;
     }

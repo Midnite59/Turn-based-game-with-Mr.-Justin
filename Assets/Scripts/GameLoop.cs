@@ -36,6 +36,9 @@ public class GameLoop : MonoBehaviour
     public event Action cutsceneStart = () => { };
     public event Action cutsceneEnd = () => { };
     public event Action battleOverStart = () => { };
+
+    private List<BattleEvent> battleEvents = new List<BattleEvent>();
+
     //public event Action battleOverEnd = () => { };
     public static GameLoop instance;
 
@@ -47,6 +50,15 @@ public class GameLoop : MonoBehaviour
         enemyTurnStart += EnemyTurnVeryBasic;
     }
 
+    public void EventStack(BattleEvent bEvent)
+    {
+        battleEvents = battleEvents.Prepend(bEvent).ToList();
+    }
+    public void EventQueue(BattleEvent bEvent)
+    {
+        battleEvents = battleEvents.Append(bEvent).ToList();
+    }
+
     /* order 
      1. Attack enemy with certian character who's "specialty stance" determines the stance of the start of the battle
      3. Action is not taken for the cycle
@@ -55,7 +67,7 @@ public class GameLoop : MonoBehaviour
      5. Stance points (Title TBD) are the resource that is used to cast skills.
 
 
-    Stance points are now called "Material ammunition needed for abilities" or M.A.N.A
+    Stance points are now called "sp"
      
     */
     bool TransitionValid(State newState)
@@ -112,13 +124,13 @@ public class GameLoop : MonoBehaviour
         for (int i = 0; i < allylist.Count(); i++) 
         {
             attrList[id] = allylist[i];
-            allyActorList.Add(new Actor(allylist[i].charname, allylist[i].stats, id++, allyhealths[i] * allylist[i].stats.Maxhp, allylist[i].characterArt));
+            allyActorList.Add(new Actor(allylist[i].charname, allylist[i].stats, id++, allyhealths[i] * allylist[i].stats.Maxhp, allylist[i].characterArt, new ActorStatus()));
         }
         for (int i = 0; i < enemylist.Count(); i++)
         {
             attrList[id] = enemylist[i];
             currentTargets.Add(id); // For Dev Purposes only
-            enemyActorList.Add(new Actor(enemylist[i].charname, enemylist[i].stats, id++, enemylist[i].stats.Maxhp, enemylist[i].characterArt));
+            enemyActorList.Add(new Actor(enemylist[i].charname, enemylist[i].stats, id++, enemylist[i].stats.Maxhp, enemylist[i].characterArt, new ActorStatus()));
         }
         //currentTargets.Add(1); pre enemey ai test
 
@@ -152,6 +164,7 @@ public class GameLoop : MonoBehaviour
         }
         int ActorID = turnOrder[currentTurn];
         gs = gs.SetCurrentActor(ActorID);
+        gs = gs.WithActor(gs.currentActor.WithStatus(gs.currentActor.status.Recover()));
         if (gs.allies.Any(a => a.id == ActorID))
         {
             TransitionState(State.AllyTurn);
@@ -170,7 +183,7 @@ public class GameLoop : MonoBehaviour
     {
         turnOrder.Clear();
         var actors = gs.actors;
-        var spdIDs = actors.Select(actor => new {id = actor.id, spd = actor.stats.spd});
+        var spdIDs = actors.Select(actor => new {id = actor.id, spd = actor.stats.spd * actor.Mspd});
         while (spdIDs.Any(a => a.spd > 0)) 
         {
             var fastest = spdIDs.First(a => a.spd == spdIDs.Max(a => a.spd));
@@ -188,15 +201,45 @@ public class GameLoop : MonoBehaviour
         var targets = targetsIE.ToList();
         if (skill)
         {
-            gs = skill.Execute(gs, currentactor, targets);
+            BattleFlags flags = BattleFlags.None;
+            gs = skill.Execute(gs, currentactor, targets, out flags);
+            if ((flags & BattleFlags.CharDowned) == BattleFlags.CharDowned)
+            {
+                //Debug.Log(String.Join(", " ,targets.Select(a => a.name)) + " was downed :O");
+                gs = gs.WithStance(skill.art);
+                
+            }
         } else
         {
             Debug.LogWarning(gs.currentActor.name + " used splash. (This is a fallback. Are u sure this was intentional?)");
         }
+        //post action event
+
         currentTurn++;
         StartTurn();
     }
-    
+
+
+    void ProcessEvents()
+    {
+        while (battleEvents.Count > 0)
+        {
+            BattleEvent bevent = battleEvents[0];
+            if (bevent == null)
+            {
+                Debug.LogError("You queued a null event. How did you even do that?");
+                throw new NullReferenceException("You queued a null event. How did you even do that?");
+            }
+            switch(bevent.type) 
+            {
+                case BattleEvent.Type.Down: //down
+                    break;
+                case BattleEvent.Type.Dead: //dead
+                    break;
+            }
+        }
+    }
+
 
     public void EnemyTurnVeryBasic()
     {

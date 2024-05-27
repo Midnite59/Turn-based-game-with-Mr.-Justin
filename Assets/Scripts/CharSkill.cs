@@ -35,7 +35,7 @@ public class CharSkill : ScriptableObject
     {
         return art;
     }
-    public virtual GameState Execute(GameState state, Actor user, List<Actor> targets)
+    public virtual GameState Execute(GameState state, Actor user, List<Actor> targets, out BattleFlags flags)
     {
         Debug.Log("You did not set the override, dummy!");
         throw new NotImplementedException();

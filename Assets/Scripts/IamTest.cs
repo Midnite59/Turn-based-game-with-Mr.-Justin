@@ -4,6 +4,7 @@ using System.Collections.Immutable;
 using UnityEngine;
 using BattleLogic;
 using System.Linq;
+using static Unity.IO.LowLevel.Unsafe.AsyncReadManagerMetrics;
 
 public class IamTest : MonoBehaviour
 {
@@ -19,8 +20,8 @@ public class IamTest : MonoBehaviour
     // Start is called before the first frame update
     void TestCaseNoGameLoop()
     {
-        Actor sample = new Actor("sample", new CharStats(100, 15, 15, 1, 10), 1, 100, Stance.None, 15, 15, 1, 10);
-        Actor sample2 = new Actor("sample2", new CharStats(100, 15, 15, 1, 10), 2, 100, Stance.None, 15, 15, 1, 10);
+        Actor sample = new Actor("sample", new CharStats(100, 15, 15, 1, 10), 1, 100, Stance.None, new ActorStatus(), 15, 15, 1, 10);
+        Actor sample2 = new Actor("sample2", new CharStats(100, 15, 15, 1, 10), 2, 100, Stance.None, new ActorStatus(), 15, 15, 1, 10);
         ImmutableList<Actor> allies = ImmutableList.Create<Actor>();
         allies = allies.Add(sample);
         ImmutableList<Actor> enemies = ImmutableList.Create<Actor>();
@@ -31,7 +32,7 @@ public class IamTest : MonoBehaviour
         GameState gs2;
         if (testSkill.IsUsable(gs, sample2))
         {
-            gs2 = testSkill.Execute(gs, sample2, new List<Actor> { sample });
+            gs2 = testSkill.Execute(gs, sample2, new List<Actor> { sample }, out _);
         }
         else
         {
@@ -42,10 +43,10 @@ public class IamTest : MonoBehaviour
     }
     void TestCase2()
     {
-        Actor sample = new Actor(Norman.charname, Norman.stats, 1, 100, Stance.None);
-        Actor sample2 = new Actor(NormanButSlow.charname, NormanButSlow.stats, 2, 40, Stance.None);
-        Actor sample3 = new Actor(NormanButEvenSlower.charname, NormanButEvenSlower.stats, 3, 50, Stance.None);
-        Actor MarlanActor = new Actor(Marlan.charname, Marlan.stats, 4, 130, Stance.None);
+        Actor sample = new Actor(Norman.charname, Norman.stats, 1, 100, Stance.None, new ActorStatus());
+        Actor sample2 = new Actor(NormanButSlow.charname, NormanButSlow.stats, 2, 40, Stance.None, new ActorStatus());
+        Actor sample3 = new Actor(NormanButEvenSlower.charname, NormanButEvenSlower.stats, 3, 50, Stance.None, new ActorStatus());
+        Actor MarlanActor = new Actor(Marlan.charname, Marlan.stats, 4, 130, Stance.None, new ActorStatus());
         ImmutableList<Actor> allies = ImmutableList.Create<Actor>();
         allies = allies.Add(sample);
         allies = allies.Add(MarlanActor);
