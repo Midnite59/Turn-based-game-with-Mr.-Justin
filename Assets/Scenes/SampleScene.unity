@@ -380,8 +380,6 @@ GameObject:
   - component: {fileID: 1048583798}
   - component: {fileID: 1048583797}
   - component: {fileID: 1048583801}
-  - component: {fileID: 1048583802}
-  - component: {fileID: 1048583803}
   - component: {fileID: 1048583806}
   m_Layer: 0
   m_Name: PlayerMovable
@@ -493,64 +491,6 @@ MonoBehaviour:
   speed: 10
   cameraPos: {fileID: 963194228}
   rb: {fileID: 1048583806}
---- !u!114 &1048583802
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1048583796}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b0b92a08050c7b42bac38b990753080, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  testSkill: {fileID: 11400000, guid: eaf5a5f7cc4ee1248a65f0efbb82ded2, type: 2}
-  MarlanAtk: {fileID: 11400000, guid: 737dc9c562858d341bd40dfb34e624a0, type: 2}
-  Marlan: {fileID: 11400000, guid: 531844f3aebb8b345822fe5d83db7a6d, type: 2}
-  Norman: {fileID: 11400000, guid: 9dc9a4338cd437d4bbb2a058c841950b, type: 2}
-  NormanButSlow: {fileID: 11400000, guid: c74735cac21e6e745a79a26a9da1fdfa, type: 2}
-  NormanButEvenSlower: {fileID: 11400000, guid: 1dbdc770316393e4a881e94e45a803ac, type: 2}
-  gameloop: {fileID: 1048583803}
-  Encounter: {fileID: 0}
-  Team: {fileID: 0}
---- !u!114 &1048583803
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1048583796}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 648262b6333142741a939c8bb8b3c5d5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentState: 0
-  currentTurn: 0
-  turnOrder: 
-  gs:
-    visibleAllies: []
-    visibleEnemies: []
-    currentActor:
-      name: 
-      stats:
-        Maxhp: 0
-        atk: 0
-        def: 0
-        eff: 0
-        spd: 0
-      id: 0
-      hp: 0
-      stance: 0
-      Mmhp: 0
-      Matk: 0
-      Mdef: 0
-      Meff: 0
-      Mspd: 0
-    currentStance: 0
-  currentTargets: 
-  battleResult: 0
 --- !u!54 &1048583806
 Rigidbody:
   m_ObjectHideFlags: 0

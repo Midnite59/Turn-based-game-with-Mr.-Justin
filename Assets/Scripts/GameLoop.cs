@@ -5,7 +5,6 @@ using UnityEngine;
 using BattleLogic;
 using System.Linq;
 using System.Collections.Immutable;
-using Unity.VisualScripting;
 
 public class GameLoop : MonoBehaviour
 {
@@ -46,11 +45,12 @@ public class GameLoop : MonoBehaviour
     public static GameLoop instance;
 
     // Start is called before the first frame update
-    void Awake()
+    void Start()
     {
         instance = this;
         currentTargets = new List<int>();
         enemyTurnStart += EnemyTurnVeryBasic;
+        Debug.Log(instance);
     }
 
     public void EventStack(BattleEvent bEvent)
@@ -112,6 +112,7 @@ public class GameLoop : MonoBehaviour
             case State.Interruptions: interuptionsStart.Invoke(); break;
             case State.Cutscene: cutsceneStart.Invoke(); break;
         }
+        //Debug.Log("Changed State :D");
         return true;
     }
 
@@ -273,7 +274,7 @@ public class GameLoop : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        //instance = this;
     }
     /* */
 

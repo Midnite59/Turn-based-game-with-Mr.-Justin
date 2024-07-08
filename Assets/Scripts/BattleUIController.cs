@@ -15,6 +15,10 @@ public class BattleUIController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (gameloop == null)
+        {
+            throw new System.NullReferenceException("WHERE IS GAMELOOP");
+        }
         gameloop.allyTurnStart += AllyTurnStart;
         gameloop.allyTurnEnd += AllyTurnEnd;
         Debug.Log("Added");
