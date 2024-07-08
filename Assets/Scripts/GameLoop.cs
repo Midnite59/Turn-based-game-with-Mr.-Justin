@@ -5,6 +5,7 @@ using UnityEngine;
 using BattleLogic;
 using System.Linq;
 using System.Collections.Immutable;
+using Unity.VisualScripting;
 
 public class GameLoop : MonoBehaviour
 {
@@ -35,11 +36,13 @@ public class GameLoop : MonoBehaviour
     public event Action interuptionsEnd = () => { };
     public event Action cutsceneStart = () => { };
     public event Action cutsceneEnd = () => { };
-    public event Action battleOverStart = () => { };
+    public event Action battleOverWin = () => { };
 
     private List<BattleEvent> battleEvents = new List<BattleEvent>();
 
-    //public event Action battleOverEnd = () => { };
+    public bool battleResult;
+
+    public event Action battleOverLose = () => { };
     public static GameLoop instance;
 
     // Start is called before the first frame update
@@ -105,7 +108,7 @@ public class GameLoop : MonoBehaviour
             case State.EnemyTurn: enemyTurnStart.Invoke(); break;
             case State.AllyTurn: allyTurnStart.Invoke(); break;
             case State.EndOfRound: endOfRoundStart.Invoke(); RoundEnd(); break;
-            case State.BattleOver: battleOverStart.Invoke(); break;
+            case State.BattleOver: if (battleResult) battleOverWin.Invoke(); else battleOverLose.Invoke(); break;
             case State.Interruptions: interuptionsStart.Invoke(); break;
             case State.Cutscene: cutsceneStart.Invoke(); break;
         }
@@ -142,7 +145,7 @@ public class GameLoop : MonoBehaviour
 
     public void StartBattle()
     {
-        startBattleStart.Invoke();
+        startBattleStart.Invoke(); //DISTURBING THE PEACE!!!
         SetTurnOrder();
         StartTurn();
     }
@@ -162,15 +165,28 @@ public class GameLoop : MonoBehaviour
             TransitionState(State.EndOfRound);
             return;
         }
+            while (gs.GetActor(turnOrder[currentTurn]).status.dead)
+            {
+                currentTurn++;
+                if (currentTurn >= turnOrder.Count)
+                {
+                    TransitionState(State.EndOfRound);
+                    return;
+                }
+            }
+
+
         int ActorID = turnOrder[currentTurn];
         gs = gs.SetCurrentActor(ActorID);
         gs = gs.WithActor(gs.currentActor.WithStatus(gs.currentActor.status.Recover()));
         if (gs.allies.Any(a => a.id == ActorID))
         {
+            //Debug.Log("oops");
             TransitionState(State.AllyTurn);
             return;
         } else if (gs.enemies.Any(a => a.id == ActorID)) 
         {
+            
             TransitionState(State.EnemyTurn);
             return;
         } else 
@@ -214,9 +230,17 @@ public class GameLoop : MonoBehaviour
             Debug.LogWarning(gs.currentActor.name + " used splash. (This is a fallback. Are u sure this was intentional?)");
         }
         //post action event
-
-        currentTurn++;
-        StartTurn();
+        bool? dead = Check4Dead();
+        if (dead.HasValue)
+        {
+            battleResult = dead.Value;
+            TransitionState(State.BattleOver);
+        }
+        else
+        {
+            currentTurn++;
+            StartTurn();
+        }
     }
 
 
@@ -252,5 +276,23 @@ public class GameLoop : MonoBehaviour
         
     }
     /* */
+
+
+    bool? Check4Dead()
+    {
+        if (gs.allies.All(a => a.status.dead))
+        {
+            Debug.Log("You died you loser");
+            return false;
+        }
+        else if (gs.enemies.All(a => a.status.dead))
+        {
+            return true;
+        }
+        else
+        {
+            return null;
+        }
+    }
 }
 

@@ -17,9 +17,11 @@ public class BattleUIController : MonoBehaviour
     {
         gameloop.allyTurnStart += AllyTurnStart;
         gameloop.allyTurnEnd += AllyTurnEnd;
+        Debug.Log("Added");
     }
     void AllyTurnStart()
     {
+        Debug.Log("ally's turn");
         basicButton.onClick.AddListener(() => gameloop.TakeTurn(gameloop.currentAttr.GetBasic(), gameloop.currentTargets));
         skill1Button.onClick.AddListener(() => gameloop.TakeTurn(gameloop.currentAttr.GetSkill1(), gameloop.currentTargets));
         skill2Button.onClick.AddListener(() => gameloop.TakeTurn(gameloop.currentAttr.GetSkill2(), gameloop.currentTargets));

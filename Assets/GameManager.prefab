@@ -1,0 +1,140 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6792552205298862442
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6870537085314003285}
+  - component: {fileID: -8249199771388596926}
+  - component: {fileID: 3786984925233556366}
+  - component: {fileID: 8561926677680113315}
+  - component: {fileID: 8696840866156292414}
+  - component: {fileID: 8753719683184857470}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6870537085314003285
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6792552205298862442}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 79.08733, y: -41.318424, z: -23.473785}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-8249199771388596926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6792552205298862442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81e39357f2cb0fe488c6a8a7ad3c4710, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BattleBackground: {fileID: 0}
+  Overworld: {fileID: 0}
+--- !u!114 &3786984925233556366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6792552205298862442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: deadf3ad7f35ae341b649d32546956e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allies:
+  - {fileID: 11400000, guid: 9dc9a4338cd437d4bbb2a058c841950b, type: 2}
+  allyhealths:
+  - 100
+--- !u!114 &8561926677680113315
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6792552205298862442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b0b92a08050c7b42bac38b990753080, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  testSkill: {fileID: 11400000, guid: eaf5a5f7cc4ee1248a65f0efbb82ded2, type: 2}
+  MarlanAtk: {fileID: 11400000, guid: 737dc9c562858d341bd40dfb34e624a0, type: 2}
+  Marlan: {fileID: 11400000, guid: 531844f3aebb8b345822fe5d83db7a6d, type: 2}
+  Norman: {fileID: 11400000, guid: 9dc9a4338cd437d4bbb2a058c841950b, type: 2}
+  NormanButSlow: {fileID: 11400000, guid: c74735cac21e6e745a79a26a9da1fdfa, type: 2}
+  NormanButEvenSlower: {fileID: 11400000, guid: 1dbdc770316393e4a881e94e45a803ac, type: 2}
+  gameloop: {fileID: 8696840866156292414}
+  Encounter: {fileID: 8753719683184857470}
+  Team: {fileID: 3786984925233556366}
+--- !u!114 &8696840866156292414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6792552205298862442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 648262b6333142741a939c8bb8b3c5d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentState: 0
+  currentTurn: 0
+  turnOrder: 
+  gs:
+    visibleAllies: []
+    visibleEnemies: []
+    currentActor:
+      name: 
+      stats:
+        Maxhp: 0
+        atk: 0
+        def: 0
+        eff: 0
+        spd: 0
+      id: 0
+      hp: 0
+      stance: 0
+      Mmhp: 0
+      Matk: 0
+      Mdef: 0
+      Meff: 0
+      Mspd: 0
+    currentStance: 0
+  currentTargets: 
+  battleResult: 0
+--- !u!114 &8753719683184857470
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6792552205298862442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fa1e02268205c141b6657a9d545e170, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemies:
+  - {fileID: 11400000, guid: c74735cac21e6e745a79a26a9da1fdfa, type: 2}

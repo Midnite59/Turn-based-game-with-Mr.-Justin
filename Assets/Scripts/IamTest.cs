@@ -61,10 +61,10 @@ public class IamTest : MonoBehaviour
     }
     private void Start()
     {
-        Invoke("Case3", 0.1f);
+        Invoke("Case3", 6f);
     }
 
-    private void Case3()
+    public void Case3()
     {
         gameloop.CreateBattle(Team.allies, Encounter.enemies, Team.allyhealths);
     }

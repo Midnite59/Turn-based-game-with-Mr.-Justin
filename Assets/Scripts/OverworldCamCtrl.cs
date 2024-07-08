@@ -22,8 +22,8 @@ public class OverworldCamCtrl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Cursor.lockState=CursorLockMode.Locked;
-        Cursor.visible=false;
+        //Cursor.lockState=CursorLockMode.Locked;
+        //Cursor.visible=false;
         CamDesiredDirection = (Camera.transform.position - CameraTarget.position).normalized;
         Camera.transform.position = CameraTarget.position + CamDesiredDirection * CamDesiredDistance;
         Camera.transform.LookAt(CameraTarget.position);
