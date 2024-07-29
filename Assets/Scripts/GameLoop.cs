@@ -50,7 +50,7 @@ public class GameLoop : MonoBehaviour
         instance = this;
         currentTargets = new List<int>();
         enemyTurnStart += EnemyTurnVeryBasic;
-        Debug.Log(instance);
+        //Debug.Log(instance);
     }
 
     public void EventStack(BattleEvent bEvent)
@@ -141,6 +141,7 @@ public class GameLoop : MonoBehaviour
         ImmutableList<Actor> allies = ImmutableList.Create<Actor>(allyActorList.ToArray());
         ImmutableList<Actor> enemies = ImmutableList.Create<Actor>(enemyActorList.ToArray());
         gs = new GameState(allies, enemies, null, Stance.Physical, allyStancePoints, enemyStancePoints);
+        BattleManager.batman.Setup(allylist, enemylist);
         StartBattle();
     }
 

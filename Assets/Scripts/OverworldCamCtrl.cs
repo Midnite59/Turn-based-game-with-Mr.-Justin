@@ -22,8 +22,8 @@ public class OverworldCamCtrl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //Cursor.lockState=CursorLockMode.Locked;
-        //Cursor.visible=false;
+        Cursor.lockState=CursorLockMode.Locked;
+        Cursor.visible=false;
         CamDesiredDirection = (Camera.transform.position - CameraTarget.position).normalized;
         Camera.transform.position = CameraTarget.position + CamDesiredDirection * CamDesiredDistance;
         Camera.transform.LookAt(CameraTarget.position);
@@ -35,8 +35,8 @@ public class OverworldCamCtrl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float InputY = Input.GetAxis("Mouse X");
-        float InputX = -Input.GetAxis("Mouse Y");
+        float InputY = Input.GetKey(KeyCode.LeftAlt) ? 0: Input.GetAxis("Mouse X");
+        float InputX = Input.GetKey(KeyCode.LeftAlt) ? 0: - Input.GetAxis("Mouse Y");
         //float Scroll2 = -Input.GetAxis("Mouse ScrollWheel");
         float Scroll = Input.mouseScrollDelta.y == 0? 0 : -Mathf.Sign(Input.mouseScrollDelta.y);
         //Debug.Log(Scroll);
@@ -64,6 +64,17 @@ public class OverworldCamCtrl : MonoBehaviour
         }
         Camera.transform.position = CameraTarget.position + CamDesiredDirection * CamDistance;
         Camera.transform.LookAt(CameraTarget.position);
+
+        if (Input.GetKey(KeyCode.LeftAlt)) 
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        } 
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
     }
 
     
