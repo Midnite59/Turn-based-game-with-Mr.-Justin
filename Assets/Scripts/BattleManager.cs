@@ -14,6 +14,7 @@ public class BattleManager : MonoBehaviour
     private Coroutine currentEvent;
     public GameState gs;
     private bool eventRunning;
+    public List<AnimHit> hitqueue;
     // Start is called before the first frame update
     void Awake()
     {
@@ -85,5 +86,9 @@ public class BattleManager : MonoBehaviour
         gs = oEvent.gsOUT;
         eventRunning = false;
         yield break;
+    }
+    public void HitAnimation() 
+    {
+        // Triggers the hits in the queue
     }
 }

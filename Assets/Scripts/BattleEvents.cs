@@ -30,3 +30,19 @@ public class UIEvent : OutputEvent
         yield break;
     }
 }
+
+public class AttackAnimationEvent : AnimationEvent
+{
+
+}
+
+public class AnimHurt 
+{
+    int targetid;
+    int dmg;
+}
+
+public class AnimHit
+{
+    List<AnimHurt> animHurts;
+}
