@@ -25,4 +25,8 @@ public class BattleActor : MonoBehaviour
     {
         BattleManager.batman.HitAnimation();
     }
+    public void HurtAnimation() 
+    {
+        animator.SetTrigger("Hurt");
+    }
 }

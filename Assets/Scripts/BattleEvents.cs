@@ -38,11 +38,11 @@ public class AttackAnimationEvent : AnimationEvent
 
 public class AnimHurt 
 {
-    int targetid;
-    int dmg;
+    public int targetid;
+    public int dmg;
 }
 
 public class AnimHit
 {
-    List<AnimHurt> animHurts;
+    public List<AnimHurt> animHurts;
 }

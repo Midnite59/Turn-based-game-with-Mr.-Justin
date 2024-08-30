@@ -1,8 +1,8 @@
 using BattleLogic;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class BattleManager : MonoBehaviour
@@ -15,6 +15,7 @@ public class BattleManager : MonoBehaviour
     public GameState gs;
     private bool eventRunning;
     public List<AnimHit> hitqueue;
+    public List<OutputEvent> outputevents;
     // Start is called before the first frame update
     void Awake()
     {
@@ -83,12 +84,39 @@ public class BattleManager : MonoBehaviour
         currentEvent = StartCoroutine(oEvent.Execute(gs));
         eventRunning = true;
         yield return currentEvent;
-        gs = oEvent.gsOUT;
         eventRunning = false;
         yield break;
     }
     public void HitAnimation() 
     {
         // Triggers the hits in the queue
+        hitqueue[0].animHurts.ForEach(a => { GetBattleActor(a.targetid).HurtAnimation(); });
+        hitqueue.RemoveAt(0);
+    }
+    public void QueueEvent(OutputEvent oEvent, params AnimHit[] hits)
+    {
+        outputevents.Add(oEvent);
+        hitqueue.Concat(hits);
+    }
+    public void ProcessEvents()
+    {
+        if (!eventRunning)
+        {
+            if (currentEvent != null) 
+            {
+                UpdateGs(outputevents[0].gsOUT);
+                outputevents.RemoveAt(0);
+                currentEvent = null;
+            }
+            if (outputevents.Count > 0) 
+            {
+                StartCoroutine(RunEvent(outputevents[0]));
+            }
+        }
+    }
+    void UpdateGs(GameState gsOut)
+    {
+        gs = gsOut;
+        // UI stuff
     }
 }

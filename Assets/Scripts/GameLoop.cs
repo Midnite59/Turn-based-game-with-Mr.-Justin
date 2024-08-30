@@ -62,15 +62,10 @@ public class GameLoop : MonoBehaviour
         battleEvents = battleEvents.Append(bEvent).ToList();
     }
 
-    /* order 
-     1. Attack enemy with certian character who's "specialty stance" determines the stance of the start of the battle
-     3. Action is not taken for the cycle
-     4. Stance Determines what resource (Stance Points - We can change it later) is regained with skills, 
-        and it also increases Efficiency for skills used by specialty characters
-     5. Stance points (Title TBD) are the resource that is used to cast skills.
-
-
-    Stance points are now called "sp"
+    /* 
+     Todo:
+        Stats and make them work
+        Interuptions
      
     */
     bool TransitionValid(State newState)
@@ -221,6 +216,7 @@ public class GameLoop : MonoBehaviour
         {
             BattleFlags flags = BattleFlags.None;
             gs = skill.Execute(gs, currentactor, targets, out flags);
+            skill.Animate(gs, currentactor.id, targetIDs);
             if ((flags & BattleFlags.CharDowned) == BattleFlags.CharDowned)
             {
                 //Debug.Log(String.Join(", " ,targets.Select(a => a.name)) + " was downed :O");
