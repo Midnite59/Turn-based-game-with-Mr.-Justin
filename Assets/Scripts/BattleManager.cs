@@ -93,7 +93,7 @@ public class BattleManager : MonoBehaviour
         hitqueue[0].animHurts.ForEach(a => { GetBattleActor(a.targetid).HurtAnimation(); });
         hitqueue.RemoveAt(0);
     }
-    public void QueueEvent(OutputEvent oEvent, params AnimHit[] hits)
+    public void QueueEvent(OutputEvent oEvent, List<AnimHit> hits)
     {
         outputevents.Add(oEvent);
         hitqueue.Concat(hits);

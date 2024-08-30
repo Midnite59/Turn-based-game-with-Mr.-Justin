@@ -215,8 +215,9 @@ public class GameLoop : MonoBehaviour
         if (skill)
         {
             BattleFlags flags = BattleFlags.None;
+            GameState animgs = gs;
             gs = skill.Execute(gs, currentactor, targets, out flags);
-            skill.Animate(gs, currentactor.id, targetIDs);
+            skill.Animate(animgs, gs, currentactor.id, targetIDs);
             if ((flags & BattleFlags.CharDowned) == BattleFlags.CharDowned)
             {
                 //Debug.Log(String.Join(", " ,targets.Select(a => a.name)) + " was downed :O");

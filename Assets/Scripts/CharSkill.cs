@@ -35,15 +35,19 @@ public class CharSkill : ScriptableObject
     {
         return art;
     }
-    public virtual void Animate(GameState gsOUT, int userid, List<int> targetids)
+    public virtual void Animate(GameState gsIN, GameState gsOUT, int userid, List<int> targetids)
     {
-        Debug.Log("You did not set the override, dummy!");
-        throw new NotImplementedException("Make sure you fill in all of the parameters.");
+        Debug.LogError("You did not set the override, dummy!");
+        BattleManager.batman.QueueEvent(GetEvent(gsOUT));
         // I dont have to return anything! >:)
     }
     public virtual GameState Execute(GameState state, Actor user, List<Actor> targets, out BattleFlags flags)
     {
-        Debug.Log("You did not set the override, dummy!");
+        Debug.LogError("You did not set the override, dummy!");
         throw new NotImplementedException("Make sure you fill in all of the parameters.");
+    }
+    public virtual OutputEvent GetEvent(GameState gsOUT) 
+    {
+        return new OutputEvent(gsOUT);
     }
 }
