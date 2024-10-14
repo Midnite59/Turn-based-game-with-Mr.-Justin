@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7286f5fae43ad6648a5fdd179c31725f, type: 3}
-  m_Name: Norman Punch
+  m_Name: Nothing
   m_EditorClassIdentifier: 
-  targetType: 2
+  targetType: 0
   icon: {fileID: 0}
   art: 0
-  dmg: 20
+  dmg: 0
   hitamount: 2

@@ -21,7 +21,6 @@ public class GameLoop : MonoBehaviour
     public GameState gs;
     public Dictionary<int, CharAttr> attrList;
     public CharAttr currentAttr { get { return attrList[turnOrder[currentTurn]]; } }
-    public List<int> currentTargets;
 
     public event Action startBattleStart = () => { };
     public event Action startBattleEnd = () => { };
@@ -48,7 +47,6 @@ public class GameLoop : MonoBehaviour
     void Start()
     {
         instance = this;
-        currentTargets = new List<int>();
         enemyTurnStart += EnemyTurnVeryBasic;
         //Debug.Log(instance);
     }
@@ -127,11 +125,10 @@ public class GameLoop : MonoBehaviour
         }
         for (int i = 0; i < enemylist.Count(); i++)
         {
-            attrList[id] = enemylist[i];
-            currentTargets.Add(id); // For Dev Purposes only
+            attrList[id] = enemylist[i]; 
             enemyActorList.Add(new Actor(enemylist[i].charname, enemylist[i].stats, id++, enemylist[i].stats.Maxhp, enemylist[i].characterArt, new ActorStatus()));
         }
-        //currentTargets.Add(1); pre enemey ai test
+       
 
         ImmutableList<Actor> allies = ImmutableList.Create<Actor>(allyActorList.ToArray());
         ImmutableList<Actor> enemies = ImmutableList.Create<Actor>(enemyActorList.ToArray());

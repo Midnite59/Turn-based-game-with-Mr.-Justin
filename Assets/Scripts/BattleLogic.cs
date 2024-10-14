@@ -74,7 +74,7 @@ namespace BattleLogic
 
     public enum Stance
     {
-        None, Physical, Mental, Electric, Chemical, Chaotic, Natural, Super
+        None, Physical, Mind, Energy, Chemical, Chaos, Nature, Super
     }
     [Flags]
     public enum BattleFlags
@@ -83,7 +83,7 @@ namespace BattleLogic
     }
     public enum TargetType
     {
-       None, Self, SingleEnemy, SingleAlly, SplashEnemy, SplashAlly, AoeEnemy, AoeAlly, AoeAll
+       None, Self, SingleEnemy, SingleAlly, BurstAlly, BurstEnemy, AoeEnemy, AoeAlly, AoeAll
     }
 
     public class BattleEvent
@@ -326,12 +326,12 @@ namespace BattleLogic
         {
             switch (stance)
             {
-                case Stance.Electric: return Stance.Natural;
-                case Stance.Natural: return Stance.Chemical;
-                case Stance.Chemical: return Stance.Electric;
-                case Stance.Physical: return Stance.Mental;
-                case Stance.Mental: return Stance.Chaotic;
-                case Stance.Chaotic: return Stance.Physical;
+                case Stance.Energy: return Stance.Nature;
+                case Stance.Nature: return Stance.Chemical;
+                case Stance.Chemical: return Stance.Energy;
+                case Stance.Physical: return Stance.Mind;
+                case Stance.Mind: return Stance.Chaos;
+                case Stance.Chaos: return Stance.Physical;
                 default : return Stance.None;
             }
         }
@@ -339,12 +339,12 @@ namespace BattleLogic
         {
             switch (stance)
             {
-                case Stance.Electric: return Stance.Chemical;
-                case Stance.Natural: return Stance.Electric;
-                case Stance.Chemical: return Stance.Natural;
-                case Stance.Physical: return Stance.Chaotic;
-                case Stance.Mental: return Stance.Physical;
-                case Stance.Chaotic: return Stance.Mental;
+                case Stance.Energy: return Stance.Chemical;
+                case Stance.Nature: return Stance.Energy;
+                case Stance.Chemical: return Stance.Nature;
+                case Stance.Physical: return Stance.Chaos;
+                case Stance.Mind: return Stance.Physical;
+                case Stance.Chaos: return Stance.Mind;
                 default: return Stance.None;
             }
         }

@@ -11,6 +11,10 @@ public class CharSkillEnemyAttack : CharSkill
     // Damage
     public float dmg = 15;
     public int hitamount;
+    private void Awake()
+    {
+        targetType = TargetType.SingleEnemy;
+    }
     public List<AnimHit> GetHits(GameState gsIN, int user, List<int> targets)
     {
         List<AnimHit> hits = new List<AnimHit>();
@@ -40,13 +44,9 @@ public class CharSkillEnemyAttack : CharSkill
     {
         return user.stance;
     }
-    public override OutputEvent GetEvent(GameState gsOUT)
-    {
-        return new AttackAnimationEvent(gsOUT);
-    }
     public override void Animate(GameState gsIN, GameState gsOUT, int userid, List<int> targetids)
     {
-        BattleManager.batman.QueueEvent(new AttackAnimationEvent(gsOUT), GetHits(gsIN, userid, targetids));
+        BattleManager.batman.QueueEvent(new AttackAnimationEvent(gsOUT, userid, "BasicAttack"), GetHits(gsIN, userid, targetids));
     }
 
 }

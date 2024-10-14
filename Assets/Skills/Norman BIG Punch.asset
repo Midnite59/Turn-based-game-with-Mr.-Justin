@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7286f5fae43ad6648a5fdd179c31725f, type: 3}
   m_Name: Norman BIG Punch
   m_EditorClassIdentifier: 
-  prefStance: 1
   targetType: 4
+  icon: {fileID: 0}
+  art: 0
   dmg: 40
+  hitamount: 2

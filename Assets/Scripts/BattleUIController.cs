@@ -11,10 +11,13 @@ public class BattleUIController : MonoBehaviour
     public Button basicButton;
     public Button skill1Button;
     public Button skill2Button;
+    public List<int> targets;
 
     // Start is called before the first frame update
     void Start()
     {
+        targets = new List<int>();
+        targets.Add(2);
         if (gameloop == null)
         {
             throw new System.NullReferenceException("WHERE IS GAMELOOP");
@@ -25,10 +28,11 @@ public class BattleUIController : MonoBehaviour
     }
     void AllyTurnStart()
     {
+        BattleManager.batman.SelectTargets(targets);
         Debug.Log("ally's turn");
-        basicButton.onClick.AddListener(() => gameloop.TakeTurn(gameloop.currentAttr.GetBasic(), gameloop.currentTargets));
-        skill1Button.onClick.AddListener(() => gameloop.TakeTurn(gameloop.currentAttr.GetSkill1(), gameloop.currentTargets));
-        skill2Button.onClick.AddListener(() => gameloop.TakeTurn(gameloop.currentAttr.GetSkill2(), gameloop.currentTargets));
+        basicButton.onClick.AddListener(() => gameloop.TakeTurn(gameloop.currentAttr.GetBasic(), targets));
+        skill1Button.onClick.AddListener(() => gameloop.TakeTurn(gameloop.currentAttr.GetSkill1(), targets));
+        skill2Button.onClick.AddListener(() => gameloop.TakeTurn(gameloop.currentAttr.GetSkill2(), targets));
     }
     void AllyTurnEnd()
     {

@@ -21,11 +21,19 @@ public class OutputEvent
 
 public class AnimationEvent : OutputEvent
 {
-    public AnimationEvent(GameState gsOUT) : base(gsOUT) { }
-
+    public AnimationEvent(GameState gsOUT, int userid, string triggername) : base(gsOUT) 
+    {
+        this.userid = userid;
+        this.triggername = triggername;
+    }
+    int userid;
+    string triggername;
     public override IEnumerator Execute(GameState gsIN) 
     {
-        // Do animation stuff
+        BattleActor batactor = BattleManager.batman.GetBattleActor(userid);
+        batactor.animator.SetTrigger(triggername);
+        Debug.Log("Execute() Triggered");
+        yield return new WaitForSeconds(3);
         yield break;
     }
 }
@@ -42,7 +50,7 @@ public class UIEvent : OutputEvent
 
 public class AttackAnimationEvent : AnimationEvent
 {
-    public AttackAnimationEvent(GameState gsOUT) : base(gsOUT) { }
+    public AttackAnimationEvent(GameState gsOUT, int userid, string triggername) : base(gsOUT, userid, triggername) { }
 }
 
 public class AnimHurt 
