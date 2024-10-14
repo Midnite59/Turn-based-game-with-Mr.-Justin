@@ -17,14 +17,14 @@ public class CharAttr : ScriptableObject
 
     public CharSkill GetBasic() 
     {
-        try { return skills[0]; } catch (IndexOutOfRangeException) { return fallback; }
+        try { return skills[0]; } catch (ArgumentOutOfRangeException) { return fallback; }
     }
     public CharSkill GetSkill1()
     {
-        try { return skills[1]; } catch (IndexOutOfRangeException) { return fallback; }
+        try { return skills[1]; } catch (ArgumentOutOfRangeException) { return fallback; }
     }
     public CharSkill GetSkill2()
     {
-        try { return skills[2]; } catch (IndexOutOfRangeException) { return fallback; }
+        try { return skills[2]; } catch (ArgumentOutOfRangeException) { return fallback; }
     }
 }

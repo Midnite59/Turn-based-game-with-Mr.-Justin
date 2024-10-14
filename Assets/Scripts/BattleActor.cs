@@ -9,6 +9,10 @@ public class BattleActor : MonoBehaviour
     public string charname;
     public Animator animator;
     public GameObject targetselector;
+    //skills
+    public CharSkill basic;
+    public CharSkill skill1;
+    public CharSkill skill2;
     public bool animated { get { return animator != null && animator.enabled; } }
     // Start is called before the first frame update
     void Start()

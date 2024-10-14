@@ -21,6 +21,7 @@ public class BattleManager : MonoBehaviour
     public int lastSelectedEnemy;
     public CharSkill selectedSkill;
     public List<int> realTargets;
+    public bool allyTurnStart;
 
     // Start is called before the first frame update
     void Awake()
@@ -54,6 +55,9 @@ public class BattleManager : MonoBehaviour
             allyTeam.batactors[i].hp = allies[i].stats.Maxhp;
             allyTeam.batactors[i].charname = allies[i].charname;
             allyTeam.batactors[i].name = allies[i].charname;
+            allyTeam.batactors[i].basic = allies[i].GetBasic();
+            allyTeam.batactors[i].skill1 = allies[i].GetSkill1();
+            allyTeam.batactors[i].skill2 = allies[i].GetSkill2();
         }
         for (int i = 0; i < enemies.Count; i++)
         {
@@ -61,6 +65,9 @@ public class BattleManager : MonoBehaviour
             enemyTeam.batactors[i].hp = enemies[i].stats.Maxhp;
             enemyTeam.batactors[i].charname = enemies[i].charname;
             enemyTeam.batactors[i].name = enemies[i].charname;
+            enemyTeam.batactors[i].basic = enemies[i].GetBasic();
+            enemyTeam.batactors[i].skill1 = enemies[i].GetSkill1();
+            enemyTeam.batactors[i].skill2 = enemies[i].GetSkill2();
         }
 
         foreach (BattleActor actor in allyTeam.batactors)
@@ -157,9 +164,19 @@ public class BattleManager : MonoBehaviour
             {
                 if (GameLoop.instance.currentState == GameLoop.State.AllyTurn)
                 {
-                    SelectTargets();
+                    if (!allyTurnStart)
+                    {
+                        Debug.Log("Should be selecting skill but idk: " + allyTurnStart);
+                        selectedSkill = GetBattleActor(gs.currentActor.id).basic;
+                        allyTurnStart = true;
+                        SelectTargets();
+                    }
                 }
             }
+        } 
+        else
+        {
+            allyTurnStart = false;
         }
     }
     void UpdateGs(GameState gsOut)
@@ -254,6 +271,12 @@ public class BattleManager : MonoBehaviour
         switch (selectedSkill.targetType)
         {
             case TargetType.SingleAlly: realTargets.Add(selectTarget); break;
+            case TargetType.BurstAlly: //WIP
+            case TargetType.AoeAlly: realTargets = allyTeam.batactors.Select(a => a.id).ToList(); break;
+            case TargetType.AoeAll: realTargets = allactors.Select(a => a.id).ToList(); break;
+            case TargetType.SingleEnemy: realTargets.Add(selectTarget); break;
+            case TargetType.BurstEnemy: //WIP
+            case TargetType.AoeEnemy: realTargets = enemyTeam.batactors.Select(a => a.id).ToList(); break;
         }
     }
 }
