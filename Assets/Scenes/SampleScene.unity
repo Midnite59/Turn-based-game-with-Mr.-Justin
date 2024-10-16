@@ -772,6 +772,22 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 3786984925233556366, guid: 4713985f7a1c96c469b0760e5299b3fa, type: 3}
+      propertyPath: allies.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3786984925233556366, guid: 4713985f7a1c96c469b0760e5299b3fa, type: 3}
+      propertyPath: allies.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 9dc9a4338cd437d4bbb2a058c841950b, type: 2}
+    - target: {fileID: 3786984925233556366, guid: 4713985f7a1c96c469b0760e5299b3fa, type: 3}
+      propertyPath: allies.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 9dc9a4338cd437d4bbb2a058c841950b, type: 2}
+    - target: {fileID: 3786984925233556366, guid: 4713985f7a1c96c469b0760e5299b3fa, type: 3}
+      propertyPath: allies.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: 9dc9a4338cd437d4bbb2a058c841950b, type: 2}
+    - target: {fileID: 3786984925233556366, guid: 4713985f7a1c96c469b0760e5299b3fa, type: 3}
       propertyPath: allyhealths.Array.size
       value: 0
       objectReference: {fileID: 0}
@@ -819,6 +835,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8753719683184857470, guid: 4713985f7a1c96c469b0760e5299b3fa, type: 3}
+      propertyPath: enemies.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8753719683184857470, guid: 4713985f7a1c96c469b0760e5299b3fa, type: 3}
+      propertyPath: enemies.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 1dbdc770316393e4a881e94e45a803ac, type: 2}
+    - target: {fileID: 8753719683184857470, guid: 4713985f7a1c96c469b0760e5299b3fa, type: 3}
+      propertyPath: enemies.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: c74735cac21e6e745a79a26a9da1fdfa, type: 2}
+    - target: {fileID: 8753719683184857470, guid: 4713985f7a1c96c469b0760e5299b3fa, type: 3}
+      propertyPath: enemies.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: 1dbdc770316393e4a881e94e45a803ac, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -22,6 +22,7 @@ public class BattleManager : MonoBehaviour
     public CharSkill selectedSkill;
     public List<int> realTargets;
     public bool allyTurnStart;
+    private bool batmanInit;
 
     // Start is called before the first frame update
     void Awake()
@@ -39,9 +40,18 @@ public class BattleManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
-        ProcessEvents();
+        if (batmanInit)
+        {
+            ProcessEvents();
+        }
+        //Debug.Log(gs.currentActor.id);
+    }
+    public void StartBatman(GameState startGS)
+    {
+        gs = startGS;
+        batmanInit = true;
     }
 
     public void Setup(List<CharAttr> allies, List<CharAttr> enemies)
@@ -116,7 +126,7 @@ public class BattleManager : MonoBehaviour
     {
        return allactors.Where(a => ids.Contains(a.id)).ToList();
     }
-    public void SelectTargets(List<int> ids) 
+    public void ShowTargets(List<int> ids) 
     {
         allactors.ForEach(a => a.UnTarget());
         var targets = GetBattleActors(ids);
@@ -166,7 +176,7 @@ public class BattleManager : MonoBehaviour
                 {
                     if (!allyTurnStart)
                     {
-                        Debug.Log("Should be selecting skill but idk: " + allyTurnStart);
+                        gs = GameLoop.instance.gs;
                         selectedSkill = GetBattleActor(gs.currentActor.id).basic;
                         allyTurnStart = true;
                         SelectTargets();
@@ -241,7 +251,7 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    void SelectTargets()
+    public void SelectTargets()
     {
         realTargets = new List<int>();
         switch (selectedSkill.targetType) 
@@ -271,11 +281,37 @@ public class BattleManager : MonoBehaviour
         switch (selectedSkill.targetType)
         {
             case TargetType.SingleAlly: realTargets.Add(selectTarget); break;
-            case TargetType.BurstAlly: //WIP
+            case TargetType.BurstAlly:
+                List<int> allyIDList = allyTeam.batactors.Select(a => a.id).ToList();
+                int selectedAllyIndex = allyIDList.FindIndex(a => a == selectTarget);
+                realTargets.Add(selectTarget);
+                if (selectedAllyIndex + 1 < allyIDList.Count())
+                {
+                    realTargets.Add(allyIDList[selectedAllyIndex + 1]);
+                }
+                if (selectedAllyIndex - 1 >= 0)
+                {
+                    realTargets.Add(allyIDList[selectedAllyIndex - 1]);
+                }
+
+                break;
             case TargetType.AoeAlly: realTargets = allyTeam.batactors.Select(a => a.id).ToList(); break;
             case TargetType.AoeAll: realTargets = allactors.Select(a => a.id).ToList(); break;
             case TargetType.SingleEnemy: realTargets.Add(selectTarget); break;
-            case TargetType.BurstEnemy: //WIP
+            case TargetType.BurstEnemy:
+                List<int> enemyIDList = enemyTeam.batactors.Select(a => a.id).ToList();
+                int selectedEnemyIndex = enemyIDList.FindIndex(a => a == selectTarget);
+                realTargets.Add(selectTarget);
+                if (selectedEnemyIndex + 1 < enemyIDList.Count())
+                {
+                    realTargets.Add(enemyIDList[selectedEnemyIndex + 1]);
+                }
+                if (selectedEnemyIndex - 1 >= 0)
+                {
+                    realTargets.Add(enemyIDList[selectedEnemyIndex - 1]);
+                }
+
+                break;
             case TargetType.AoeEnemy: realTargets = enemyTeam.batactors.Select(a => a.id).ToList(); break;
         }
     }

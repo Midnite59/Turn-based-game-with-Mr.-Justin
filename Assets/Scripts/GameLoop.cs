@@ -142,6 +142,7 @@ public class GameLoop : MonoBehaviour
         startBattleStart.Invoke(); //DISTURBING THE PEACE!!!
         SetTurnOrder();
         StartTurn();
+        BattleManager.batman.StartBatman(gs);
     }
 
     public void RoundEnd() 
