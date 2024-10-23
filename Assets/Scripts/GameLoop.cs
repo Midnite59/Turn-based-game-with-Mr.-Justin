@@ -208,6 +208,8 @@ public class GameLoop : MonoBehaviour
     {
         int ActorID = turnOrder[currentTurn];
         var currentactor = gs.currentActor;
+        Debug.Log(targetIDs.Count + " targets");
+        Debug.Log(String.Join(", ", targetIDs));
         var targetsIE = targetIDs.Select(tid => gs.actors.First(a => a.id == tid));
         var targets = targetsIE.ToList();
         if (skill)

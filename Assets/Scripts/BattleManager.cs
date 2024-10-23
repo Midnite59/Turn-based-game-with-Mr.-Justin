@@ -23,6 +23,7 @@ public class BattleManager : MonoBehaviour
     public List<int> realTargets;
     public bool allyTurnStart;
     private bool batmanInit;
+    private bool batmanSetup;
 
     // Start is called before the first frame update
     void Awake()
@@ -42,7 +43,7 @@ public class BattleManager : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        if (batmanInit)
+        if (batmanInit && batmanSetup)
         {
             ProcessEvents();
         }
@@ -94,6 +95,8 @@ public class BattleManager : MonoBehaviour
                 actor.gameObject.SetActive(false);
             }
         }
+        batmanSetup = true;
+        selectTarget = lastSelectedEnemy = enemyTeam.batactors[0].id;
     }
 
     public BattleActor GetBattleActor(int id)
@@ -164,7 +167,7 @@ public class BattleManager : MonoBehaviour
                 UpdateGs(outputevents[0].gsOUT);
                 outputevents.RemoveAt(0);
                 currentEvent = null;
-                Debug.Log("current event ended but still does exist");
+                Debug.Log("No event running :D. Finally I can take a break");
             }
             if (outputevents.Count > 0) 
             {
@@ -178,8 +181,10 @@ public class BattleManager : MonoBehaviour
                     {
                         gs = GameLoop.instance.gs;
                         selectedSkill = GetBattleActor(gs.currentActor.id).basic;
+                        Debug.Log(selectedSkill.name);
                         allyTurnStart = true;
                         SelectTargets();
+                        ShowTargets(BattleManager.batman.realTargets);
                     }
                 }
             }
@@ -269,12 +274,14 @@ public class BattleManager : MonoBehaviour
             case TargetType.AoeEnemy:
                 if (!enemyTeam.batactors.Select(a => a.id).Contains(selectTarget))
                 {
-                    if (lastSelectedEnemy > 0) 
+                    if (lastSelectedEnemy > 0)
                     {
                         selectTarget = lastSelectedEnemy;
-                    } else 
+                    }
+                    else
                     {
                         selectTarget = enemyTeam.batactors[0].id;
+                        Debug.Log("im working: " + selectedSkill.targetType);
                     }
                 } break;
         }
