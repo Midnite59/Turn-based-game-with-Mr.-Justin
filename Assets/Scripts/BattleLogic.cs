@@ -35,6 +35,15 @@ namespace BattleLogic
         }
     }
 
+    /*
+        New idea: Make a system that allows limited number of recruits per area.
+        Allows every run to be destinct
+     
+        True completionists must get the true completion by winning the game with each charichter recrutied, will take multiple runs.
+
+     */
+
+
     public class ActorStatus
     {
         public bool downed = false;

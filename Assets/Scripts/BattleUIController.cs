@@ -12,6 +12,14 @@ public class BattleUIController : MonoBehaviour
     public Button skill1Button;
     public Button skill2Button;
     public List<int> targets;
+    public float horizontal;
+    public float vertical;
+    public float deadzone;
+    public int oldstatev;
+    public int oldstateh;
+    public int stateh;
+    public int statev;
+
 
     // Start is called before the first frame update
     void Start()
@@ -43,4 +51,11 @@ public class BattleUIController : MonoBehaviour
         gameloop.allyTurnStart -= AllyTurnStart;
         gameloop.allyTurnEnd -= AllyTurnEnd;
     }
+
+    void Update()
+    {
+        horizontal = Input.GetAxis("Horizontal");
+        vertical = Input.GetAxis("Vertical");
+    }
+
 }

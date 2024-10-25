@@ -36,6 +36,8 @@ public class GameLoop : MonoBehaviour
     public event Action cutsceneEnd = () => { };
     public event Action battleOverWin = () => { };
 
+    public System.Random random = new System.Random();
+
     private List<BattleEvent> battleEvents = new List<BattleEvent>();
 
     public bool battleResult;
@@ -266,7 +268,10 @@ public class GameLoop : MonoBehaviour
 
     public void EnemyTurnVeryBasic()
     {
-        TakeTurn(currentAttr.GetBasic(), gs.allies.Select(a => a.id).ToList());
+        List<int> allyids = gs.allies.Select(a => a.id).ToList();
+        List<int> targetids = new List<int>();
+        targetids.Add(allyids[random.Next(gs.allies.Count)]);
+        TakeTurn(currentAttr.GetBasic(), targetids);
     }
     
     // Update is called once per frame
