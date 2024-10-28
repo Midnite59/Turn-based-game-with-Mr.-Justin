@@ -43,6 +43,7 @@ public class BattleManager : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
+        bui.enabled = batmanInit && batmanSetup;
         if (batmanInit && batmanSetup)
         {
             ProcessEvents();
@@ -200,7 +201,7 @@ public class BattleManager : MonoBehaviour
         // UI stuff
     }
 
-    void TargetChange(bool right, bool ally = false)
+    public void TargetChange(bool right, bool ally = false)
     {
         if (selectedSkill.targetType == TargetType.Self) 
         {
@@ -213,7 +214,7 @@ public class BattleManager : MonoBehaviour
         {
             if (right)
             {
-                if (currentindex + 1 < team.batactors.Count())
+                if (currentindex + 1 < team.batactors.Where(a => a.id > 0).Count())
                 {
                     currentindex++;
                 }
@@ -236,6 +237,7 @@ public class BattleManager : MonoBehaviour
             selectTarget = team.batactors[currentindex].id;
             UntargetAll();
             SelectTargets();
+            ShowTargets(realTargets);
             //Change based on targetype
             if (!ally) { lastSelectedEnemy = selectTarget; }
         }

@@ -319,6 +319,9 @@ MonoBehaviour:
   charname: 
   animator: {fileID: 0}
   targetselector: {fileID: 791652444}
+  basic: {fileID: 0}
+  skill1: {fileID: 0}
+  skill2: {fileID: 0}
 --- !u!1001 &126826619
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -540,6 +543,9 @@ MonoBehaviour:
   charname: 
   animator: {fileID: 0}
   targetselector: {fileID: 1866581345}
+  basic: {fileID: 0}
+  skill1: {fileID: 0}
+  skill2: {fileID: 0}
 --- !u!1 &219329079
 GameObject:
   m_ObjectHideFlags: 0
@@ -1080,6 +1086,9 @@ MonoBehaviour:
   charname: 
   animator: {fileID: 0}
   targetselector: {fileID: 1742008471}
+  basic: {fileID: 0}
+  skill1: {fileID: 0}
+  skill2: {fileID: 0}
 --- !u!1001 &651723329
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1186,6 +1195,9 @@ MonoBehaviour:
   charname: 
   animator: {fileID: 0}
   targetselector: {fileID: 1209333575}
+  basic: {fileID: 0}
+  skill1: {fileID: 0}
+  skill2: {fileID: 0}
 --- !u!1001 &791652442
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1407,6 +1419,9 @@ MonoBehaviour:
   charname: 
   animator: {fileID: 0}
   targetselector: {fileID: 1496956369}
+  basic: {fileID: 0}
+  skill1: {fileID: 0}
+  skill2: {fileID: 0}
 --- !u!1001 &1011453168
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1632,6 +1647,9 @@ MonoBehaviour:
   charname: 
   animator: {fileID: 0}
   targetselector: {fileID: 550726903}
+  basic: {fileID: 0}
+  skill1: {fileID: 0}
+  skill2: {fileID: 0}
 --- !u!1001 &1209333573
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1857,6 +1875,9 @@ MonoBehaviour:
   charname: 
   animator: {fileID: 0}
   targetselector: {fileID: 126826621}
+  basic: {fileID: 0}
+  skill1: {fileID: 0}
+  skill2: {fileID: 0}
 --- !u!1 &1423505262
 GameObject:
   m_ObjectHideFlags: 0
@@ -1911,6 +1932,9 @@ MonoBehaviour:
     currentStance: 0
   selectTarget: 0
   lastSelectedEnemy: 0
+  selectedSkill: {fileID: 0}
+  realTargets: 
+  allyTurnStart: 0
 --- !u!4 &1423505264
 Transform:
   m_ObjectHideFlags: 0
@@ -2351,6 +2375,9 @@ MonoBehaviour:
   charname: 
   animator: {fileID: 0}
   targetselector: {fileID: 1011453170}
+  basic: {fileID: 0}
+  skill1: {fileID: 0}
+  skill2: {fileID: 0}
 --- !u!1001 &1742008469
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2763,6 +2790,9 @@ MonoBehaviour:
   charname: 
   animator: {fileID: 0}
   targetselector: {fileID: 552016961}
+  basic: {fileID: 0}
+  skill1: {fileID: 0}
+  skill2: {fileID: 0}
 --- !u!1001 &2084828403
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2851,33 +2881,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5500773497723669723, guid: 6a44e3e42a3efb04bb300715cce23ff8, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5500773497723669723, guid: 6a44e3e42a3efb04bb300715cce23ff8, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 11500000, guid: 2b0b92a08050c7b42bac38b990753080, type: 3}
-    - target: {fileID: 5500773497723669723, guid: 6a44e3e42a3efb04bb300715cce23ff8, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5500773497723669723, guid: 6a44e3e42a3efb04bb300715cce23ff8, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5500773497723669723, guid: 6a44e3e42a3efb04bb300715cce23ff8, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
+    - target: {fileID: 7616499088312366912, guid: 6a44e3e42a3efb04bb300715cce23ff8, type: 3}
+      propertyPath: deadzone
+      value: 0.001
       objectReference: {fileID: 0}
     - target: {fileID: 8002715364603638879, guid: 6a44e3e42a3efb04bb300715cce23ff8, type: 3}
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: 2559389589447979308, guid: 6a44e3e42a3efb04bb300715cce23ff8, type: 3}
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6a44e3e42a3efb04bb300715cce23ff8, type: 3}
@@ -2887,7 +2900,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 2084828403}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fb763380741b8064e87c5224ab6b0694, type: 3}
   m_Name: 

@@ -4,6 +4,7 @@ using UnityEngine;
 using BattleLogic;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class BattleUIController : MonoBehaviour
 {
@@ -12,14 +13,47 @@ public class BattleUIController : MonoBehaviour
     public Button skill1Button;
     public Button skill2Button;
     public List<int> targets;
-    public float horizontal;
-    public float vertical;
-    public float deadzone;
-    public int oldstatev;
-    public int oldstateh;
-    public int stateh;
-    public int statev;
-
+    public float horizontal { get { return stateh; } set 
+        {
+            if (value > deadzone)
+            {
+                stateh = 1;
+            }
+            else if (value < -deadzone) 
+            {
+                stateh = -1;
+            }else
+            {
+                stateh = 0;
+            }
+        }
+    }
+    public float vertical
+    {
+        get { return statev; }
+        set
+        {
+            if (value > deadzone)
+            {
+                statev = 1;
+            }
+            else if (value < -deadzone)
+            {
+                statev = -1;
+            }
+            else
+            {
+                statev = 0;
+            }
+        }
+    }
+    public float deadzone = 0.001f;
+    public int stateh { get { return _stateh; } set { if (value != _stateh) { _stateh = value; onStateChangeH.Invoke(value); } } }
+    public int statev { get { return _statev; } set { if (value != _statev) { _statev = value; onStateChangeV.Invoke(value); } } }
+    private int _stateh;
+    private int _statev;
+    public event Action<int> onStateChangeH = (i) => {};
+    public event Action<int> onStateChangeV = (i) => {};
 
     // Start is called before the first frame update
     void Start()
@@ -32,6 +66,7 @@ public class BattleUIController : MonoBehaviour
         }
         gameloop.allyTurnStart += AllyTurnStart;
         gameloop.allyTurnEnd += AllyTurnEnd;
+        onStateChangeH += OnStateChangeH; // Like and Subscribe
         Debug.Log("Added");
     }
     void AllyTurnStart()
@@ -56,6 +91,20 @@ public class BattleUIController : MonoBehaviour
     {
         horizontal = Input.GetAxis("Horizontal");
         vertical = Input.GetAxis("Vertical");
+        //Debug.Log("frame");
+    }
+
+    void OnStateChangeH(int newState)
+    {
+        //we need ally targeting :O
+        if (newState == 1)
+        {
+            BattleManager.batman.TargetChange(true);
+        }
+        else if (newState == -1) 
+        {
+            BattleManager.batman.TargetChange(false);
+        }
     }
 
 }
