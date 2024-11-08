@@ -5,6 +5,7 @@ using UnityEngine;
 using BattleLogic;
 using System.Linq;
 using System.Collections.Immutable;
+using System.Reflection;
 
 public class GameLoop : MonoBehaviour
 {
@@ -107,7 +108,7 @@ public class GameLoop : MonoBehaviour
             case State.Interruptions: interuptionsStart.Invoke(); break;
             case State.Cutscene: cutsceneStart.Invoke(); break;
         }
-        //Debug.Log("Changed State :D");
+        Debug.Log("Changed State :D");
         return true;
     }
 

@@ -182,7 +182,7 @@ public class BattleManager : MonoBehaviour
                     {
                         gs = GameLoop.instance.gs;
                         selectedSkill = GetBattleActor(gs.currentActor.id).basic;
-                        Debug.Log(selectedSkill.name);
+                        //Debug.Log(selectedSkill.name);
                         allyTurnStart = true;
                         SelectTargets();
                         ShowTargets(BattleManager.batman.realTargets);

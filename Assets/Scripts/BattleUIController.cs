@@ -67,13 +67,14 @@ public class BattleUIController : MonoBehaviour
         gameloop.allyTurnStart += AllyTurnStart;
         gameloop.allyTurnEnd += AllyTurnEnd;
         onStateChangeH += OnStateChangeH; // Like and Subscribe
-        Debug.Log("Added");
+        //Debug.Log("Added");
     }
     void AllyTurnStart()
     {
+        Debug.Log("added listnars");
         basicButton.onClick.AddListener(() => gameloop.TakeTurn(gameloop.currentAttr.GetBasic(), BattleManager.batman.realTargets));
-        //skill1Button.onClick.AddListener(() => gameloop.TakeTurn(gameloop.currentAttr.GetSkill1(), targets));
-        //skill2Button.onClick.AddListener(() => gameloop.TakeTurn(gameloop.currentAttr.GetSkill2(), targets));
+        skill1Button.onClick.AddListener(() => gameloop.TakeTurn(gameloop.currentAttr.GetSkill1(), BattleManager.batman.realTargets));
+        skill2Button.onClick.AddListener(() => gameloop.TakeTurn(gameloop.currentAttr.GetSkill2(), BattleManager.batman.realTargets));
     }
     void AllyTurnEnd()
     {

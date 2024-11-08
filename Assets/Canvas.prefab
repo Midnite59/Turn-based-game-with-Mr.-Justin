@@ -776,7 +776,7 @@ MonoBehaviour:
   skill1Button: {fileID: 4220899936175766663}
   skill2Button: {fileID: 6711132647785823805}
   targets: 
-  deadzone: 0.2
+  deadzone: 0
 --- !u!1 &8122119225187364307
 GameObject:
   m_ObjectHideFlags: 0
