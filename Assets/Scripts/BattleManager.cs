@@ -43,7 +43,6 @@ public class BattleManager : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        bui.enabled = batmanInit && batmanSetup;
         if (batmanInit && batmanSetup)
         {
             ProcessEvents();
@@ -54,6 +53,7 @@ public class BattleManager : MonoBehaviour
     {
         gs = startGS;
         batmanInit = true;
+        bui.enabled = batmanInit && batmanSetup;
     }
 
     public void Setup(List<CharAttr> allies, List<CharAttr> enemies)

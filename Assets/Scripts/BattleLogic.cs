@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using UnityEngine;
 using System.Linq;
+using UnityEditor.SceneManagement;
 
 namespace BattleLogic
 {
@@ -123,11 +124,11 @@ namespace BattleLogic
         // M means modified
         public float Mmhp;
         // Modified Max Hit Points
-        public float Matk;
-        public float Mdef;
+        public int Matk;
+        public int Mdef;
         public float Meff;
-        public float Mspd;
-        public Actor(string name, CharStats stats, int id, float hp, Stance stance, ActorStatus status, float mmhp = 1, float matk = 1, float mdef = 1, float meff = 1, float mspd = 1)
+        public int Mspd;
+        public Actor(string name, CharStats stats, int id, float hp, Stance stance, ActorStatus status, float mmhp = 0, int matk = 0, int mdef = 0, float meff = 0, int mspd = 0)
         {
             this.name = name;
             this.stats = stats;
@@ -152,9 +153,9 @@ namespace BattleLogic
             if (newHP <= 0) { 
                 Debug.Log(name + " is Dead!");
                 GameLoop.instance.EventStack(new BattleEvent(BattleEvent.Type.Dead, id));
-                return new Actor(name, stats, id, newHP, stance, status.Die(), Matk, Mdef, Meff, Mspd);
+                return new Actor(name, stats, id, newHP, stance, status.Die(), Mmhp, Matk, Mdef, Meff, Mspd);
             }
-            return new Actor(name, stats, id, newHP, stance, status, Matk, Mdef, Meff, Mspd);  
+            return new Actor(name, stats, id, newHP, stance, status, Mmhp, Matk, Mdef, Meff, Mspd);  
         }
         public Actor TakeStanceDmg(float damage, Stance stance, GameState gs, out BattleFlags flags) 
         {
@@ -181,9 +182,11 @@ namespace BattleLogic
             return TakeDmg(damage);
         }
 
+
+
         public Actor WithStatus(ActorStatus status) 
         {
-            return new Actor(name, stats, id, hp, stance, status, Matk, Mdef, Meff, Mspd);
+            return new Actor(name, stats, id, hp, stance, status, Mmhp, Matk, Mdef, Meff, Mspd);
         }
 
     }
@@ -357,5 +360,40 @@ namespace BattleLogic
                 default: return Stance.None;
             }
         }
+        //Buff stages 2/4 3/4 4/4 5/4 6/4
+        //            -2  -1   0   1   2
+        // Basics: 1 or low 2 digit
+        // Skill: Mid to high 2 digit
+        // Nukes: Low 3 digit
+
+
+        //Early game defense
+        // 100
+        //Late game defense
+        // 200-250
+        //Early game attack
+        // 100
+        //Late game attack
+        // 200-250
+
+        // Buffs last 3 cycles default
+
+        public static int CalcDmg(Actor target, int power, Actor attacker)
+        {
+            int dmg = Mathf.RoundToInt(power * (attacker.stats.atk * StageToMulti(attacker.Matk)/target.stats.def * StageToMulti(target.Mdef)));
+            return dmg;
+        }
+
+        public static float StageToMulti(int stage)
+        {
+            return (4 + (float)stage) / 4;
+        }
+       /* 
+         public static float STM(int stage)
+        {
+            return StageToMulti(stage);
+        }
+       */
+
     }
 }

@@ -56,7 +56,7 @@ public class BattleUIController : MonoBehaviour
     public event Action<int> onStateChangeV = (i) => {};
 
     // Start is called before the first frame update
-    void Start()
+    void OnEnable()
     {
         //targets = new List<int>();
         //targets.Add(2);
@@ -67,7 +67,7 @@ public class BattleUIController : MonoBehaviour
         gameloop.allyTurnStart += AllyTurnStart;
         gameloop.allyTurnEnd += AllyTurnEnd;
         onStateChangeH += OnStateChangeH; // Like and Subscribe
-        //Debug.Log("Added");
+        Debug.Log("Added");
     }
     void AllyTurnStart()
     {

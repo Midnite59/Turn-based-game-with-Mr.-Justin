@@ -5,7 +5,6 @@ using UnityEngine;
 using BattleLogic;
 using System.Linq;
 using System.Collections.Immutable;
-using System.Reflection;
 
 public class GameLoop : MonoBehaviour
 {
@@ -102,13 +101,12 @@ public class GameLoop : MonoBehaviour
         {
             //case State.StartBattle: startBattleStart.Invoke(); break;
             case State.EnemyTurn: enemyTurnStart.Invoke(); break;
-            case State.AllyTurn: allyTurnStart.Invoke(); break;
+            case State.AllyTurn: allyTurnStart.Invoke(); Debug.Log("invoked"); break;
             case State.EndOfRound: endOfRoundStart.Invoke(); RoundEnd(); break;
             case State.BattleOver: if (battleResult) battleOverWin.Invoke(); else battleOverLose.Invoke(); break;
             case State.Interruptions: interuptionsStart.Invoke(); break;
             case State.Cutscene: cutsceneStart.Invoke(); break;
         }
-        Debug.Log("Changed State :D");
         return true;
     }
 
@@ -144,8 +142,8 @@ public class GameLoop : MonoBehaviour
     {
         startBattleStart.Invoke(); //DISTURBING THE PEACE!!!
         SetTurnOrder();
-        StartTurn();
         BattleManager.batman.StartBatman(gs);
+        StartTurn();
     }
 
     public void RoundEnd() 
@@ -197,7 +195,7 @@ public class GameLoop : MonoBehaviour
     {
         turnOrder.Clear();
         var actors = gs.actors;
-        var spdIDs = actors.Select(actor => new {id = actor.id, spd = actor.stats.spd * actor.Mspd});
+        var spdIDs = actors.Select(actor => new {id = actor.id, spd = actor.stats.spd * Helper.StageToMulti(actor.Mspd)});
         while (spdIDs.Any(a => a.spd > 0)) 
         {
             var fastest = spdIDs.First(a => a.spd == spdIDs.Max(a => a.spd));
