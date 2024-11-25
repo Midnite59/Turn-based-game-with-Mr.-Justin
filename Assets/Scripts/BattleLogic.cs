@@ -190,6 +190,18 @@ namespace BattleLogic
         }
 
     }
+
+    public class BattleRandom : System.Random
+    {
+        public BattleRandom NextRandom(float min, float max, out float value)
+        {
+
+            BattleRandom randomcopy = (BattleRandom)MemberwiseClone();
+            value = randomcopy.Next(Mathf.RoundToInt(min * 100), Mathf.RoundToInt(max*100)) / 100f;
+            return randomcopy;
+        }
+    }
+
     [Serializable]
     public class GameState
     {
@@ -207,6 +219,7 @@ namespace BattleLogic
         public ImmutableDictionary<Stance, float> enemyStancePoints;
         public IEnumerable<Actor> actors
         { get {  return allies.Concat(enemies); } }
+        private BattleRandom random;
         
         //public ImmutabeList<Action> effects;
 
@@ -224,6 +237,25 @@ namespace BattleLogic
             this.currentStance = currentStance;
             this.allyStancePoints = allyStancePoints;
             this.enemyStancePoints = enemyStancePoints;
+            this.random = new BattleRandom();
+        }
+        public GameState(
+           ImmutableList<Actor> allies,
+           ImmutableList<Actor> enemies,
+           Actor currentActor,
+           Stance currentStance,
+           ImmutableDictionary<Stance, float> allyStancePoints,
+           ImmutableDictionary<Stance, float> enemyStancePoints,
+           BattleRandom random)
+           
+        {
+            this.allies = allies;
+            this.enemies = enemies;
+            this.currentActor = currentActor;
+            this.currentStance = currentStance;
+            this.allyStancePoints = allyStancePoints;
+            this.enemyStancePoints = enemyStancePoints;
+            this.random = random;
         }
 
         public GameState WithActor(Actor actor) 
@@ -247,7 +279,7 @@ namespace BattleLogic
 
         public GameState WithStance(Stance stance)
         {
-            return new GameState(allies, enemies, currentActor, stance, allyStancePoints, enemyStancePoints);
+            return new GameState(allies, enemies, currentActor, stance, allyStancePoints, enemyStancePoints, random);
         }
 
         public GameState SetCurrentActor(int id)
@@ -258,7 +290,7 @@ namespace BattleLogic
                 Debug.LogError("Error in SetCurrentActor: Invalid ID :(");
                 throw new ArgumentOutOfRangeException();
             }
-            return new GameState(allies, enemies, newCurrentActor, currentStance, allyStancePoints, enemyStancePoints);
+            return new GameState(allies, enemies, newCurrentActor, currentStance, allyStancePoints, enemyStancePoints, random);
         }
         public Actor GetActor(int id) 
         {
@@ -278,12 +310,12 @@ namespace BattleLogic
         {
             var newCurrentActor = Mallies.FirstOrDefault(a => a.id == currentActor.id) ?? currentActor;
             //newCurrentActor = newCurrentActor == null ? currentActor : newCurrentActor;
-            return new GameState(Mallies, enemies, newCurrentActor, currentStance, allyStancePoints, enemyStancePoints);
+            return new GameState(Mallies, enemies, newCurrentActor, currentStance, allyStancePoints, enemyStancePoints, random);
         }
         public GameState WithEnemies(ImmutableList<Actor> Menemies)
         {
             var newCurrentActor = Menemies.FirstOrDefault(a => a.id == currentActor.id) ?? currentActor;
-            return new GameState(allies, Menemies, newCurrentActor, currentStance, allyStancePoints, enemyStancePoints);
+            return new GameState(allies, Menemies, newCurrentActor, currentStance, allyStancePoints, enemyStancePoints, random);
         }
         public bool IsIDAlly(int  id)
         {
@@ -314,6 +346,16 @@ namespace BattleLogic
             return new TypeCombo(StanceWeaks, StanceRes);
         }
         
+        public GameState GetRandom(float min, float max, out float value)
+        {
+            return new GameState(allies, enemies, currentActor, currentStance, allyStancePoints, enemyStancePoints, random.NextRandom(min, max, out value));
+        }
+
+        public GameState Copy()
+        {
+            return new GameState(allies, enemies, currentActor, currentStance, allyStancePoints, enemyStancePoints, random);
+        }
+
        /* public bool? IsIDAlly2(int id)
         {
             if (IsIDAlly(id)) { return true; }
@@ -378,12 +420,26 @@ namespace BattleLogic
 
         // Buffs last 3 cycles default
 
-        public static int CalcDmg(Actor target, int power, Actor attacker)
+        public static int CalcDmg(Actor target, int power, Actor attacker, ref GameState gs)
         {
-            int dmg = Mathf.RoundToInt(power * (attacker.stats.atk * StageToMulti(attacker.Matk)/target.stats.def * StageToMulti(target.Mdef)));
+            float randomnumber;
+            gs = gs.GetRandom(0.90f, 1.10f, out randomnumber);
+            Debug.LogError(randomnumber);
+            int dmg = Mathf.RoundToInt(power * (attacker.stats.atk * StageToMulti(attacker.Matk)/target.stats.def * StageToMulti(target.Mdef)) * randomnumber);
             return dmg;
         }
 
+        /* OLD
+        public static List<float> GetMulti(int targetcount)
+        {
+            List<float> multis = new List<float>();
+            for (int i = 0; i < targetcount; i++)
+            {
+                multis.Add(UnityEngine.Random.Range(0.95f, 1.05f));
+            }
+            return multis;
+        }
+        */
         public static float StageToMulti(int stage)
         {
             return (4 + (float)stage) / 4;

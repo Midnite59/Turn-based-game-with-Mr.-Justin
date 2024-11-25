@@ -15,5 +15,5 @@ MonoBehaviour:
   targetType: 2
   icon: {fileID: 0}
   art: 0
-  dmg: 20
+  power: 15
   hitamount: 2

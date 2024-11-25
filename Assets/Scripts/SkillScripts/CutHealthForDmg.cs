@@ -9,10 +9,11 @@ using System.Linq;
 public class CutHealthForDmg : CharSkill
 {
     // Damage
-    public float dmg = 30;
+    public int power = 30;
     public float sacrifice = 10;
     public override GameState Execute(GameState state, Actor user, List<Actor> targets, out BattleFlags flags)
     {
+        GameState gs = state.Copy();
         flags = BattleFlags.None;
         Debug.Log(user.name + " (" + user.id + ") attacked " + string.Join(", ", targets.Select(a => a.name + " (" + a.id + ")").ToList()));
 
@@ -20,7 +21,7 @@ public class CutHealthForDmg : CharSkill
 
         foreach (var target in targets)
         {
-            state = state.WithActor(target.TakeStanceDmg(dmg, art, state, out flags));
+            state = state.WithActor(target.TakeStanceDmg(Helper.CalcDmg(target, power, user, ref gs), art, state, out flags));
         }
         return state;
     }
