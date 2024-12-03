@@ -191,17 +191,6 @@ namespace BattleLogic
 
     }
 
-    public class BattleRandom : System.Random
-    {
-        public BattleRandom NextRandom(float min, float max, out float value)
-        {
-
-            BattleRandom randomcopy = (BattleRandom)MemberwiseClone();
-            value = randomcopy.Next(Mathf.RoundToInt(min * 100), Mathf.RoundToInt(max*100)) / 100f;
-            return randomcopy;
-        }
-    }
-
     [Serializable]
     public class GameState
     {

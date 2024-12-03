@@ -16,4 +16,6 @@ MonoBehaviour:
   icon: {fileID: 0}
   art: 0
   power: 15
-  hitamount: 2
+  hitSplit:
+  - 0.25
+  - 0.75
