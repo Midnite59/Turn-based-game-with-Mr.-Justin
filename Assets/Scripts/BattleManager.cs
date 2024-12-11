@@ -24,6 +24,7 @@ public class BattleManager : MonoBehaviour
     public bool allyTurnStart;
     private bool batmanInit;
     private bool batmanSetup;
+    private bool allySelected { get { return allyTeam.batactors.Select(a => a.id).Contains(selectTarget); } }
 
     // Start is called before the first frame update
     void Awake()
@@ -201,14 +202,14 @@ public class BattleManager : MonoBehaviour
         // UI stuff
     }
 
-    public void TargetChange(bool right, bool ally = false)
+    public void TargetChange(bool right)
     {
         if (selectedSkill.targetType == TargetType.Self) 
         {
             Debug.Log("nice try");
             return;
         }
-        BattleTeam team = ally ? allyTeam : enemyTeam;
+        BattleTeam team = allySelected ? allyTeam : enemyTeam;
         int currentindex = team.batactors.IndexOf(GetBattleActor(selectTarget));
         if (currentindex != -1)
         {
@@ -239,7 +240,7 @@ public class BattleManager : MonoBehaviour
             SelectTargets();
             ShowTargets(realTargets);
             //Change based on targetype
-            if (!ally) { lastSelectedEnemy = selectTarget; }
+            if (!allySelected) { lastSelectedEnemy = selectTarget; }
         }
         else
         {

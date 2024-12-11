@@ -5,6 +5,7 @@ using System.Collections.Immutable;
 using UnityEngine;
 using System.Linq;
 using UnityEditor.SceneManagement;
+using UnityEngine.Assertions.Must;
 
 namespace BattleLogic
 {
@@ -105,7 +106,7 @@ namespace BattleLogic
         }
         public enum Type
         {
-            Down, Dead
+            Down, Dead, Up, Res
         }
         public Type type;
         public List<int> actorids;
@@ -150,12 +151,25 @@ namespace BattleLogic
                 damage *= 1.3f;
             }
             float newHP = hp - damage;
-            if (newHP <= 0) { 
+            if (newHP <= 0 && !status.dead) { 
                 Debug.Log(name + " is Dead!");
                 GameLoop.instance.EventStack(new BattleEvent(BattleEvent.Type.Dead, id));
                 return new Actor(name, stats, id, newHP, stance, status.Die(), Mmhp, Matk, Mdef, Meff, Mspd);
             }
             return new Actor(name, stats, id, newHP, stance, status, Mmhp, Matk, Mdef, Meff, Mspd);  
+        }
+        public Actor HealDmg(float damage)
+        {
+            float newHP = hp + damage;
+            newHP = MathF.Min(newHP, stats.Maxhp);
+            Debug.Log("I smell healing... like " + damage + "hp to be exact");
+            if (newHP > 0 && status.dead)
+            {
+                Debug.Log(name + " es eliveeeeee!!");
+                GameLoop.instance.EventStack(new BattleEvent(BattleEvent.Type.Res, id));
+                return new Actor(name, stats, id, newHP, stance, status.UnDie(), Mmhp, Matk, Mdef, Meff, Mspd);
+            }
+            return new Actor(name, stats, id, newHP, stance, status, Mmhp, Matk, Mdef, Meff, Mspd);
         }
         public Actor TakeStanceDmg(float damage, Stance stance, GameState gs, out BattleFlags flags) 
         {
@@ -399,13 +413,13 @@ namespace BattleLogic
 
 
         //Early game defense
-        // 100
+        // 15 (10-20)
         //Late game defense
-        // 200-250
+        // 50 (30-70)
         //Early game attack
-        // 100
+        // 10 (8-12)
         //Late game attack
-        // 200-250
+        // 60 (40-80)
 
         // Buffs last 3 cycles default
 
@@ -413,7 +427,7 @@ namespace BattleLogic
         {
             float randomnumber;
             gs = gs.GetRandom(0.90f, 1.10f, out randomnumber);
-            Debug.LogError(randomnumber);
+            //Debug.LogError(randomnumber);
             int dmg = Mathf.RoundToInt(power * (attacker.stats.atk * StageToMulti(attacker.Matk)/target.stats.def * StageToMulti(target.Mdef)) * randomnumber);
             return dmg;
         }
