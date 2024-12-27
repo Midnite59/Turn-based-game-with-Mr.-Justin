@@ -122,12 +122,12 @@ public class GameLoop : MonoBehaviour
         for (int i = 0; i < allylist.Count(); i++) 
         {
             attrList[id] = allylist[i];
-            allyActorList.Add(new Actor(allylist[i].charname, allylist[i].stats, id++, allyhealths[i] * allylist[i].stats.Maxhp, allylist[i].characterArt, new ActorStatus()));
+            allyActorList.Add(new Actor(allylist[i].charname, allylist[i].stats, id++, allyhealths[i] * allylist[i].stats.Maxhp, allylist[i].characterArt, new ActorStatus(), ImmutableList<Buff>.Empty));
         }
         for (int i = 0; i < enemylist.Count(); i++)
         {
             attrList[id] = enemylist[i]; 
-            enemyActorList.Add(new Actor(enemylist[i].charname, enemylist[i].stats, id++, enemylist[i].stats.Maxhp, enemylist[i].characterArt, new ActorStatus()));
+            enemyActorList.Add(new Actor(enemylist[i].charname, enemylist[i].stats, id++, enemylist[i].stats.Maxhp, enemylist[i].characterArt, new ActorStatus(), ImmutableList<Buff>.Empty));
         }
        
 
@@ -195,7 +195,7 @@ public class GameLoop : MonoBehaviour
     {
         turnOrder.Clear();
         var actors = gs.actors;
-        var spdIDs = actors.Select(actor => new {id = actor.id, spd = actor.stats.spd * Helper.StageToMulti(actor.Mspd)});
+        var spdIDs = actors.Select(actor => new {id = actor.id, spd = actor.stats.spd * Helper.StageToMulti(actor.Mspd(gs))});
         while (spdIDs.Any(a => a.spd > 0)) 
         {
             var fastest = spdIDs.First(a => a.spd == spdIDs.Max(a => a.spd));

@@ -137,14 +137,26 @@ public class BattleManager : MonoBehaviour
         var targets = GetBattleActors(ids);
         targets.ForEach(a => a.Target());
     }
-    public void HitAnimation() 
+    public void HitAnimation(bool usehitanimation = true) 
     {
         // Triggers the hits in the queue
         if (hitqueue.Count == 0)
         { 
             Debug.LogWarning("Not enough hits in hitqueue :O"); 
         }
-        hitqueue[0].animHurts.ForEach(a => { GetBattleActor(a.targetid).HurtAnimation(a.dmg); Debug.Log("ouch! " + a.dmg + " damage!! - " + a.targetid); });
+        hitqueue[0].animHurts.ForEach(a => {
+            if (usehitanimation)
+            {
+                GetBattleActor(a.targetid).HurtAnimation(a.dmg);
+                Debug.Log("ouch! " + a.dmg + " damage!! - " + a.targetid);
+            }
+            else
+            {
+                GetBattleActor(a.targetid).HealAnimation(a.dmg);
+                Debug.Log("No ouch");
+            }
+            
+        });
         
         hitqueue.RemoveAt(0);
     }

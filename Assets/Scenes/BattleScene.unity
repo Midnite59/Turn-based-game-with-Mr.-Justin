@@ -285,6 +285,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pill-ayer 3
       objectReference: {fileID: 0}
+    - target: {fileID: 7789133934172724290, guid: cf12533979f42bd408329a1098521535, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 8ee1f55c4b9a6d943b7e462a8ce82701, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:

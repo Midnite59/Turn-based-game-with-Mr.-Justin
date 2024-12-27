@@ -53,6 +53,11 @@ public class AttackAnimationEvent : AnimationEvent
     public AttackAnimationEvent(GameState gsOUT, int userid, string triggername) : base(gsOUT, userid, triggername) { }
 }
 
+public class NonAttackAnimationEvent : AnimationEvent
+{
+    public NonAttackAnimationEvent(GameState gsOUT, int userid, string triggername) : base(gsOUT, userid, triggername) { }
+}
+
 public class AnimHurt 
 {
     public AnimHurt(int targetid, int dmg)

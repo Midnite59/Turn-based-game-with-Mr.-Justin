@@ -9,6 +9,14 @@ using UnityEngine.Assertions.Must;
 
 namespace BattleLogic
 {
+
+    public enum BuffStat
+    {
+        Attack,
+        Defense,
+        Speed
+    }
+
     [Serializable]
     public class CharStats
     {
@@ -123,13 +131,11 @@ namespace BattleLogic
         public Stance stance;
         public ActorStatus status;
         // M means modified
-        public float Mmhp;
-        // Modified Max Hit Points
-        public int Matk;
-        public int Mdef;
-        public float Meff;
-        public int Mspd;
-        public Actor(string name, CharStats stats, int id, float hp, Stance stance, ActorStatus status, float mmhp = 0, int matk = 0, int mdef = 0, float meff = 0, int mspd = 0)
+        public int Matk(GameState gs) {/*?*/ return 0; }
+        public int Mdef(GameState gs) {/*?*/ return 0; }
+        public int Mspd(GameState gs) {/*?*/ return 0; }
+        public ImmutableList<Buff> buffs;
+        public Actor(string name, CharStats stats, int id, float hp, Stance stance, ActorStatus status, ImmutableList<Buff> buffs)
         {
             this.name = name;
             this.stats = stats;
@@ -137,11 +143,7 @@ namespace BattleLogic
             this.hp = hp;
             this.stance = stance;
             this.status = status;
-            Matk = matk;
-            Mdef = mdef;
-            Meff = meff;
-            Mspd = mspd;
-            Mmhp = mmhp;
+            this.buffs = buffs;
         }
 
         public Actor TakeDmg(float damage)
@@ -154,9 +156,9 @@ namespace BattleLogic
             if (newHP <= 0 && !status.dead) { 
                 Debug.Log(name + " is Dead!");
                 GameLoop.instance.EventStack(new BattleEvent(BattleEvent.Type.Dead, id));
-                return new Actor(name, stats, id, newHP, stance, status.Die(), Mmhp, Matk, Mdef, Meff, Mspd);
+                return new Actor(name, stats, id, newHP, stance, status.Die(), buffs);
             }
-            return new Actor(name, stats, id, newHP, stance, status, Mmhp, Matk, Mdef, Meff, Mspd);  
+            return new Actor(name, stats, id, newHP, stance, status, buffs);  
         }
         public Actor HealDmg(float damage)
         {
@@ -167,9 +169,9 @@ namespace BattleLogic
             {
                 Debug.Log(name + " es eliveeeeee!!");
                 GameLoop.instance.EventStack(new BattleEvent(BattleEvent.Type.Res, id));
-                return new Actor(name, stats, id, newHP, stance, status.UnDie(), Mmhp, Matk, Mdef, Meff, Mspd);
+                return new Actor(name, stats, id, newHP, stance, status.UnDie(), buffs);
             }
-            return new Actor(name, stats, id, newHP, stance, status, Mmhp, Matk, Mdef, Meff, Mspd);
+            return new Actor(name, stats, id, newHP, stance, status, buffs);
         }
         public Actor TakeStanceDmg(float damage, Stance stance, GameState gs, out BattleFlags flags) 
         {
@@ -200,9 +202,19 @@ namespace BattleLogic
 
         public Actor WithStatus(ActorStatus status) 
         {
-            return new Actor(name, stats, id, hp, stance, status, Mmhp, Matk, Mdef, Meff, Mspd);
+            return new Actor(name, stats, id, hp, stance, status, buffs);
+        }
+        public Actor WithBuff(Buff buff)
+        {
+            return new Actor(name, stats, id, hp, stance, status, buffs.Add(buff));
         }
 
+        /*
+        public Actor Buff(BuffStat buffStat, int duration) 
+        {
+
+        }
+        */
     }
 
     [Serializable]
@@ -428,7 +440,7 @@ namespace BattleLogic
             float randomnumber;
             gs = gs.GetRandom(0.90f, 1.10f, out randomnumber);
             //Debug.LogError(randomnumber);
-            int dmg = Mathf.RoundToInt(power * (attacker.stats.atk * StageToMulti(attacker.Matk)/target.stats.def * StageToMulti(target.Mdef)) * randomnumber);
+            int dmg = Mathf.RoundToInt(power * (attacker.stats.atk * StageToMulti(attacker.Matk(gs))/target.stats.def * StageToMulti(target.Mdef(gs))) * randomnumber);
             return dmg;
         }
 
@@ -454,5 +466,22 @@ namespace BattleLogic
         }
        */
 
+    }
+    public class Buff
+    {
+        // Visual studio wanted me to make a singleton of this lol
+        public Buff(int duration, IBuffEffect effect)
+        {
+            this.duration = duration;
+            this.effect = effect;
+        }
+        int duration;
+        IBuffEffect effect;
+    }
+    public interface IBuffEffect 
+    {
+        int GetAttack(GameState gs, int targetID);
+        int GetDefense(GameState gs, int targetID);
+        int GetSpeed(GameState gs, int targetID);
     }
 }

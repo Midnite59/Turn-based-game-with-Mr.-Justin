@@ -9,7 +9,7 @@ public class CharSkill : ScriptableObject
 {
     public TargetType targetType;
     public Sprite icon;
-
+    public string skilltype = "BasicAttack";
     public Stance art;
     public virtual bool IsRestricted(GameState state, Actor user)
     {

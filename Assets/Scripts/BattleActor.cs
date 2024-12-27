@@ -28,9 +28,9 @@ public class BattleActor : MonoBehaviour
     {
         
     }
-    public void HitAnimation()
+    public void HitAnimation(bool usehitanimation = true)
     {
-        BattleManager.batman.HitAnimation();
+        BattleManager.batman.HitAnimation(usehitanimation);
     }
     public void HurtAnimation(float dmg) 
     {
@@ -40,6 +40,16 @@ public class BattleActor : MonoBehaviour
             animator.SetBool("Dead", true);
         }
         hp -= dmg;
+    }
+    public void HealAnimation(float dmg)
+    {
+        //animator.SetTrigger("Hurt");
+        hp = Mathf.Min(hp + dmg, BattleManager.batman.gs.GetActor(id).stats.Maxhp);
+        if (hp > 0)
+        {
+            animator.SetBool("Dead", false);
+        }
+
     }
     public void Target()
     {

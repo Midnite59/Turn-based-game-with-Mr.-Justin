@@ -20,8 +20,8 @@ public class IamTest : MonoBehaviour
     // Start is called before the first frame update
     void TestCaseNoGameLoop()
     {
-        Actor sample = new Actor("sample", new CharStats(100, 15, 15, 1, 10), 1, 100, Stance.None, new ActorStatus(), 15, 15, 1, 10);
-        Actor sample2 = new Actor("sample2", new CharStats(100, 15, 15, 1, 10), 2, 100, Stance.None, new ActorStatus(), 15, 15, 1, 10);
+        Actor sample = new Actor("sample", new CharStats(100, 15, 15, 1, 10), 1, 100, Stance.None, new ActorStatus(), ImmutableList<Buff>.Empty);
+        Actor sample2 = new Actor("sample2", new CharStats(100, 15, 15, 1, 10), 2, 100, Stance.None, new ActorStatus(), ImmutableList<Buff>.Empty);
         ImmutableList<Actor> allies = ImmutableList.Create<Actor>();
         allies = allies.Add(sample);
         ImmutableList<Actor> enemies = ImmutableList.Create<Actor>();
@@ -43,10 +43,10 @@ public class IamTest : MonoBehaviour
     }
     void TestCase2()
     {
-        Actor sample = new Actor(Norman.charname, Norman.stats, 1, 100, Stance.None, new ActorStatus());
-        Actor sample2 = new Actor(NormanButSlow.charname, NormanButSlow.stats, 2, 40, Stance.None, new ActorStatus());
-        Actor sample3 = new Actor(NormanButEvenSlower.charname, NormanButEvenSlower.stats, 3, 50, Stance.None, new ActorStatus());
-        Actor MarlanActor = new Actor(Marlan.charname, Marlan.stats, 4, 130, Stance.None, new ActorStatus());
+        Actor sample = new Actor(Norman.charname, Norman.stats, 1, 100, Stance.None, new ActorStatus(), ImmutableList<Buff>.Empty);
+        Actor sample2 = new Actor(NormanButSlow.charname, NormanButSlow.stats, 2, 40, Stance.None, new ActorStatus(), ImmutableList<Buff>.Empty);
+        Actor sample3 = new Actor(NormanButEvenSlower.charname, NormanButEvenSlower.stats, 3, 50, Stance.None, new ActorStatus(), ImmutableList<Buff>.Empty);
+        Actor MarlanActor = new Actor(Marlan.charname, Marlan.stats, 4, 130, Stance.None, new ActorStatus(), ImmutableList<Buff>.Empty);
         ImmutableList<Actor> allies = ImmutableList.Create<Actor>();
         allies = allies.Add(sample);
         allies = allies.Add(MarlanActor);

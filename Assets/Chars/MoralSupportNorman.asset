@@ -10,16 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3c9eb213c02df014faa91c9eaf8abeaa, type: 3}
-  m_Name: FirstAidNorman
+  m_Name: MoralSupportNorman
   m_EditorClassIdentifier: 
-  charname: First Aid Norman
+  charname: Moral Support Norman
   stats:
     Maxhp: 100
     atk: 15
     def: 15
     eff: 1
-    spd: 101
-  skills:
-  - {fileID: 11400000, guid: 657d5a909d46f794598c07a940c794e7, type: 2}
-  fallback: {fileID: 11400000, guid: d8b5124648e2edb4b8f5706ba9da3bb1, type: 2}
-  characterArt: 2
+    spd: 102
+  skills: []
+  fallback: {fileID: 0}
+  characterArt: 0

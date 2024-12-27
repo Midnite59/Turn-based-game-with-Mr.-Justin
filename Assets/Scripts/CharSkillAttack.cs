@@ -6,7 +6,7 @@ using BattleLogic;
 using System.Linq;
 
 [CreateAssetMenu(menuName = "Battle Logic/Skill/Basic Attack")]
-public class CharSkillEnemyAttack : CharSkill
+public class CharSkillAttack : CharSkill
 {
     // Damage
     public int power = 15;
@@ -55,7 +55,7 @@ public class CharSkillEnemyAttack : CharSkill
     }
     public override void Animate(GameState gsIN, GameState gsOUT, int userid, List<int> targetids)
     {
-        BattleManager.batman.QueueEvent(new AttackAnimationEvent(gsOUT, userid, "BasicAttack"), GetHits(gsIN, userid, targetids));
+        BattleManager.batman.QueueEvent(new AttackAnimationEvent(gsOUT, userid, skilltype), GetHits(gsIN, userid, targetids));
     }
 
 }

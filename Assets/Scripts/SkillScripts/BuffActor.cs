@@ -4,21 +4,20 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Battle Logic/Skill/Heal Actor")]
-public class HealActor: CharSkill
+[CreateAssetMenu(menuName = "Battle Logic/Skill/Buff Actor")]
+public class BuffActor : CharSkill
 {
     /*
         
     */
-    public int minhealamount;
-    public float healpower;
+    public BuffEffect effect;
+    public int duration;
     public override GameState Execute(GameState state, Actor user, List<Actor> targets, out BattleFlags flags)
     {
         flags = BattleFlags.None;
         foreach (var target in targets)
         {
-            int level = 1;
-            state = state.WithActor(target.HealDmg(minhealamount+(level*healpower)));
+            state = state.WithActor(target.WithBuff(new Buff(duration, effect)));
         }
         return state;
     }
