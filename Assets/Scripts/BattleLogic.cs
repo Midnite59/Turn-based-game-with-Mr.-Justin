@@ -131,9 +131,9 @@ namespace BattleLogic
         public Stance stance;
         public ActorStatus status;
         // M means modified
-        public int Matk(GameState gs) {/*?*/ return 0; }
-        public int Mdef(GameState gs) {/*?*/ return 0; }
-        public int Mspd(GameState gs) {/*?*/ return 0; }
+        public int Matk(GameState gs) {/*?*/ return buffs.Aggregate(0, (total, next) => total += next.effect.GetAttack(gs, id), (total) => Mathf.Clamp(total, -2, 2)); }
+        public int Mdef(GameState gs) {/*?*/ return buffs.Aggregate(0, (total, next) => total += next.effect.GetDefense(gs, id), (total) => Mathf.Clamp(total, -2, 2)); }
+        public int Mspd(GameState gs) {/*?*/ return buffs.Aggregate(0, (total, next) => total += next.effect.GetSpeed(gs, id), (total) => Mathf.Clamp(total, -2, 2)); }
         public ImmutableList<Buff> buffs;
         public Actor(string name, CharStats stats, int id, float hp, Stance stance, ActorStatus status, ImmutableList<Buff> buffs)
         {
@@ -207,6 +207,11 @@ namespace BattleLogic
         public Actor WithBuff(Buff buff)
         {
             return new Actor(name, stats, id, hp, stance, status, buffs.Add(buff));
+        }
+
+        public Actor TickBuffs()
+        {
+            return new Actor(name, stats, id, hp, stance, status, buffs.Select(b => b.TickDown()).Where(b => b.duration > 0).ToImmutableList());
         }
 
         /*
@@ -377,6 +382,11 @@ namespace BattleLogic
             else if (IsIDEnemy(id)) { return false; }
             else { return null; }
         } */
+
+        public GameState TickDownBuffs()
+        {
+            return actors.Aggregate(this, (gs, actor) => gs.WithActor(actor.TickBuffs()));
+        }
     }
     public class TypeCombo 
     {
@@ -475,13 +485,18 @@ namespace BattleLogic
             this.duration = duration;
             this.effect = effect;
         }
-        int duration;
-        IBuffEffect effect;
+        public int duration;
+        public IBuffEffect effect;
+
+        public Buff TickDown()
+        {
+            return new Buff(this.duration - 1, this.effect);
+        }
     }
     public interface IBuffEffect 
     {
-        int GetAttack(GameState gs, int targetID);
-        int GetDefense(GameState gs, int targetID);
-        int GetSpeed(GameState gs, int targetID);
+        public int GetAttack(GameState gs, int targetID);
+        public int GetDefense(GameState gs, int targetID);
+        public int GetSpeed(GameState gs, int targetID);
     }
 }

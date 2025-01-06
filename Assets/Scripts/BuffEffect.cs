@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(menuName = "Battle Logic/Buff/Basic")]
 public class BuffEffect : ScriptableObject, IBuffEffect
 {
     [SerializeField]

@@ -28,9 +28,9 @@ public class BattleActor : MonoBehaviour
     {
         
     }
-    public void HitAnimation(bool usehitanimation = true)
+    public void HitAnimation(int usehitanimation = 1)
     {
-        BattleManager.batman.HitAnimation(usehitanimation);
+        BattleManager.batman.HitAnimation(usehitanimation == 1);
     }
     public void HurtAnimation(float dmg) 
     {

@@ -149,6 +149,7 @@ public class GameLoop : MonoBehaviour
     public void RoundEnd() 
     {
         Debug.Log("Round Over!");
+        gs = gs.TickDownBuffs();
         SetTurnOrder();
         currentTurn = 0;
         StartTurn();

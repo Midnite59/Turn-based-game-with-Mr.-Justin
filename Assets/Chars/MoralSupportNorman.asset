@@ -19,6 +19,7 @@ MonoBehaviour:
     def: 15
     eff: 1
     spd: 102
-  skills: []
+  skills:
+  - {fileID: 11400000, guid: 1f2e59cdc87fd3c43a01eb03688108ae, type: 2}
   fallback: {fileID: 0}
   characterArt: 0

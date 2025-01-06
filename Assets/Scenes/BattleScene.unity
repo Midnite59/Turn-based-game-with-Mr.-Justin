@@ -457,6 +457,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1597213400}
     m_Modifications:
+    - target: {fileID: 1274598094997741247, guid: cf12533979f42bd408329a1098521535, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: f8fd8f888ab3ff04c98a0382d62f328f, type: 2}
     - target: {fileID: 5112747754169986423, guid: cf12533979f42bd408329a1098521535, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
@@ -513,6 +517,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pill-ayer 4
       objectReference: {fileID: 0}
+    - target: {fileID: 7789133934172724290, guid: cf12533979f42bd408329a1098521535, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: e998268b6e1b6ec4ab633bbd6eb47c76, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -2024,11 +2032,6 @@ MonoBehaviour:
       id: 0
       hp: 0
       stance: 0
-      Mmhp: 0
-      Matk: 0
-      Mdef: 0
-      Meff: 0
-      Mspd: 0
     currentStance: 0
   selectTarget: 0
   lastSelectedEnemy: 0
