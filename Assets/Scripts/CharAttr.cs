@@ -13,6 +13,7 @@ public class CharAttr : ScriptableObject
     public List<CharSkill> skills;
     public CharSkill fallback = null;
     public Stance characterArt;
+    public BattleActor prefab;
 
 
     public CharSkill GetBasic() 

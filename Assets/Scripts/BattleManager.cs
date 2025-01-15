@@ -62,8 +62,11 @@ public class BattleManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         int id = 1;
+        allyTeam.batactors = new List<BattleActor>();
+        enemyTeam.batactors = new List<BattleActor>();
         for (int i = 0; i < allies.Count; i++)
         {
+            allyTeam.batactors.Add(Instantiate(allies[i].prefab, allyTeam.transforms[i].position, allyTeam.transforms[i].rotation, allyTeam.transform));
             allyTeam.batactors[i].id = id++;
             allyTeam.batactors[i].hp = allies[i].stats.Maxhp;
             allyTeam.batactors[i].charname = allies[i].charname;
@@ -74,6 +77,7 @@ public class BattleManager : MonoBehaviour
         }
         for (int i = 0; i < enemies.Count; i++)
         {
+            enemyTeam.batactors.Add(Instantiate(enemies[i].prefab, enemyTeam.transforms[i].position, enemyTeam.transforms[i].rotation, enemyTeam.transform));
             enemyTeam.batactors[i].id = id++;
             enemyTeam.batactors[i].hp = enemies[i].stats.Maxhp;
             enemyTeam.batactors[i].charname = enemies[i].charname;
@@ -82,7 +86,7 @@ public class BattleManager : MonoBehaviour
             enemyTeam.batactors[i].skill1 = enemies[i].GetSkill1();
             enemyTeam.batactors[i].skill2 = enemies[i].GetSkill2();
         }
-
+        /*
         foreach (BattleActor actor in allyTeam.batactors)
         {
             if (actor.id == 0)
@@ -97,6 +101,7 @@ public class BattleManager : MonoBehaviour
                 actor.gameObject.SetActive(false);
             }
         }
+        */
         batmanSetup = true;
         selectTarget = lastSelectedEnemy = enemyTeam.batactors[0].id;
     }

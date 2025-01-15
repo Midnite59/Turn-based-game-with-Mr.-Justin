@@ -5,6 +5,7 @@ using UnityEngine;
 public class BattleTeam : MonoBehaviour
 {
     public List<BattleActor> batactors;
+    public List<Transform> transforms;
     // Start is called before the first frame update
     void Start()
     {

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations;
 
 public class BattleActor : MonoBehaviour
 {
@@ -21,6 +22,7 @@ public class BattleActor : MonoBehaviour
         {
             animator = GetComponent<Animator>();
         }
+        targetselector.GetComponent<LookAtConstraint>().AddSource(new ConstraintSource { sourceTransform = Camera.main.transform, weight = 1f });
     }
 
     // Update is called once per frame

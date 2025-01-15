@@ -24,3 +24,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3b1ed87aada25e84ea47cb0ab44f330a, type: 2}
   fallback: {fileID: 0}
   characterArt: 6
+  prefab: {fileID: 9155025927961530675, guid: 0d3b4f31f44f36b4ca06a7bb71eadf4a, type: 3}
