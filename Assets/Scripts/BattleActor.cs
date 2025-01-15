@@ -48,6 +48,7 @@ public class BattleActor : MonoBehaviour
         if (hp > 0)
         {
             animator.SetBool("Dead", false);
+            animator.ResetTrigger("Hurt");
         }
 
     }

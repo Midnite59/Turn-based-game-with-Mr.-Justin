@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   charname: Norman
   stats:
-    Maxhp: 100
+    Maxhp: 1
     atk: 15
     def: 15
     eff: 1
