@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
+using BattleLogic;
 
 public class BattleActor : MonoBehaviour
 {
@@ -14,6 +15,9 @@ public class BattleActor : MonoBehaviour
     public CharSkill basic;
     public CharSkill skill1;
     public CharSkill skill2;
+
+    public CharStats stats { get { return BattleManager.batman.gs.GetActor(id).stats; } }
+
     public bool animated { get { return animator != null && animator.enabled; } }
     // Start is called before the first frame update
     void Start()
@@ -46,7 +50,7 @@ public class BattleActor : MonoBehaviour
     public void HealAnimation(float dmg)
     {
         //animator.SetTrigger("Hurt");
-        hp = Mathf.Min(hp + dmg, BattleManager.batman.gs.GetActor(id).stats.Maxhp);
+        hp = Mathf.Min(hp + dmg, stats.Maxhp);
         if (hp > 0)
         {
             animator.SetBool("Dead", false);

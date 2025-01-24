@@ -13,6 +13,8 @@ public class BattleUIController : MonoBehaviour
     public Button skill1Button;
     public Button skill2Button;
     public List<int> targets;
+
+    public List<HealthyBar> allyHealthBars;
     public float horizontal { get { return stateh; } set 
         {
             if (value > deadzone)
@@ -68,6 +70,17 @@ public class BattleUIController : MonoBehaviour
         gameloop.allyTurnEnd += AllyTurnEnd;
         onStateChangeH += OnStateChangeH; // Like and Subscribe
         Debug.Log("Added");
+        for (int i = 0; i < allyHealthBars.Count; i++)
+        {
+            if (i < BattleManager.batman.allyTeam.batactors.Count)
+            {
+                allyHealthBars[i].battleActor = BattleManager.batman.allyTeam.batactors[i];
+            }
+            else
+            {
+                allyHealthBars[i].gameObject.SetActive(false);
+            }
+        }
     }
     void AllyTurnStart()
     {
