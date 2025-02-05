@@ -428,14 +428,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   battleActor: {fileID: 0}
-  fastBar: {fileID: 8793613480668844109}
-  slowBar: {fileID: 9084539137874914314}
-  slowBarTime: 2
-  fastBarTime: 1
+  greenBar: {fileID: 0}
+  redBar: {fileID: 0}
+  blueBar: {fileID: 0}
+  slowBarTime: 1
+  fastBarTime: 0.5
   bActorLastHP: 0
-  slowBarHP: 0
-  fastBarHP: 0
-  slowBarDelay: 1
+  redBarHP: 0
+  greenBarHP: 0
+  blueBarHP: 0
+  BarDelay: 0
   fastBarCurve:
     serializedVersion: 2
     m_Curve:
@@ -1045,14 +1047,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   battleActor: {fileID: 0}
-  fastBar: {fileID: 5343468608790488990}
-  slowBar: {fileID: 5932542204555820881}
-  slowBarTime: 2
-  fastBarTime: 1
+  greenBar: {fileID: 0}
+  redBar: {fileID: 0}
+  blueBar: {fileID: 0}
+  slowBarTime: 1
+  fastBarTime: 0.5
   bActorLastHP: 0
-  slowBarHP: 0
-  fastBarHP: 0
-  slowBarDelay: 1
+  redBarHP: 0
+  greenBarHP: 0
+  blueBarHP: 0
+  BarDelay: 0
   fastBarCurve:
     serializedVersion: 2
     m_Curve:
@@ -1976,14 +1980,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   battleActor: {fileID: 0}
-  fastBar: {fileID: 1309080208483999742}
-  slowBar: {fileID: 3325262904950925589}
-  slowBarTime: 2
-  fastBarTime: 1
+  greenBar: {fileID: 0}
+  redBar: {fileID: 0}
+  blueBar: {fileID: 0}
+  slowBarTime: 1
+  fastBarTime: 0.5
   bActorLastHP: 0
-  slowBarHP: 0
-  fastBarHP: 0
-  slowBarDelay: 1
+  redBarHP: 0
+  greenBarHP: 0
+  blueBarHP: 0
+  BarDelay: 0
   fastBarCurve:
     serializedVersion: 2
     m_Curve:
@@ -2425,14 +2431,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   battleActor: {fileID: 0}
-  fastBar: {fileID: 5569635134758667654}
-  slowBar: {fileID: 2629200514276196718}
-  slowBarTime: 2
-  fastBarTime: 1
+  greenBar: {fileID: 0}
+  redBar: {fileID: 0}
+  blueBar: {fileID: 0}
+  slowBarTime: 1
+  fastBarTime: 0.5
   bActorLastHP: 0
-  slowBarHP: 0
-  fastBarHP: 0
-  slowBarDelay: 1
+  redBarHP: 0
+  greenBarHP: 0
+  blueBarHP: 0
+  BarDelay: 0
   fastBarCurve:
     serializedVersion: 2
     m_Curve:
