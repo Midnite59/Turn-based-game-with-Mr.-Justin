@@ -1,19 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class HealthyBar : MonoBehaviour
 {
     public BattleActor battleActor;
-    public Image fastBar;
-    public Image slowBar;
-    public float slowBarTime;
-    public float fastBarTime;
-    public float slowBarHP;
-    public float fastBarHP;
+    public Image greenBar;
+    public Image redBar;
+    public Image blueBar;
+    public float redBarTime;
+    public float greenBarTime;
     public float bActorLastHP;
-    public float slowBarDelay;
+    public float redBarHP;
+    public float greenBarHP;
+    public float BarDelay;
 
     // Timers
     float fastBarTimer;
@@ -22,22 +24,55 @@ public class HealthyBar : MonoBehaviour
     public AnimationCurve fastBarCurve;
     public AnimationCurve slowBarCurve;
 
-    private Coroutine fastBarRoutine;
-    private Coroutine slowBarRoutine;
+    private Coroutine GreenBarRoutine = null;
+    private Coroutine RedBarRoutine = null;
 
-    private IEnumerator FastBarFunction(float start)
+    private bool slowBarLock;
+    public void SetBattleActor(BattleActor battleActor)
     {
-        fastBarTimer = fastBarTime;
+        this.battleActor = battleActor;
+        this.greenBarHP = battleActor.hp;
+        this.redBarHP = battleActor.hp;
+        this.bActorLastHP = battleActor.hp;
+        BattleManager.batman.onAnimationEnd += (ae) => { slowBarLock = false; };
+    }
+
+    private IEnumerator FastBarFunctionDMG(float start)
+    {
+        fastBarTimer = greenBarTime;
         float dif =  start - battleActor.hp;
         while (fastBarTimer > 0)
         {
             yield return null;
             fastBarTimer-=Time.deltaTime;
+            float t = fastBarTimer/greenBarTime;
+            t = fastBarCurve.Evaluate(t);
+            greenBarHP = battleActor.hp+dif*t;
+            greenBar.fillAmount = greenBarHP/battleActor.stats.Maxhp;
+            blueBar.fillAmount = greenBarHP / battleActor.stats.Maxhp;
         }
+        GreenBarRoutine = null;
         yield break;
     }
-    private IEnumerator SlowBarFunction()
+    private IEnumerator SlowBarFunctionDMG(float start)
     {
+        slowBarTimer = redBarTime;
+        float dif = start - battleActor.hp;
+        while (slowBarLock)
+        {
+            yield return null;
+        }
+        yield return new WaitForSeconds(BarDelay);
+        while (slowBarTimer > 0)
+        {
+            yield return null;
+            slowBarTimer -= Time.deltaTime;
+            float t = slowBarTimer / redBarTime;
+            t = slowBarCurve.Evaluate(t);
+            redBarHP = battleActor.hp + dif * t;
+            redBar.fillAmount = redBarHP / battleActor.stats.Maxhp;
+        }
+        RedBarRoutine = null;
         yield break;
     }
 
@@ -61,8 +96,21 @@ public class HealthyBar : MonoBehaviour
 
             if (battleActor.hp < bActorLastHP)
             {
+                //Debug.LogError(fastBarRoutine);
+                if (GreenBarRoutine != null)
+                {
+                    StopCoroutine(GreenBarRoutine);    
+                }
+                if (RedBarRoutine != null)
+                {
+                    StopCoroutine(RedBarRoutine);
+                }
                 // Damage
-                
+                GreenBarRoutine = StartCoroutine(FastBarFunctionDMG(greenBarHP));
+                slowBarLock = true;
+                RedBarRoutine = StartCoroutine(SlowBarFunctionDMG(redBarHP));
+                bActorLastHP = battleActor.hp;
+
             }
         }
     }

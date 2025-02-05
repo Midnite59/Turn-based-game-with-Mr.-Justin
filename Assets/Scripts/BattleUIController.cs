@@ -74,7 +74,7 @@ public class BattleUIController : MonoBehaviour
         {
             if (i < BattleManager.batman.allyTeam.batactors.Count)
             {
-                allyHealthBars[i].battleActor = BattleManager.batman.allyTeam.batactors[i];
+                allyHealthBars[i].SetBattleActor(BattleManager.batman.allyTeam.batactors[i]);
             }
             else
             {

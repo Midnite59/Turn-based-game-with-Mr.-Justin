@@ -26,6 +26,10 @@ public class BattleManager : MonoBehaviour
     private bool batmanSetup;
     private bool allySelected { get { return allyTeam.batactors.Select(a => a.id).Contains(selectTarget); } }
 
+
+
+    public event Action<AnimationEvent> onAnimationEnd = (ae) => { };
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -184,6 +188,10 @@ public class BattleManager : MonoBehaviour
             if (currentEvent != null) 
             {
                 UpdateGs(outputevents[0].gsOUT);
+                if (outputevents[0] is AnimationEvent)
+                {
+                    onAnimationEnd.Invoke(outputevents[0] as AnimationEvent);
+                }
                 outputevents.RemoveAt(0);
                 currentEvent = null;
                 Debug.Log("No event running :D. Finally I can take a break");
