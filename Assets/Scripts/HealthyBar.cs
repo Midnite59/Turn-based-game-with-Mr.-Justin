@@ -35,6 +35,7 @@ public class HealthyBar : MonoBehaviour
         this.battleActor = battleActor;
         this.greenBarHP = battleActor.hp;
         this.redBarHP = battleActor.hp;
+        this.blueBarHP = battleActor.hp;
         this.bActorLastHP = battleActor.hp;
         BattleManager.batman.onAnimationEnd += (ae) => { slowBarLock = false; };
     }
@@ -51,7 +52,8 @@ public class HealthyBar : MonoBehaviour
             t = fastBarCurve.Evaluate(t);
             greenBarHP = battleActor.hp+dif*t;
             greenBar.fillAmount = greenBarHP/battleActor.stats.Maxhp;
-            blueBar.fillAmount = greenBarHP / battleActor.stats.Maxhp;
+            blueBarHP = battleActor.hp+dif*t;
+            blueBar.fillAmount = blueBarHP / battleActor.stats.Maxhp;
         }
         GreenBarRoutine = null;
         yield break;
@@ -91,7 +93,8 @@ public class HealthyBar : MonoBehaviour
             t = fastBarCurve.Evaluate(t);
             blueBarHP = battleActor.hp + dif * t;
             blueBar.fillAmount = blueBarHP / battleActor.stats.Maxhp;
-            redBar.fillAmount = blueBarHP / battleActor.stats.Maxhp;
+            redBarHP = battleActor.hp + dif * t;
+            redBar.fillAmount = redBarHP / battleActor.stats.Maxhp;
         }
         BlueBarRoutine = null;
         yield break;

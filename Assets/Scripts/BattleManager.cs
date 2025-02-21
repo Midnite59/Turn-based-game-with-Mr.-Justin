@@ -14,7 +14,7 @@ public class BattleManager : MonoBehaviour
     public List<BattleActor> allactors { get { return allyTeam.batactors.Concat(enemyTeam.batactors).ToList(); } }
     private Coroutine currentEvent;
     public GameState gs;
-    private bool eventRunning;
+    public bool eventRunning { get; private set; }
     public List<AnimHit> hitqueue;
     public List<OutputEvent> outputevents;
     public int selectTarget;

@@ -22,5 +22,5 @@ MonoBehaviour:
   skills:
   - {fileID: 11400000, guid: 1f2e59cdc87fd3c43a01eb03688108ae, type: 2}
   fallback: {fileID: 0}
-  characterArt: 0
+  characterArt: 3
   prefab: {fileID: 7729801854867531800, guid: 33194b5a267a2bc4b852eba164b39dc1, type: 3}

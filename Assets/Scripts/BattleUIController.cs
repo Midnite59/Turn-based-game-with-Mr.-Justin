@@ -56,6 +56,7 @@ public class BattleUIController : MonoBehaviour
     private int _statev;
     public event Action<int> onStateChangeH = (i) => {};
     public event Action<int> onStateChangeV = (i) => {};
+    private bool UIEnabled; // Ultra Instinct
 
     // Start is called before the first frame update
     void OnEnable()
@@ -66,8 +67,6 @@ public class BattleUIController : MonoBehaviour
         {
             throw new System.NullReferenceException("WHERE IS GAMELOOP");
         }
-        gameloop.allyTurnStart += AllyTurnStart;
-        gameloop.allyTurnEnd += AllyTurnEnd;
         onStateChangeH += OnStateChangeH; // Like and Subscribe
         Debug.Log("Added");
         for (int i = 0; i < allyHealthBars.Count; i++)
@@ -88,24 +87,38 @@ public class BattleUIController : MonoBehaviour
         basicButton.onClick.AddListener(() => gameloop.TakeTurn(gameloop.currentAttr.GetBasic(), BattleManager.batman.realTargets));
         skill1Button.onClick.AddListener(() => gameloop.TakeTurn(gameloop.currentAttr.GetSkill1(), BattleManager.batman.realTargets));
         skill2Button.onClick.AddListener(() => gameloop.TakeTurn(gameloop.currentAttr.GetSkill2(), BattleManager.batman.realTargets));
+
+        basicButton.gameObject.SetActive(true);
+        skill1Button.gameObject.SetActive(true);
+        skill2Button.gameObject.SetActive(true);
+
+        UIEnabled = true;
     }
     void AllyTurnEnd()
     {
         basicButton.onClick.RemoveAllListeners();
         skill1Button.onClick.RemoveAllListeners();
         skill2Button.onClick.RemoveAllListeners();
-    }
-    void OnDestroy()
-    {
-        gameloop.allyTurnStart -= AllyTurnStart;
-        gameloop.allyTurnEnd -= AllyTurnEnd;
+
+        basicButton.gameObject.SetActive(false);
+        skill1Button.gameObject.SetActive(false);
+        skill2Button.gameObject.SetActive(false);
+
+        UIEnabled = false;
     }
 
     void Update()
     {
         horizontal = Input.GetAxis("Horizontal");
         vertical = Input.GetAxis("Vertical");
-        //Debug.Log("frame");
+        if (!BattleManager.batman.eventRunning && !UIEnabled)
+        {
+            AllyTurnStart();
+        }
+        else if (BattleManager.batman.eventRunning && UIEnabled)
+        {
+            AllyTurnEnd();
+        }
     }
 
     void OnStateChangeH(int newState)

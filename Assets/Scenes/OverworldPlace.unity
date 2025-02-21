@@ -778,7 +778,7 @@ PrefabInstance:
     - target: {fileID: 3786984925233556366, guid: 4713985f7a1c96c469b0760e5299b3fa, type: 3}
       propertyPath: allies.Array.data[1]
       value: 
-      objectReference: {fileID: 11400000, guid: 9dc9a4338cd437d4bbb2a058c841950b, type: 2}
+      objectReference: {fileID: 11400000, guid: 4eb09dce7e3840f4f98eb9f6bd57c945, type: 2}
     - target: {fileID: 3786984925233556366, guid: 4713985f7a1c96c469b0760e5299b3fa, type: 3}
       propertyPath: allies.Array.data[2]
       value: 

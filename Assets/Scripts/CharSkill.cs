@@ -11,6 +11,7 @@ public class CharSkill : ScriptableObject
     public Sprite icon;
     public string skilltype = "BasicAttack";
     public Stance art;
+    public float cost;
     public virtual bool IsRestricted(GameState state, Actor user)
     {
         return false;

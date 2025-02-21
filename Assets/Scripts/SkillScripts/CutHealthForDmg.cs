@@ -16,11 +16,11 @@ public class CutHealthForDmg : CharSkill
         flags = BattleFlags.None;
         Debug.Log(user.name + " (" + user.id + ") attacked " + string.Join(", ", targets.Select(a => a.name + " (" + a.id + ")").ToList()));
 
-        state = state.WithActor(user.TakeDmg(Mathf.Min(sacrifice, user.hp - 1)));
+        state = state.WithActor(user.TakeDmg(Mathf.Min(sacrifice, user.hp - 1), flags));
 
         foreach (var target in targets)
         {
-            state = state.WithActor(target.TakeStanceDmg(Helper.CalcDmg(target, power, user, ref state), art, state, out flags));
+            state = state.WithActor(target.TakeDmg(Helper.CalcDmg(target, power, user, ref state, out flags, art != Stance.None ? art : null), flags));
         }
         return state;
     }

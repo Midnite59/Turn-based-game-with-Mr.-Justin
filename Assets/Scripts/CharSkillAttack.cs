@@ -22,7 +22,7 @@ public class CharSkillAttack : CharSkill
         List<int> damages = new List<int>();
         foreach (var target in targets) 
         {
-            int dmg = Helper.CalcDmg(gsIN.GetActor(target), power, gsIN.GetActor(user), ref gsIN);
+            int dmg = Helper.CalcDmg(gsIN.GetActor(target), power, gsIN.GetActor(user), ref gsIN, out _, art != Stance.None ? art : null);
             damages.Add(dmg);
         }
         List<AnimHit> hits = new List<AnimHit>();
@@ -44,8 +44,8 @@ public class CharSkillAttack : CharSkill
         Debug.Log(user.name + " (" + user.id + ") attacked " + string.Join(", ", targets.Select(a => a.name + " (" + a.id + ")").ToList()));
         foreach (var target in targets)
         {
-            int dmg = Helper.CalcDmg(target, power, user, ref state);
-            state = state.WithActor(target.TakeDmg(dmg));
+            int dmg = Helper.CalcDmg(target, power, user, ref state, out flags, art != Stance.None ? art:null);
+            state = state.WithActor(target.TakeDmg(dmg, flags));
         }
         return state;
     }

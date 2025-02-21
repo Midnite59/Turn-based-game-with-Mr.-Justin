@@ -17,7 +17,7 @@ public class BuffActor : CharSkill
         flags = BattleFlags.None;
         foreach (var target in targets)
         {
-            state = state.WithActor(target.WithBuff(new Buff(duration, effect)));
+            state = state.WithActor(target.WithBuff(new Buff(duration, effect, user.id)));
         }
         return state;
     }

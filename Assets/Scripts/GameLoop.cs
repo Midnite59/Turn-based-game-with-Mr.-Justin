@@ -113,8 +113,8 @@ public class GameLoop : MonoBehaviour
     public void CreateBattle(List<CharAttr> allylist, List<CharAttr> enemylist, List<float> allyhealths)
     {
         attrList = new Dictionary<int, CharAttr>();
-        var allyStancePoints = ImmutableDictionary.Create<Stance, float>();
-        var enemyStancePoints = ImmutableDictionary.Create<Stance, float>();
+        var allyStancePoints = 0;
+        var enemyStancePoints = 0;
         int id = 1;
         List<Actor> allyActorList = new List<Actor>();
         List<Actor> enemyActorList = new List<Actor>();

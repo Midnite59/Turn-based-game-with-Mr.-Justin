@@ -6,6 +6,7 @@ using UnityEngine;
 using System.Linq;
 using UnityEditor.SceneManagement;
 using UnityEngine.Assertions.Must;
+using System.Xml.Linq;
 
 namespace BattleLogic
 {
@@ -135,6 +136,7 @@ namespace BattleLogic
         public int Mdef(GameState gs) {/*?*/ return buffs.Aggregate(0, (total, next) => total += next.effect.GetDefense(gs, id), (total) => Mathf.Clamp(total, -2, 2)); }
         public int Mspd(GameState gs) {/*?*/ return buffs.Aggregate(0, (total, next) => total += next.effect.GetSpeed(gs, id), (total) => Mathf.Clamp(total, -2, 2)); }
         public ImmutableList<Buff> buffs;
+        public List<Buff> visibleBuffs;
         public Actor(string name, CharStats stats, int id, float hp, Stance stance, ActorStatus status, ImmutableList<Buff> buffs)
         {
             this.name = name;
@@ -144,21 +146,28 @@ namespace BattleLogic
             this.stance = stance;
             this.status = status;
             this.buffs = buffs;
+            this.visibleBuffs = buffs.ToList();
         }
 
-        public Actor TakeDmg(float damage)
+        public Actor TakeDmg(float damage, BattleFlags flags)
         {
+            ActorStatus newStatus = status;
+
             if (status.downed)
             {
                 damage *= 1.3f;
+            }
+            if ((flags & BattleFlags.CharDowned) == BattleFlags.CharDowned)
+            {
+                newStatus = newStatus.Down();
             }
             float newHP = hp - damage;
             if (newHP <= 0 && !status.dead) { 
                 Debug.Log(name + " is Dead!");
                 GameLoop.instance.EventStack(new BattleEvent(BattleEvent.Type.Dead, id));
-                return new Actor(name, stats, id, newHP, stance, status.Die(), buffs);
+                newStatus = newStatus.Die();
             }
-            return new Actor(name, stats, id, newHP, stance, status, buffs);  
+            return new Actor(name, stats, id, newHP, stance, newStatus, buffs);  
         }
         public Actor HealDmg(float damage)
         {
@@ -173,30 +182,6 @@ namespace BattleLogic
             }
             return new Actor(name, stats, id, newHP, stance, status, buffs);
         }
-        public Actor TakeStanceDmg(float damage, Stance stance, GameState gs, out BattleFlags flags) 
-        {
-            flags = BattleFlags.None;
-            TypeCombo damagedTC = gs.FindCharWeakness(id);
-            if (damagedTC.resistances.Contains(stance))
-            {
-                Debug.Log("It's not very effective...");
-                damage *= 0.5f;
-            }
-            if (damagedTC.weaknesses.Contains(stance))
-            {
-                damage *= 1.5f;
-                Debug.Log("It's super effective!!");
-
-                if (!status.downed) 
-                {
-                    flags = BattleFlags.CharDowned;
-                    GameLoop.instance.EventStack(new BattleEvent(BattleEvent.Type.Down, id));
-                    Debug.Log(name + " was downed :O");
-                }
-                return TakeDmg(damage).WithStatus(status.Down());
-            }
-            return TakeDmg(damage);
-        }
 
 
 
@@ -206,7 +191,14 @@ namespace BattleLogic
         }
         public Actor WithBuff(Buff buff)
         {
-            return new Actor(name, stats, id, hp, stance, status, buffs.Add(buff));
+            if (buffs.Any(b => b.buffID == buff.buffID))
+            {
+                return new Actor(name, stats, id, hp, stance, status, buffs.Select(b => b.buffID == buff.buffID ? new Buff(buff.duration, b.effect, b.uid):b).ToImmutableList());
+            }
+            else
+            {
+                return new Actor(name, stats, id, hp, stance, status, buffs.Add(buff));
+            }
         }
 
         public Actor TickBuffs()
@@ -235,8 +227,8 @@ namespace BattleLogic
         private List<Actor> visibleEnemies;
         public Actor currentActor;
         public Stance currentStance;
-        public ImmutableDictionary<Stance, float> allyStancePoints;
-        public ImmutableDictionary<Stance, float> enemyStancePoints;
+        public float allyStancePoints;
+        public float enemyStancePoints;
         public IEnumerable<Actor> actors
         { get {  return allies.Concat(enemies); } }
         private BattleRandom random;
@@ -248,8 +240,8 @@ namespace BattleLogic
             ImmutableList<Actor> enemies, 
             Actor currentActor, 
             Stance currentStance, 
-            ImmutableDictionary<Stance, float> allyStancePoints, 
-            ImmutableDictionary<Stance, float> enemyStancePoints) 
+            float allyStancePoints, 
+            float enemyStancePoints) 
         {
             this.allies = allies;
             this.enemies = enemies;
@@ -264,8 +256,8 @@ namespace BattleLogic
            ImmutableList<Actor> enemies,
            Actor currentActor,
            Stance currentStance,
-           ImmutableDictionary<Stance, float> allyStancePoints,
-           ImmutableDictionary<Stance, float> enemyStancePoints,
+           float allyStancePoints,
+           float enemyStancePoints,
            BattleRandom random)
            
         {
@@ -353,15 +345,23 @@ namespace BattleLogic
             StanceWeaks.Add(Helper.FindWeakness(charStance));
             StanceWeaks.Add(Helper.FindWeakness(stateStance));
             List<Stance> StanceRes = new List<Stance>();
-            StanceRes.Add(Helper.FindResistance(charStance));
-            StanceRes.Add(Helper.FindResistance(stateStance));
-            foreach (Stance stance in StanceWeaks)
+            Stance cres = Helper.FindResistance(charStance);
+            Stance sres = Helper.FindResistance(stateStance);
+            if (StanceWeaks.Contains(cres))
             {
-                if (StanceRes.Contains(stance))
-                {
-                    StanceWeaks.Remove(stance);
-                    StanceRes.Remove(stance);
-                }
+                StanceWeaks.Remove(cres);
+            }
+            else
+            {
+                StanceRes.Add(cres);
+            }
+            if (StanceWeaks.Contains(sres))
+            {
+                StanceWeaks.Remove(sres);
+            }
+            else
+            {
+                StanceRes.Add(sres);
             }
             return new TypeCombo(StanceWeaks, StanceRes);
         }
@@ -386,6 +386,15 @@ namespace BattleLogic
         public GameState TickDownBuffs()
         {
             return actors.Aggregate(this, (gs, actor) => gs.WithActor(actor.TickBuffs()));
+        }
+
+        public GameState RegainSP()
+        {
+            BattleRandom rand = random;
+            float enemySP = enemyStancePoints;
+            float allySP = allies.Aggregate(allyStancePoints, (sp, actor) => sp + actor.stats.eff >= 6 ? sp : sp + actor.stats.eff);
+            // Skill point blackjack
+            return new GameState(allies, enemies, currentActor, currentStance, allySP, enemySP, rand);
         }
     }
     public class TypeCombo 
@@ -445,13 +454,36 @@ namespace BattleLogic
 
         // Buffs last 3 cycles default
 
-        public static int CalcDmg(Actor target, int power, Actor attacker, ref GameState gs)
+        public static int CalcDmg(Actor target, int power, Actor attacker, ref GameState gs, out BattleFlags flags, Stance? stanceOverride = null)
         {
             float randomnumber;
             gs = gs.GetRandom(0.90f, 1.10f, out randomnumber);
             //Debug.LogError(randomnumber);
-            int dmg = Mathf.RoundToInt(power * (attacker.stats.atk * StageToMulti(attacker.Matk(gs))/target.stats.def * StageToMulti(target.Mdef(gs))) * randomnumber);
-            return dmg;
+            float dmg = Mathf.Round(power * (attacker.stats.atk * StageToMulti(attacker.Matk(gs))/target.stats.def * StageToMulti(target.Mdef(gs))) * randomnumber);
+            
+
+            // Stancy stuff
+            Stance stance = stanceOverride ?? attacker.stance;
+            flags = BattleFlags.None;
+            TypeCombo damagedTC = gs.FindCharWeakness(target.id);
+            if (damagedTC.resistances.Contains(stance))
+            {
+                Debug.Log("It's not very effective...");
+                dmg *= 0.5f;
+            }
+            if (damagedTC.weaknesses.Contains(stance))
+            {
+                dmg *= 1.5f;
+                Debug.Log("It's super effective!!");
+
+                if (!target.status.downed)
+                {
+                    flags = BattleFlags.CharDowned;
+                    GameLoop.instance.EventStack(new BattleEvent(BattleEvent.Type.Down, target.id));
+                    Debug.Log(target.name + " was downed :O");
+                }
+            }
+            return Mathf.RoundToInt(dmg);
         }
 
         /* OLD
@@ -477,20 +509,25 @@ namespace BattleLogic
        */
 
     }
+    [Serializable]
     public class Buff
     {
         // Visual studio wanted me to make a singleton of this lol
-        public Buff(int duration, IBuffEffect effect)
+        public Buff(int duration, IBuffEffect effect, int uid)
         {
             this.duration = duration;
             this.effect = effect;
+            this.buffID = effect.GetHashCode() * 100 + uid;
+            this.uid = uid;
         }
         public int duration;
+        public int buffID;
+        public int uid;
         public IBuffEffect effect;
 
         public Buff TickDown()
         {
-            return new Buff(this.duration - 1, this.effect);
+            return new Buff(this.duration - 1, this.effect, this.uid);
         }
     }
     public interface IBuffEffect 

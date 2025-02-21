@@ -26,8 +26,8 @@ public class IamTest : MonoBehaviour
         allies = allies.Add(sample);
         ImmutableList<Actor> enemies = ImmutableList.Create<Actor>();
         enemies = enemies.Add(sample2);
-        var allyStancePoints = ImmutableDictionary.Create<Stance, float>();
-        var enemyStancePoints = ImmutableDictionary.Create<Stance, float>();
+        var allyStancePoints = 5;
+        var enemyStancePoints = 5;
         GameState gs = new GameState(allies, enemies, sample, Stance.Physical, allyStancePoints, enemyStancePoints);
         GameState gs2;
         if (testSkill.IsUsable(gs, sample2))
@@ -53,8 +53,8 @@ public class IamTest : MonoBehaviour
         ImmutableList<Actor> enemies = ImmutableList.Create<Actor>();
         enemies = enemies.Add(sample2);
         enemies = enemies.Add(sample3);
-        var allyStancePoints = ImmutableDictionary.Create<Stance, float>();
-        var enemyStancePoints = ImmutableDictionary.Create<Stance, float>();
+        var allyStancePoints = 5;
+        var enemyStancePoints = 5;
         GameState gs = new GameState(allies, enemies, sample, Stance.Physical, allyStancePoints, enemyStancePoints);
         gameloop.gs = gs;
         gameloop.StartBattle();
