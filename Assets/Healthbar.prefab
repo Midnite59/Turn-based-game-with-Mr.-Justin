@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2105888834908578581}
   - component: {fileID: 7841682561360127021}
   - component: {fileID: 5090004400887177346}
-  - component: {fileID: 8284337122050226394}
+  - component: {fileID: 8256307919270037690}
   m_Layer: 0
   m_Name: Attack
   m_TagString: Untagged
@@ -76,7 +76,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &8284337122050226394
+--- !u!114 &8256307919270037690
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -146,9 +146,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   battleActor: {fileID: 0}
-  greenBar: {fileID: 0}
-  redBar: {fileID: 0}
-  blueBar: {fileID: 0}
+  greenBar: {fileID: 2333037138155645347}
+  redBar: {fileID: 5284700108723187019}
+  blueBar: {fileID: 2665379505921737372}
   slowBarTime: 1
   fastBarTime: 0.5
   bActorLastHP: 0
@@ -156,6 +156,9 @@ MonoBehaviour:
   greenBarHP: 0
   blueBarHP: 0
   BarDelay: 0
+  atkBuffIcon: {fileID: 8256307919270037690}
+  defBuffIcon: {fileID: 4806093345732583869}
+  spdBuffIcon: {fileID: 1130703211186951754}
   fastBarCurve:
     serializedVersion: 2
     m_Curve:
@@ -290,7 +293,7 @@ GameObject:
   - component: {fileID: 1625453871929880012}
   - component: {fileID: 7185239841716377741}
   - component: {fileID: 5133543308312563926}
-  - component: {fileID: 7300449092492930773}
+  - component: {fileID: 4806093345732583869}
   m_Layer: 0
   m_Name: Defense
   m_TagString: Untagged
@@ -355,7 +358,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &7300449092492930773
+--- !u!114 &4806093345732583869
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -605,7 +608,7 @@ GameObject:
   - component: {fileID: 1207337805246081784}
   - component: {fileID: 5503116622014939053}
   - component: {fileID: 3350327994316914386}
-  - component: {fileID: 4137280548039211202}
+  - component: {fileID: 1130703211186951754}
   m_Layer: 0
   m_Name: Speed
   m_TagString: Untagged
@@ -670,7 +673,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &4137280548039211202
+--- !u!114 &1130703211186951754
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

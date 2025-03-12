@@ -44,8 +44,14 @@ public class UIEvent : OutputEvent
     public override IEnumerator Execute(GameState gsIN)
     {
         // Do UI stuff
+        yield return null;
         yield break;
     }
+}
+
+public class BuffUIEvent : UIEvent
+{
+    public BuffUIEvent(GameState gsOUT) : base(gsOUT) { }
 }
 
 public class AttackAnimationEvent : AnimationEvent

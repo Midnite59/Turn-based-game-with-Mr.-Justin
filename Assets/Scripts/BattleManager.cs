@@ -29,6 +29,7 @@ public class BattleManager : MonoBehaviour
 
 
     public event Action<AnimationEvent> onAnimationEnd = (ae) => { };
+    public event Action<UIEvent> repaintUI = (ui) => {};
 
     // Start is called before the first frame update
     void Awake()
@@ -191,6 +192,10 @@ public class BattleManager : MonoBehaviour
                 if (outputevents[0] is AnimationEvent)
                 {
                     onAnimationEnd.Invoke(outputevents[0] as AnimationEvent);
+                }
+                if (outputevents[0] is UIEvent)
+                {
+                    repaintUI.Invoke(outputevents[0] as UIEvent);
                 }
                 outputevents.RemoveAt(0);
                 currentEvent = null;

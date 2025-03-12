@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Bufficon : MonoBehaviour
+public class BuffIcon : MonoBehaviour
 {
     public Image image;
     public int hue;

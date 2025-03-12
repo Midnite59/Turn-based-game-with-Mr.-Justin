@@ -28,5 +28,6 @@ public class BuffActor : CharSkill
     public override void Animate(GameState gsIN, GameState gsOUT, int userid, List<int> targetids)
     {
         BattleManager.batman.QueueEvent(new NonAttackAnimationEvent(gsOUT, userid, skilltype));
+        BattleManager.batman.QueueEvent(new BuffUIEvent(gsOUT));
     }
 }

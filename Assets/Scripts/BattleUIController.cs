@@ -14,7 +14,7 @@ public class BattleUIController : MonoBehaviour
     public Button skill2Button;
     public List<int> targets;
 
-    public List<HealthyBar> allyHealthBars;
+    public List<BActorInfo> allyHealthBars;
     public float horizontal { get { return stateh; } set 
         {
             if (value > deadzone)

@@ -1,10 +1,12 @@
+using BattleLogic;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HealthyBar : MonoBehaviour
+public class BActorInfo : MonoBehaviour
 {
     public BattleActor battleActor;
     public Image greenBar;
@@ -17,6 +19,11 @@ public class HealthyBar : MonoBehaviour
     public float greenBarHP;
     public float blueBarHP;
     public float BarDelay;
+
+    public BuffIcon atkBuffIcon;
+    public BuffIcon defBuffIcon;
+    public BuffIcon spdBuffIcon;
+    //public Bufficon effBuffIcon
 
     // Timers
     float fastBarTimer;
@@ -38,6 +45,21 @@ public class HealthyBar : MonoBehaviour
         this.blueBarHP = battleActor.hp;
         this.bActorLastHP = battleActor.hp;
         BattleManager.batman.onAnimationEnd += (ae) => { slowBarLock = false; };
+        BattleManager.batman.repaintUI += (ui) => 
+        {
+            if (ui is BuffUIEvent) 
+            {
+                RepaintBuffs(ui.gsOUT);
+            }
+        };
+    }
+
+    private void RepaintBuffs(GameState gs)
+    {
+        Actor gsactor = gs.GetActor(battleActor.id);
+        atkBuffIcon.StageToRGB(gsactor.Matk(gs));
+        defBuffIcon.StageToRGB(gsactor.Mdef(gs));
+        spdBuffIcon.StageToRGB(gsactor.Mspd(gs));
     }
 
     private IEnumerator FastBarFunctionDMG(float start)

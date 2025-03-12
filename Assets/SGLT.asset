@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5ddc5d5fbadd07459b61ebdf2e4d969, type: 3}
+  m_Name: SGLT
+  m_EditorClassIdentifier: 
+  stanceColors:
+  - {r: 0, g: 0, b: 0, a: 1}
+  - {r: 0.74509805, g: 0.74509805, b: 0.74509805, a: 1}
+  - {r: 0.9960785, g: 0.9960785, b: 0, a: 1}
+  - {r: 0, g: 0.43921572, b: 0.7490196, a: 1}
+  - {r: 0.9960785, g: 0, b: 0, a: 1}
+  - {r: 0.27450982, g: 0.11764707, b: 0.3921569, a: 1}
+  - {r: 0, g: 0.6862745, b: 0.3137255, a: 1}
+  - {r: 0.9960785, g: 0.9960785, b: 0.9960785, a: 1}
