@@ -58,6 +58,8 @@ public class BattleUIController : MonoBehaviour
     public event Action<int> onStateChangeV = (i) => {};
     private bool UIEnabled; // Ultra Instinct
 
+    public Image stateStance;
+
     // Start is called before the first frame update
     void OnEnable()
     {
@@ -80,6 +82,7 @@ public class BattleUIController : MonoBehaviour
                 allyHealthBars[i].gameObject.SetActive(false);
             }
         }
+        BattleManager.batman.eventEnd += RepaintStance;
     }
     void AllyTurnStart()
     {
@@ -107,6 +110,11 @@ public class BattleUIController : MonoBehaviour
         UIEnabled = false;
     }
 
+    void RepaintStance()
+    {
+        stateStance.color = BattleManager.sglt.GetColor(BattleManager.batman.gs.currentStance);
+    }
+
     void Update()
     {
         horizontal = Input.GetAxis("Horizontal");
@@ -119,6 +127,7 @@ public class BattleUIController : MonoBehaviour
         {
             AllyTurnEnd();
         }
+
     }
 
     void OnStateChangeH(int newState)

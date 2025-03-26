@@ -37,6 +37,8 @@ public class BActorInfo : MonoBehaviour
     private Coroutine BlueBarRoutine = null;
 
     private bool slowBarLock;
+
+    public Image stanceIcon;
     public void SetBattleActor(BattleActor battleActor)
     {
         this.battleActor = battleActor;
@@ -52,6 +54,8 @@ public class BActorInfo : MonoBehaviour
                 RepaintBuffs(ui.gsOUT);
             }
         };
+        stanceIcon.sprite = BattleManager.sglt.GetImage(BattleManager.batman.gs.GetActor(battleActor.id).stance);
+        stanceIcon.color = BattleManager.sglt.GetColor(BattleManager.batman.gs.GetActor(battleActor.id).stance);
     }
 
     private void RepaintBuffs(GameState gs)

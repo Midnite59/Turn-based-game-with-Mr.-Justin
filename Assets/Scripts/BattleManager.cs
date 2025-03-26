@@ -24,12 +24,15 @@ public class BattleManager : MonoBehaviour
     public bool allyTurnStart;
     private bool batmanInit;
     private bool batmanSetup;
+
+    public static TheStanceGraphicsLookupTable sglt { get { return TheStanceGraphicsLookupTable.instance; } }
     private bool allySelected { get { return allyTeam.batactors.Select(a => a.id).Contains(selectTarget); } }
 
 
 
     public event Action<AnimationEvent> onAnimationEnd = (ae) => { };
-    public event Action<UIEvent> repaintUI = (ui) => {};
+    public event Action<UIEvent> repaintUI = (ui) => { };
+    public event Action eventEnd = () => { };
 
     // Start is called before the first frame update
     void Awake()
@@ -186,6 +189,7 @@ public class BattleManager : MonoBehaviour
     {
         if (!eventRunning)
         {
+            bool endEvent = false;
             if (currentEvent != null) 
             {
                 UpdateGs(outputevents[0].gsOUT);
@@ -197,6 +201,7 @@ public class BattleManager : MonoBehaviour
                 {
                     repaintUI.Invoke(outputevents[0] as UIEvent);
                 }
+                endEvent = true;
                 outputevents.RemoveAt(0);
                 currentEvent = null;
                 Debug.Log("No event running :D. Finally I can take a break");
@@ -218,6 +223,10 @@ public class BattleManager : MonoBehaviour
                         SelectTargets();
                         ShowTargets(BattleManager.batman.realTargets);
                     }
+                }
+                if (endEvent)
+                {
+                    eventEnd.Invoke();
                 }
             }
         } 

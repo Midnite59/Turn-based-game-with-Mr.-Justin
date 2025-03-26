@@ -792,20 +792,24 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6792552205298862442, guid: 4713985f7a1c96c469b0760e5299b3fa, type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 2800000, guid: 83438053370c84456a73f7f95ef821fb, type: 3}
+    - target: {fileID: 6792552205298862442, guid: 4713985f7a1c96c469b0760e5299b3fa, type: 3}
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
     - target: {fileID: 6870537085314003285, guid: 4713985f7a1c96c469b0760e5299b3fa, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 79.08733
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6870537085314003285, guid: 4713985f7a1c96c469b0760e5299b3fa, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -41.318424
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6870537085314003285, guid: 4713985f7a1c96c469b0760e5299b3fa, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -23.473785
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6870537085314003285, guid: 4713985f7a1c96c469b0760e5299b3fa, type: 3}
       propertyPath: m_LocalRotation.w

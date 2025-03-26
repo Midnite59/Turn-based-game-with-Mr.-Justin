@@ -133,7 +133,7 @@ public class GameLoop : MonoBehaviour
 
         ImmutableList<Actor> allies = ImmutableList.Create<Actor>(allyActorList.ToArray());
         ImmutableList<Actor> enemies = ImmutableList.Create<Actor>(enemyActorList.ToArray());
-        gs = new GameState(allies, enemies, null, Stance.Physical, allyStancePoints, enemyStancePoints);
+        gs = new GameState(allies, enemies, null, Stance.None, allyStancePoints, enemyStancePoints);
         BattleManager.batman.Setup(allylist, enemylist);
         StartBattle();
     }
@@ -223,7 +223,7 @@ public class GameLoop : MonoBehaviour
             if ((flags & BattleFlags.CharDowned) == BattleFlags.CharDowned)
             {
                 //Debug.Log(String.Join(", " ,targets.Select(a => a.name)) + " was downed :O");
-                gs = gs.WithStance(skill.art);
+                gs = gs.WithStance(skill.art == Stance.None ? gs.GetActor(ActorID).stance : skill.art);
                 
             }
         } else

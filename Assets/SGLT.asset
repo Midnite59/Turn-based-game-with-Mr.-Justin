@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SGLT
   m_EditorClassIdentifier: 
   stanceColors:
-  - {r: 0, g: 0, b: 0, a: 1}
+  - {r: 0, g: 0, b: 0, a: 0}
   - {r: 0.74509805, g: 0.74509805, b: 0.74509805, a: 1}
   - {r: 0.9960785, g: 0.9960785, b: 0, a: 1}
   - {r: 0, g: 0.43921572, b: 0.7490196, a: 1}
@@ -21,3 +21,12 @@ MonoBehaviour:
   - {r: 0.27450982, g: 0.11764707, b: 0.3921569, a: 1}
   - {r: 0, g: 0.6862745, b: 0.3137255, a: 1}
   - {r: 0.9960785, g: 0.9960785, b: 0.9960785, a: 1}
+  stanceImages:
+  - {fileID: 0}
+  - {fileID: 21300000, guid: cfe41ce1821c9374b91de5d83ca9759f, type: 3}
+  - {fileID: 21300000, guid: b83ee07116642f246bf2a1b2c90578cc, type: 3}
+  - {fileID: 21300000, guid: 32160683c9938a44e86fd4a886946fc8, type: 3}
+  - {fileID: 21300000, guid: 1654ffe04d9173b4ba807e80fec70732, type: 3}
+  - {fileID: 21300000, guid: 33dbf7b784da4bf4b9e1ecee99265c1c, type: 3}
+  - {fileID: 21300000, guid: b5f8cfad983860040824e8a68d0f91e3, type: 3}
+  - {fileID: 21300000, guid: b8bb16a58c835334eadb932cea62412e, type: 3}
