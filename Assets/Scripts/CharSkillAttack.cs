@@ -35,13 +35,13 @@ public class CharSkillAttack : CharSkill
             }
             hits.Add(new AnimHit(hurts));
         }
-        Debug.Log("Triggered: GetHits()");
+        //Debug.Log("Triggered: GetHits()");
         return hits;
     }
     public override GameState Execute(GameState state, Actor user, List<Actor> targets, out BattleFlags flags)
     {
         flags = BattleFlags.None;
-        Debug.Log(user.name + " (" + user.id + ") attacked " + string.Join(", ", targets.Select(a => a.name + " (" + a.id + ")").ToList()));
+        //Debug.Log(user.name + " (" + user.id + ") attacked " + string.Join(", ", targets.Select(a => a.name + " (" + a.id + ")").ToList()));
         foreach (var target in targets)
         {
             int dmg = Helper.CalcDmg(target, power, user, ref state, out flags, art != Stance.None ? art:null);

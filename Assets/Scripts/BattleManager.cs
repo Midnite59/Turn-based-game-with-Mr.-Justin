@@ -25,7 +25,9 @@ public class BattleManager : MonoBehaviour
     private bool batmanInit;
     private bool batmanSetup;
 
-    public static TheStanceGraphicsLookupTable sglt { get { return TheStanceGraphicsLookupTable.instance; } }
+    [SerializeField]
+    private TheStanceGraphicsLookupTable _sglt;
+    public static TheStanceGraphicsLookupTable sglt { get { return batman._sglt; } }
     private bool allySelected { get { return allyTeam.batactors.Select(a => a.id).Contains(selectTarget); } }
 
 
@@ -133,9 +135,7 @@ public class BattleManager : MonoBehaviour
         currentEvent = StartCoroutine(oEvent.Execute(gs));
         eventRunning = true;
         UntargetAll();
-        Debug.Log(currentEvent);
         yield return currentEvent;
-        Debug.Log(currentEvent);
         eventRunning = false;
         yield break;
     }
@@ -179,17 +179,16 @@ public class BattleManager : MonoBehaviour
         if (hits != null)
         {
             hitqueue = hitqueue.Concat(hits).ToList();
-            Debug.LogWarning(hits.Count + " Hits (supposedly) added");
+            //Debug.LogWarning(hits.Count + " Hits (supposedly) added");
         } else
         {
-            Debug.LogWarning("No hits added");
+            //Debug.LogWarning("No hits added");
         }
     }
     public void ProcessEvents()
     {
         if (!eventRunning)
         {
-            bool endEvent = false;
             if (currentEvent != null) 
             {
                 UpdateGs(outputevents[0].gsOUT);
@@ -201,9 +200,9 @@ public class BattleManager : MonoBehaviour
                 {
                     repaintUI.Invoke(outputevents[0] as UIEvent);
                 }
-                endEvent = true;
                 outputevents.RemoveAt(0);
                 currentEvent = null;
+                eventEnd.Invoke();
                 Debug.Log("No event running :D. Finally I can take a break");
             }
             if (outputevents.Count > 0) 
@@ -224,10 +223,7 @@ public class BattleManager : MonoBehaviour
                         ShowTargets(BattleManager.batman.realTargets);
                     }
                 }
-                if (endEvent)
-                {
-                    eventEnd.Invoke();
-                }
+                
             }
         } 
         else

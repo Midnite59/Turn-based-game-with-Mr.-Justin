@@ -1141,6 +1141,7 @@ MonoBehaviour:
   selectedSkill: {fileID: 0}
   realTargets: 
   allyTurnStart: 0
+  _sglt: {fileID: 11400000, guid: aafaeaefb4349e9438bb5061b73a544c, type: 2}
 --- !u!4 &1423505264
 Transform:
   m_ObjectHideFlags: 0

@@ -32,7 +32,7 @@ public class AnimationEvent : OutputEvent
     {
         BattleActor batactor = BattleManager.batman.GetBattleActor(userid);
         batactor.animator.SetTrigger(triggername);
-        Debug.Log("Execute() Triggered");
+        //Debug.Log("Execute() Triggered");
         yield return new WaitForSeconds(3);
         yield break;
     }

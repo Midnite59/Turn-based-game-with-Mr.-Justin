@@ -101,7 +101,7 @@ public class GameLoop : MonoBehaviour
         {
             //case State.StartBattle: startBattleStart.Invoke(); break;
             case State.EnemyTurn: enemyTurnStart.Invoke(); break;
-            case State.AllyTurn: allyTurnStart.Invoke(); Debug.Log("invoked"); break;
+            case State.AllyTurn: allyTurnStart.Invoke(); break;
             case State.EndOfRound: endOfRoundStart.Invoke(); RoundEnd(); break;
             case State.BattleOver: if (battleResult) battleOverWin.Invoke(); else battleOverLose.Invoke(); break;
             case State.Interruptions: interuptionsStart.Invoke(); break;
@@ -210,8 +210,8 @@ public class GameLoop : MonoBehaviour
     {
         int ActorID = turnOrder[currentTurn];
         var currentactor = gs.currentActor;
-        Debug.Log(targetIDs.Count + " targets");
-        Debug.Log(String.Join(", ", targetIDs));
+        //Debug.Log(targetIDs.Count + " targets");
+        //Debug.Log(String.Join(", ", targetIDs));
         var targetsIE = targetIDs.Select(tid => gs.actors.First(a => a.id == tid));
         var targets = targetsIE.ToList();
         if (skill)
@@ -219,13 +219,13 @@ public class GameLoop : MonoBehaviour
             BattleFlags flags = BattleFlags.None;
             GameState animgs = gs;
             gs = skill.Execute(gs, currentactor, targets, out flags);
-            skill.Animate(animgs, gs, currentactor.id, targetIDs);
             if ((flags & BattleFlags.CharDowned) == BattleFlags.CharDowned)
             {
                 //Debug.Log(String.Join(", " ,targets.Select(a => a.name)) + " was downed :O");
                 gs = gs.WithStance(skill.art == Stance.None ? gs.GetActor(ActorID).stance : skill.art);
                 
             }
+            skill.Animate(animgs, gs, currentactor.id, targetIDs);
         } else
         {
             Debug.LogWarning(gs.currentActor.name + " used splash. (This is a fallback. Are u sure this was intentional?)");

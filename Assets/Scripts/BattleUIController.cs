@@ -70,7 +70,7 @@ public class BattleUIController : MonoBehaviour
             throw new System.NullReferenceException("WHERE IS GAMELOOP");
         }
         onStateChangeH += OnStateChangeH; // Like and Subscribe
-        Debug.Log("Added");
+        //Debug.Log("Added");
         for (int i = 0; i < allyHealthBars.Count; i++)
         {
             if (i < BattleManager.batman.allyTeam.batactors.Count)
@@ -86,7 +86,7 @@ public class BattleUIController : MonoBehaviour
     }
     void AllyTurnStart()
     {
-        Debug.Log("added listnars");
+        //Debug.Log("added listnars");
         basicButton.onClick.AddListener(() => gameloop.TakeTurn(gameloop.currentAttr.GetBasic(), BattleManager.batman.realTargets));
         skill1Button.onClick.AddListener(() => gameloop.TakeTurn(gameloop.currentAttr.GetSkill1(), BattleManager.batman.realTargets));
         skill2Button.onClick.AddListener(() => gameloop.TakeTurn(gameloop.currentAttr.GetSkill2(), BattleManager.batman.realTargets));
@@ -112,6 +112,7 @@ public class BattleUIController : MonoBehaviour
 
     void RepaintStance()
     {
+        //Debug.LogError(BattleManager.batman.gs.currentStance);
         stateStance.color = BattleManager.sglt.GetColor(BattleManager.batman.gs.currentStance);
     }
 

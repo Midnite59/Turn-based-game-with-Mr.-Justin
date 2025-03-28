@@ -5,7 +5,7 @@ using UnityEngine;
 
 [CreateAssetMenu(menuName = "Battle Logic/The Stance Graphics Lookup Table (TM)")]
 
-public class TheStanceGraphicsLookupTable : ScriptableSingleton<TheStanceGraphicsLookupTable>
+public class TheStanceGraphicsLookupTable : ScriptableObject
 {
     public List<Color> stanceColors;
     public List<Sprite> stanceImages;
