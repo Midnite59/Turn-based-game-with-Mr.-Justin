@@ -5,6 +5,7 @@ using UnityEngine;
 using BattleLogic;
 using System.Linq;
 using System.Collections.Immutable;
+using static Unity.IO.LowLevel.Unsafe.AsyncReadManagerMetrics;
 
 public class GameLoop : MonoBehaviour
 {
@@ -245,7 +246,7 @@ public class GameLoop : MonoBehaviour
     }
 
 
-    void ProcessEvents()
+    void ProcessGSEvents()
     {
         while (battleEvents.Count > 0)
         {

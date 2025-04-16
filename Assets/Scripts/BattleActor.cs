@@ -45,6 +45,10 @@ public class BattleActor : MonoBehaviour
         {
             animator.SetBool("Dead", true);
         }
+        if (BattleManager.batman.gs.GetActor(id).status.downed)
+        {
+            animator.SetBool("Down", true);
+        }
         hp -= dmg;
     }
     public void HealAnimation(float dmg)

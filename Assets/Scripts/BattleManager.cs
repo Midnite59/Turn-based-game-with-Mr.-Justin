@@ -237,6 +237,13 @@ public class BattleManager : MonoBehaviour
         // UI stuff
     }
 
+    public void RefreshTargets()
+    {
+        UntargetAll();
+        SelectTargets();
+        ShowTargets(realTargets);
+    }
+
     public void TargetChange(bool right)
     {
         if (selectedSkill.targetType == TargetType.Self) 
@@ -271,9 +278,7 @@ public class BattleManager : MonoBehaviour
                 }
             }
             selectTarget = team.batactors[currentindex].id;
-            UntargetAll();
-            SelectTargets();
-            ShowTargets(realTargets);
+            RefreshTargets();
             //Change based on targetype
             if (!allySelected) { lastSelectedEnemy = selectTarget; }
         }
