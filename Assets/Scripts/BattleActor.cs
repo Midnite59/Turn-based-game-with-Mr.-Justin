@@ -20,7 +20,7 @@ public class BattleActor : MonoBehaviour
 
     public bool animated { get { return animator != null && animator.enabled; } }
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         if (animator == null)
         {
@@ -44,10 +44,6 @@ public class BattleActor : MonoBehaviour
         if (dmg >= hp)
         {
             animator.SetBool("Dead", true);
-        }
-        if (BattleManager.batman.gs.GetActor(id).status.downed)
-        {
-            animator.SetBool("Down", true);
         }
         hp -= dmg;
     }

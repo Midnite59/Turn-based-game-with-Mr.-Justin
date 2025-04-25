@@ -21,19 +21,62 @@ public class OutputEvent
 
 public class AnimationEvent : OutputEvent
 {
-    public AnimationEvent(GameState gsOUT, int userid, string triggername) : base(gsOUT) 
+    public AnimationEvent(GameState gsOUT, int userid, string paramname, float delay /*, trigger? triggerValue = null (wait a second) */) : base(gsOUT) 
     {
         this.userid = userid;
-        this.triggername = triggername;
+        this.delay = delay;
+        this.paramname = paramname;
+      //this.triggerValue = triggerValue
+    }
+    public AnimationEvent(GameState gsOUT, int userid, string paramname, float delay, bool? boolValue = null) : base(gsOUT) 
+    {
+        this.userid = userid;
+        this.delay = delay;
+        this.paramname = paramname;
+        this.boolValue = boolValue;
+    }
+    public AnimationEvent(GameState gsOUT, int userid, string paramname, float delay, float? floatValue = null) : base(gsOUT)
+    {
+        this.userid = userid;
+        this.delay = delay;
+        this.paramname = paramname;
+        this.floatValue = floatValue;
+    }
+    public AnimationEvent(GameState gsOUT, int userid, string paramname, float delay, int? intValue = null) : base(gsOUT)
+    {
+        this.userid = userid;
+        this.delay = delay;
+        this.paramname = paramname;
+        this.intValue = intValue;
     }
     int userid;
-    string triggername;
+    float delay;
+    string paramname;
+    bool? boolValue;
+    float? floatValue;
+    int? intValue;
+    //trigger? triggerValue;
     public override IEnumerator Execute(GameState gsIN) 
     {
         BattleActor batactor = BattleManager.batman.GetBattleActor(userid);
-        batactor.animator.SetTrigger(triggername);
-        //Debug.Log("Execute() Triggered");
-        yield return new WaitForSeconds(3);
+        if (boolValue.HasValue) 
+        {
+            batactor.animator.SetBool(paramname, boolValue.Value);
+        }
+        else if (floatValue.HasValue)
+        {
+            batactor.animator.SetFloat(paramname, floatValue.Value);
+        }
+        else if (intValue.HasValue)
+        {
+            batactor.animator.SetInteger(paramname, intValue.Value);
+        }
+        else
+        {
+            batactor.animator.SetTrigger(paramname);
+        }
+            //Debug.Log("Execute() Triggered");
+            yield return new WaitForSeconds(delay);
         yield break;
     }
 }
@@ -56,12 +99,12 @@ public class BuffUIEvent : UIEvent
 
 public class AttackAnimationEvent : AnimationEvent
 {
-    public AttackAnimationEvent(GameState gsOUT, int userid, string triggername) : base(gsOUT, userid, triggername) { }
+    public AttackAnimationEvent(GameState gsOUT, int userid, string triggername, float delay = 3) : base(gsOUT, userid, triggername, delay) { }
 }
 
 public class NonAttackAnimationEvent : AnimationEvent
 {
-    public NonAttackAnimationEvent(GameState gsOUT, int userid, string triggername) : base(gsOUT, userid, triggername) { }
+    public NonAttackAnimationEvent(GameState gsOUT, int userid, string triggername, float delay = 3) : base(gsOUT, userid, triggername, delay) { }
 }
 
 public class AnimHurt 

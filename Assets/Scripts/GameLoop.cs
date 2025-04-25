@@ -151,6 +151,7 @@ public class GameLoop : MonoBehaviour
     {
         Debug.Log("Round Over!");
         gs = gs.TickDownBuffs();
+        BattleManager.batman.QueueEvent(new BuffUIEvent(gs));
         SetTurnOrder();
         currentTurn = 0;
         StartTurn();
@@ -176,7 +177,11 @@ public class GameLoop : MonoBehaviour
 
         int ActorID = turnOrder[currentTurn];
         gs = gs.SetCurrentActor(ActorID);
-        gs = gs.WithActor(gs.currentActor.WithStatus(gs.currentActor.status.Recover()));
+        if (gs.currentActor.status.downed == true)
+        {
+            gs = gs.WithActor(gs.currentActor.WithStatus(gs.currentActor.status.Recover()));
+            BattleManager.batman.QueueEvent(new AnimationEvent(gs, ActorID, "Down", 2, false));
+        }
         if (gs.allies.Any(a => a.id == ActorID))
         {
             //Debug.Log("oops");
@@ -224,7 +229,14 @@ public class GameLoop : MonoBehaviour
             {
                 //Debug.Log(String.Join(", " ,targets.Select(a => a.name)) + " was downed :O");
                 gs = gs.WithStance(skill.art == Stance.None ? gs.GetActor(ActorID).stance : skill.art);
-                
+
+                foreach (Actor actor in targetsIE)
+                {
+                    if (actor.status.downed)
+                    {
+                        BattleManager.batman.QueueEvent(new AnimationEvent(gs, actor.id, "Down", 0, true));
+                    }
+                }
             }
             skill.Animate(animgs, gs, currentactor.id, targetIDs);
         } else

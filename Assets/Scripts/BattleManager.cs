@@ -330,7 +330,9 @@ public class BattleManager : MonoBehaviour
         }
         switch (selectedSkill.targetType)
         {
-            case TargetType.SingleAlly: realTargets.Add(selectTarget); break;
+            case TargetType.Self:
+            case TargetType.SingleAlly: 
+                realTargets.Add(selectTarget); break;
             case TargetType.BurstAlly:
                 List<int> allyIDList = allyTeam.batactors.Select(a => a.id).ToList();
                 int selectedAllyIndex = allyIDList.FindIndex(a => a == selectTarget);

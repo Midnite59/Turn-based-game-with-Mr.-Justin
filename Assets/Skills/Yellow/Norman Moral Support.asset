@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6de9dc674c0f61419c904978efd2663, type: 3}
   m_Name: Norman Moral Support
   m_EditorClassIdentifier: 
-  targetType: 3
+  targetType: 1
   icon: {fileID: 0}
   skilltype: Skill1
   art: 0

@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   charname: First Aid Norman
   stats:
-    Maxhp: 100
-    atk: 15
-    def: 15
+    Maxhp: 65
+    atk: 9
+    def: 9
     eff: 1
-    spd: 101
+    spd: 75
   skills:
   - {fileID: 11400000, guid: cf2da90a237d3fa46a986cec74e29808, type: 2}
   - {fileID: 11400000, guid: 657d5a909d46f794598c07a940c794e7, type: 2}

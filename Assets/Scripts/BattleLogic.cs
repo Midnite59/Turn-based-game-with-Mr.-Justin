@@ -459,7 +459,7 @@ namespace BattleLogic
             float randomnumber;
             gs = gs.GetRandom(0.90f, 1.10f, out randomnumber);
             //Debug.LogError(randomnumber);
-            float dmg = Mathf.Round(power * (attacker.stats.atk * StageToMulti(attacker.Matk(gs))/target.stats.def * StageToMulti(target.Mdef(gs))) * randomnumber);
+            float dmg = Mathf.Round(power * (attacker.stats.atk * StageToMulti(attacker.Matk(gs))/(target.stats.def * StageToMulti(target.Mdef(gs)))) * randomnumber);
             
 
             // Stancy stuff
@@ -468,19 +468,19 @@ namespace BattleLogic
             TypeCombo damagedTC = gs.FindCharWeakness(target.id);
             if (damagedTC.resistances.Contains(stance))
             {
-                Debug.Log("It's not very effective...");
+                //Debug.Log("It's not very effective...");
                 dmg *= 0.5f;
             }
             if (damagedTC.weaknesses.Contains(stance))
             {
                 dmg *= 1.5f;
-                Debug.Log("It's super effective!!");
+                //Debug.Log("It's super effective!!");
 
                 if (!target.status.downed)
                 {
                     flags = BattleFlags.CharDowned;
                     GameLoop.instance.EventStack(new BattleEvent(BattleEvent.Type.Down, target.id));
-                    Debug.Log(target.name + " was downed :O");
+                    //Debug.Log(target.name + " was downed :O");
                 }
             }
             return Mathf.RoundToInt(dmg);

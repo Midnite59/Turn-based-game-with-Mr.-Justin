@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   charname: Moral Support Norman
   stats:
-    Maxhp: 100
-    atk: 15
-    def: 15
+    Maxhp: 90
+    atk: 8
+    def: 8
     eff: 1
-    spd: 102
+    spd: 80
   skills:
   - {fileID: 11400000, guid: c4d4a4930f22106469de3d552e6d72b6, type: 2}
   - {fileID: 11400000, guid: 1f2e59cdc87fd3c43a01eb03688108ae, type: 2}
