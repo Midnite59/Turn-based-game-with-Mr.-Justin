@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
 using BattleLogic;
+using System;
 
 public class BattleActor : MonoBehaviour
 {
@@ -15,6 +16,19 @@ public class BattleActor : MonoBehaviour
     public CharSkill basic;
     public CharSkill skill1;
     public CharSkill skill2;
+    [Flags]
+    public enum FocusPart 
+    { 
+        None = 0, // 0
+        Root = 1 << 0, // 1 
+        Torso = 1 << 1, // 10
+        Head = 1 << 2,  // 100
+        RHand = 1 << 3, // 1000
+        LHand = 1 << 4, // ...
+        RFoot = 1 << 5, 
+        LFoot = 1 << 6, 
+        Target = 1 << 7,
+    }
 
     public CharStats stats { get { return BattleManager.batman.gs.GetActor(id).stats; } }
 
@@ -38,7 +52,7 @@ public class BattleActor : MonoBehaviour
     {
         BattleManager.batman.HitAnimation(usehitanimation == 1);
     }
-    public void HurtAnimation(float dmg) 
+    public void HurtAnimation(float dmg, Stance stance) 
     {
         animator.SetTrigger("Hurt");
         if (dmg >= hp)
@@ -46,6 +60,7 @@ public class BattleActor : MonoBehaviour
             animator.SetBool("Dead", true);
         }
         hp -= dmg;
+        BattleManager.npool.Activate(Mathf.RoundToInt(dmg), stance, this);
     }
     public void HealAnimation(float dmg)
     {
@@ -64,5 +79,9 @@ public class BattleActor : MonoBehaviour
     }
     public void UnTarget() {
         targetselector.SetActive(false); 
+    }
+    public void LookAtBPart(FocusPart part) 
+    {
+
     }
 }

@@ -19,6 +19,5 @@ MonoBehaviour:
   cost: 0
   power: 15
   hitSplit:
-  - 0.2
   - 0.3
-  - 0.5
+  - 0.7

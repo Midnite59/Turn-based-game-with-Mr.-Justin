@@ -15,8 +15,8 @@ MonoBehaviour:
   charname: Norman
   stats:
     Maxhp: 100
-    atk: 15
-    def: 15
+    atk: 11
+    def: 10
     eff: 1
     spd: 95
   skills:

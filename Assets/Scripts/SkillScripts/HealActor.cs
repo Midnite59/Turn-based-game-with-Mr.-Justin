@@ -31,7 +31,7 @@ public class HealActor: CharSkill
             List<AnimHurt> hurts = new List<AnimHurt>();
             for (int j = 0; j < targets.Count(); j++)
             {
-                hurts.Add(new AnimHurt(targets[j], (int)(damages[j] * hitSplit[i])));
+                hurts.Add(new AnimHurt(targets[j], (int)(damages[j] * hitSplit[i]), Stance.Super));
             }
             hits.Add(new AnimHit(hurts));
         }

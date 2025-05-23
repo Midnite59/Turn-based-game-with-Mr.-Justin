@@ -456,6 +456,7 @@ GameObject:
   - component: {fileID: 419310029}
   - component: {fileID: 419310028}
   - component: {fileID: 419310027}
+  - component: {fileID: 419310030}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -537,6 +538,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 17.668, y: 18.668, z: 0}
+--- !u!114 &419310030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 419310026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b4ba96586d8c3b4d8b9e4518b98ce3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allyTeam: {fileID: 0}
+  enemyTeam: {fileID: 0}
+  dynamicTransforms: []
 --- !u!1 &515637890
 GameObject:
   m_ObjectHideFlags: 0
@@ -1096,6 +1112,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1423505264}
   - component: {fileID: 1423505263}
+  - component: {fileID: 1423505265}
   m_Layer: 0
   m_Name: BatMan
   m_TagString: Untagged
@@ -1142,6 +1159,7 @@ MonoBehaviour:
   realTargets: 
   allyTurnStart: 0
   _sglt: {fileID: 11400000, guid: aafaeaefb4349e9438bb5061b73a544c, type: 2}
+  _npool: {fileID: 1423505265}
 --- !u!4 &1423505264
 Transform:
   m_ObjectHideFlags: 0
@@ -1157,6 +1175,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1423505265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1423505262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a173266acf3842847b40698822c85099, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dmgNumbers: []
+  numberPrefab: {fileID: 8185299208734694563, guid: a87233481c001554eaf2d3cd98fb0dc1, type: 3}
+  poolMax: 5
 --- !u!1 &1489266345
 GameObject:
   m_ObjectHideFlags: 0

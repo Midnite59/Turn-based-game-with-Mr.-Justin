@@ -109,13 +109,15 @@ public class NonAttackAnimationEvent : AnimationEvent
 
 public class AnimHurt 
 {
-    public AnimHurt(int targetid, int dmg)
+    public AnimHurt(int targetid, int dmg, Stance stance)
     {
         this.targetid = targetid;
         this.dmg = dmg;
+        this.stance = stance;
     }
     public int targetid;
     public int dmg;
+    public Stance stance;
 }
 
 public class AnimHit

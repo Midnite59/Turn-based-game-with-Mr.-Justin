@@ -15,8 +15,8 @@ MonoBehaviour:
   charname: Norman But Even Slower
   stats:
     Maxhp: 100
-    atk: 15
-    def: 15
+    atk: 10
+    def: 10
     eff: 1
     spd: 60
   skills:

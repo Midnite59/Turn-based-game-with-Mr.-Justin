@@ -9,6 +9,7 @@ public class BattleManager : MonoBehaviour
 {
     public static BattleManager batman;
     public BattleUIController bui;
+    public BattleCamera batcam;
     public BattleTeam allyTeam;
     public BattleTeam enemyTeam;
     public List<BattleActor> allactors { get { return allyTeam.batactors.Concat(enemyTeam.batactors).ToList(); } }
@@ -28,6 +29,9 @@ public class BattleManager : MonoBehaviour
     [SerializeField]
     private TheStanceGraphicsLookupTable _sglt;
     public static TheStanceGraphicsLookupTable sglt { get { return batman._sglt; } }
+    [SerializeField]
+    private NumberPool _npool;
+    public static NumberPool npool { get { return batman._npool; } }
     private bool allySelected { get { return allyTeam.batactors.Select(a => a.id).Contains(selectTarget); } }
 
 
@@ -160,7 +164,7 @@ public class BattleManager : MonoBehaviour
         hitqueue[0].animHurts.ForEach(a => {
             if (usehitanimation)
             {
-                GetBattleActor(a.targetid).HurtAnimation(a.dmg);
+                GetBattleActor(a.targetid).HurtAnimation(a.dmg, a.stance);
                 Debug.Log("ouch! " + a.dmg + " damage!! - " + a.targetid);
             }
             else

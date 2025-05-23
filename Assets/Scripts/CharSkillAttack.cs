@@ -31,7 +31,7 @@ public class CharSkillAttack : CharSkill
             List<AnimHurt> hurts = new List<AnimHurt>();
             for (int j = 0; j < targets.Count(); j++)  
             {
-                hurts.Add(new AnimHurt(targets[j], (int)(damages[j] * hitSplit[i])));
+                hurts.Add(new AnimHurt(targets[j], (int)(damages[j] * hitSplit[i]), gsIN.GetActor(user).stance));
             }
             hits.Add(new AnimHit(hurts));
         }
