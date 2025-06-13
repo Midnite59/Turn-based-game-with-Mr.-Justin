@@ -20,6 +20,6 @@ public class OverworldMovement : MonoBehaviour
         movement += Input.GetAxis("Vertical") * Vector3.ProjectOnPlane(cameraPos.forward, Vector3.up).normalized;
         movement += Input.GetAxis("Horizontal") * Vector3.ProjectOnPlane(cameraPos.right, Vector3.up).normalized;
         //transform.Translate(movement*Time.fixedDeltaTime);
-        rb.velocity = movement * speed;
+        rb.linearVelocity = movement * speed;
     }
 }

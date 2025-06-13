@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.Animations;
 using BattleLogic;
 using System;
+using UnityEditor;
+using Unity.VisualScripting;
 
 public class BattleActor : MonoBehaviour
 {
@@ -16,6 +18,11 @@ public class BattleActor : MonoBehaviour
     public CharSkill basic;
     public CharSkill skill1;
     public CharSkill skill2;
+
+    [Header(". . Torso Head RHand LHand Rfoot Lfoot .")]
+
+    public List<Transform> focusTForms;
+
     [Flags]
     public enum FocusPart 
     { 
@@ -33,6 +40,7 @@ public class BattleActor : MonoBehaviour
     public CharStats stats { get { return BattleManager.batman.gs.GetActor(id).stats; } }
 
     public bool animated { get { return animator != null && animator.enabled; } }
+    public FocusPart focusPart;
     // Start is called before the first frame update
     void Awake()
     {
@@ -46,7 +54,7 @@ public class BattleActor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
     public void HitAnimation(int usehitanimation = 1)
     {
@@ -80,8 +88,14 @@ public class BattleActor : MonoBehaviour
     public void UnTarget() {
         targetselector.SetActive(false); 
     }
-    public void LookAtBPart(FocusPart part) 
+    public void LookAtBPart(int partNumber) 
     {
-
+        FocusPart bodyPart = (FocusPart)partNumber;
+    }
+    public Transform BPartFilter(FocusPart bodyPart)
+    {
+        if (bodyPart == FocusPart.None || bodyPart == FocusPart.Target) return null;
+        if (bodyPart == FocusPart.Root) return transform;
+        return focusTForms[(int)Mathf.Log((int)bodyPart, 2)-1];
     }
 }

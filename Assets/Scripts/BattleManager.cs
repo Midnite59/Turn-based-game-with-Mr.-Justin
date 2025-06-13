@@ -225,6 +225,7 @@ public class BattleManager : MonoBehaviour
                         allyTurnStart = true;
                         SelectTargets();
                         ShowTargets(BattleManager.batman.realTargets);
+                        batcam.FocusAlly(GetBattleActor(gs.currentActor.id));
                     }
                 }
                 
