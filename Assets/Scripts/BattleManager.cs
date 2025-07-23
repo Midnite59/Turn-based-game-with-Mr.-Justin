@@ -34,6 +34,8 @@ public class BattleManager : MonoBehaviour
     public static NumberPool npool { get { return batman._npool; } }
     private bool allySelected { get { return allyTeam.batactors.Select(a => a.id).Contains(selectTarget); } }
 
+    bool teamChanged = false;
+
 
 
     public event Action<AnimationEvent> onAnimationEnd = (ae) => { };
@@ -207,7 +209,6 @@ public class BattleManager : MonoBehaviour
                 outputevents.RemoveAt(0);
                 currentEvent = null;
                 eventEnd.Invoke();
-                Debug.Log("No event running :D. Finally I can take a break");
             }
             if (outputevents.Count > 0) 
             {
@@ -217,6 +218,7 @@ public class BattleManager : MonoBehaviour
             {
                 if (GameLoop.instance.currentState == GameLoop.State.AllyTurn)
                 {
+                    //Debug.Log("No event running :D. Finally I can take a break");
                     if (!allyTurnStart)
                     {
                         gs = GameLoop.instance.gs;
@@ -225,7 +227,7 @@ public class BattleManager : MonoBehaviour
                         allyTurnStart = true;
                         SelectTargets();
                         ShowTargets(BattleManager.batman.realTargets);
-                        batcam.FocusAlly(GetBattleActor(gs.currentActor.id));
+                        batcam.FocusAlly(GetBattleActor(gs.currentActor.id), true);
                     }
                 }
                 
@@ -247,6 +249,8 @@ public class BattleManager : MonoBehaviour
         UntargetAll();
         SelectTargets();
         ShowTargets(realTargets);
+        batcam.FocusAlly(GetBattleActor(gs.currentActor.id), teamChanged);
+        teamChanged = false;
     }
 
     public void TargetChange(bool right)
@@ -316,6 +320,7 @@ public class BattleManager : MonoBehaviour
             case TargetType.AoeAll:
                 if (!allyTeam.batactors.Select(a => a.id).Contains(selectTarget)){
                     selectTarget = gs.currentActor.id;
+                    teamChanged = true;
                 } break;
             case TargetType.SingleEnemy:
             case TargetType.BurstEnemy:
@@ -331,6 +336,7 @@ public class BattleManager : MonoBehaviour
                         selectTarget = enemyTeam.batactors[0].id;
                         Debug.Log("im working: " + selectedSkill.targetType);
                     }
+                    teamChanged = true;
                 } break;
         }
         switch (selectedSkill.targetType)

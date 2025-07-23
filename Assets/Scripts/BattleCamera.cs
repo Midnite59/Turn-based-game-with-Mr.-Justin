@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.Animations;
-using System.Text.RegularExpressions;
+using static BattleCamera;
+using static Unity.VisualScripting.Member;
 
 [RequireComponent(typeof(LookAtConstraint))]
 public class BattleCamera : MonoBehaviour
@@ -19,17 +21,40 @@ public class BattleCamera : MonoBehaviour
     public float distanceToAlly;
     public Vector3 offset;
 
+    public float defaultEnemyWeight;
+    public float selectedEnemyWeight;
+    public float selectedAllyWeight;
+    [Range(0f, 1f)]
+    public float lerpSpeed;
+
+    public Vector3 allyTargetPovOffset;
+
+    public float selectedAllyWeightEnemyPov;
+
+    Vector3 anchorPosition;
+
+    public Dictionary<Transform, float> weightKeys;
+
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-
+        weightKeys = new Dictionary<Transform, float>();
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        
+        List<ConstraintSource> sources = new List<ConstraintSource>();
+        lookat.GetSources(sources);
+        List<ConstraintSource> newSources = new List<ConstraintSource>();
+        foreach (ConstraintSource source in sources) 
+        {
+            newSources.Add(new ConstraintSource { sourceTransform = source.sourceTransform, weight = Mathf.Lerp(source.weight, weightKeys[source.sourceTransform], lerpSpeed) });
+        }
+        lookat.SetSources(newSources);
+
+        transform.position = Vector3.Lerp(transform.position, anchorPosition, lerpSpeed);
     }
     
     public void DynamicTransform() 
@@ -93,14 +118,17 @@ public class BattleCamera : MonoBehaviour
     public class FocusWeight
     {
         public BattleActor.FocusPart fp;
+        public int id;
+        public Transform transform { get { return BattleManager.batman.GetBattleActor(id).BPartFilter(fp); } }
         public float weight;
-        public FocusWeight(BattleActor.FocusPart fp, float weight) 
+        public FocusWeight(BattleActor.FocusPart fp, float weight, int id) 
         {
             this.fp = fp;
             this.weight = weight;
+            this.id = id;
         }
     }
-    public void LookAt(string str) 
+    public void FocusAnimation(string str) 
     {
         string[] strings = str.Split(';');
         FocusWeight[] focusWeights = new FocusWeight[strings.Length];
@@ -121,24 +149,76 @@ public class BattleCamera : MonoBehaviour
                 //print(weight);
                 BattleActor.FocusPart part = (BattleActor.FocusPart)System.Enum.Parse(typeof(BattleActor.FocusPart), partStr);
                 float weight = float.Parse(weightStr);
-                focusWeights[i] = new FocusWeight(part, weight);
+                focusWeights[i] = new FocusWeight(part, weight, focusActor.id);
             }
         }
     }
-    public void FocusAlly(BattleActor ally)
+    public void FocusAlly(BattleActor ally, bool force = false)
     {
-        Vector3 enemycenter = enemyTeam.batactors.Aggregate(Vector3.zero, (total, next) => total += next.transform.position, (total) => total / enemyTeam.batactors.Count);
-        Vector3 head = ally.BPartFilter(BattleActor.FocusPart.Head).position;
-        Vector3 direction = (head - enemycenter).normalized;
-        transform.position = head + direction * distanceToAlly + offset;
-        ChangeLAConstraint(enemyTeam.batactors.Select(ba => ba.transform).Append(ally.transform).ToArray());
-    }
-    public void ChangeLAConstraint(params Transform[] transforms)
-    {
-        List<ConstraintSource> sources = new List<ConstraintSource>();
-        foreach (Transform tform in transforms) 
+        focusActor = ally;
+        List<FocusWeight> focusWeights = new List<FocusWeight>();
+
+        if (enemyTeam.batactors.Contains(BattleManager.batman.GetBattleActor(BattleManager.batman.selectTarget)))
         {
-            sources.Add(new ConstraintSource { sourceTransform = tform, weight = 1 });
+            Vector3 enemycenter = enemyTeam.batactors.Aggregate(Vector3.zero, (total, next) => total += next.transform.position, (total) => total / enemyTeam.batactors.Count);
+            Vector3 head = ally.headPos;
+            Vector3 direction = (head - enemycenter).normalized;
+            anchorPosition = head + direction * distanceToAlly + offset;
+
+            foreach (BattleActor actor in enemyTeam.batactors)
+            {
+                float weight = defaultEnemyWeight;
+                if (actor.id == BattleManager.batman.selectTarget) weight = selectedEnemyWeight;
+                focusWeights.Add(new FocusWeight(BattleActor.FocusPart.Root, weight, actor.id));
+            }
+            focusWeights.Add(new FocusWeight(BattleActor.FocusPart.Torso, selectedAllyWeight, ally.id));
+        }
+        else
+        {
+            Vector3 allycenter = allyTeam.batactors.Aggregate(Vector3.zero, (total, next) => total += next.transform.position, (total) => total / allyTeam.batactors.Count);
+            anchorPosition = allycenter + allyTargetPovOffset;
+
+            foreach (BattleActor actor in allyTeam.batactors)
+            {
+                float weight = defaultEnemyWeight;
+                if (actor.id == BattleManager.batman.selectTarget) weight = selectedAllyWeightEnemyPov;
+                focusWeights.Add(new FocusWeight(BattleActor.FocusPart.Root, weight, actor.id));
+            }
+        }
+        
+        if (force) 
+        {
+            SetLAConstraint(focusWeights.ToArray());
+            transform.position = anchorPosition;
+        }
+        else
+        {
+            ChangeLAConstraint(focusWeights.ToArray());
+        }
+
+
+    }
+    public void ChangeLAConstraint(params FocusWeight[] focusWeights)
+    {
+        List<Transform> transforms = weightKeys.Keys.ToList();
+        foreach (var wk in transforms)
+        {
+            weightKeys[wk] = 0;
+        }
+        foreach (FocusWeight focusWeight in focusWeights)
+        {
+            weightKeys[focusWeight.transform] = focusWeight.weight;
+        }
+    }
+
+    public void SetLAConstraint(params FocusWeight[] focusWeights)
+    {
+        weightKeys.Clear();
+        List<ConstraintSource> sources = new List<ConstraintSource>();
+        foreach (FocusWeight focusWeight in focusWeights) 
+        {
+            weightKeys[focusWeight.transform] = focusWeight.weight;
+            sources.Add(new ConstraintSource { sourceTransform = focusWeight.transform, weight = focusWeight.weight });
         }
         lookat.SetSources(sources);
     }

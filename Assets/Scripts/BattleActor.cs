@@ -19,6 +19,8 @@ public class BattleActor : MonoBehaviour
     public CharSkill skill1;
     public CharSkill skill2;
 
+    public Vector3 headPos;
+
     [Header(". . Torso Head RHand LHand Rfoot Lfoot .")]
 
     public List<Transform> focusTForms;
@@ -49,6 +51,7 @@ public class BattleActor : MonoBehaviour
             animator = GetComponent<Animator>();
         }
         targetselector.GetComponent<LookAtConstraint>().AddSource(new ConstraintSource { sourceTransform = Camera.main.transform, weight = 1f });
+        headPos = BPartFilter(FocusPart.Head).position;
     }
 
     // Update is called once per frame

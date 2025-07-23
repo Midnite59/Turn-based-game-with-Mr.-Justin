@@ -134,19 +134,26 @@ public class BattleUIController : MonoBehaviour
         {
             AllyTurnEnd();
         }
+        if (Input.GetKeyDown(KeyCode.Space) && UIEnabled) 
+        {
+            basicButton.onClick.Invoke();
+        }
 
     }
 
     void OnStateChangeH(int newState)
     {
-        //we need ally targeting :O
-        if (newState == 1)
+        if (UIEnabled)
         {
-            BattleManager.batman.TargetChange(true);
-        }
-        else if (newState == -1) 
-        {
-            BattleManager.batman.TargetChange(false);
+            //we *dont* need ally targeting :P
+            if (newState == 1)
+            {
+                BattleManager.batman.TargetChange(true);
+            }
+            else if (newState == -1)
+            {
+                BattleManager.batman.TargetChange(false);
+            }
         }
     }
 

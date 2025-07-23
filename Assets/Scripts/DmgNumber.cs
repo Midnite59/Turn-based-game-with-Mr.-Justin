@@ -29,18 +29,18 @@ public class DmgNumber : MonoBehaviour
         {
             float startingScaleMag = finalScaleMag * startingScaleMultiplier;
             transform.localScale = Vector3.one * (finalScaleMag + (startingScaleMag - finalScaleMag) * scaleCurve.Evaluate(lifetime / popin));
-            Debug.Log("Popin");
+            //Debug.Log("Popin");
             //text.color = new Color(text.color.r, text.color.g, text.color.b, fadeCurve.Evaluate(lifetime / popin));
         }
         else if (lifetime <= popin+stay)
         {
-            Debug.Log("Stay");
+            //Debug.Log("Stay");
         }
         else if (lifetime <= popin+stay+fade)
         {
             float startOp = lifetime-(popin+stay);
             text.color = new Color(text.color.r, text.color.g, text.color.b, fadeCurve.Evaluate(startOp / fade));
-            Debug.Log("Fade");
+            //Debug.Log("Fade");
         }
         else if (lifetime > popin + stay + fade)
         {

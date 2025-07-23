@@ -553,13 +553,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b4ba96586d8c3b4d8b9e4518b98ce3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allyTeam: {fileID: 0}
-  enemyTeam: {fileID: 0}
+  allyTeam: {fileID: 1597213401}
+  enemyTeam: {fileID: 1489266347}
   focusActor: {fileID: 0}
   dynamicTransforms: []
-  lookat: {fileID: 0}
+  lookat: {fileID: 419310031}
   distanceToAlly: 4
   offset: {x: 0, y: 0, z: 0}
+  defaultEnemyWeight: 1
+  selectedEnemyWeight: 8
+  selectedAllyWeight: 8
+  lerpSpeed: 0.444
+  allyTargetPovOffset: {x: 0, y: 2, z: 6.5}
+  selectedAllyWeightEnemyPov: 2
 --- !u!1183024399 &419310031
 LookAtConstraint:
   m_ObjectHideFlags: 0
@@ -575,7 +581,7 @@ LookAtConstraint:
   m_Roll: 0
   m_WorldUpObject: {fileID: 0}
   m_UseUpObject: 0
-  m_Active: 0
+  m_Active: 1
   m_IsLocked: 0
   m_Sources: []
 --- !u!1 &515637890
@@ -1402,10 +1408,10 @@ MonoBehaviour:
   - {fileID: 8413292854716753746}
   - {fileID: 5699108535914795091}
   transforms:
-  - {fileID: 58802400}
-  - {fileID: 388820627}
-  - {fileID: 1689910625}
   - {fileID: 360875103}
+  - {fileID: 1689910625}
+  - {fileID: 388820627}
+  - {fileID: 58802400}
 --- !u!1001 &1671483656
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1565,10 +1571,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_SendPointerHoverToParent: 1
-  m_HorizontalAxis: Horizontal
-  m_VerticalAxis: Vertical
-  m_SubmitButton: Submit
-  m_CancelButton: Cancel
+  m_HorizontalAxis: None
+  m_VerticalAxis: None
+  m_SubmitButton: None
+  m_CancelButton: None
   m_InputActionsPerSecond: 10
   m_RepeatDelay: 0.5
   m_ForceModuleActive: 0
