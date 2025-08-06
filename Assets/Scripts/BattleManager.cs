@@ -26,6 +26,9 @@ public class BattleManager : MonoBehaviour
     private bool batmanInit;
     private bool batmanSetup;
 
+    public static int curActorID { get {return batman.gs.currentActor != null ? batman.gs.currentActor.id : 0; } }
+
+
     [SerializeField]
     private TheStanceGraphicsLookupTable _sglt;
     public static TheStanceGraphicsLookupTable sglt { get { return batman._sglt; } }
@@ -198,6 +201,7 @@ public class BattleManager : MonoBehaviour
             if (currentEvent != null) 
             {
                 UpdateGs(outputevents[0].gsOUT);
+                Debug.Log(curActorID);
                 if (outputevents[0] is AnimationEvent)
                 {
                     onAnimationEnd.Invoke(outputevents[0] as AnimationEvent);
@@ -238,7 +242,7 @@ public class BattleManager : MonoBehaviour
             allyTurnStart = false;
         }
     }
-    void UpdateGs(GameState gsOut)
+    public void UpdateGs(GameState gsOut)
     {
         gs = gsOut;
         // UI stuff

@@ -18,7 +18,7 @@ MonoBehaviour:
     atk: 11
     def: 10
     eff: 1
-    spd: 95
+    spd: 79
   skills:
   - {fileID: 11400000, guid: eaf5a5f7cc4ee1248a65f0efbb82ded2, type: 2}
   - {fileID: 11400000, guid: 3b1ed87aada25e84ea47cb0ab44f330a, type: 2}

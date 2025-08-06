@@ -177,6 +177,7 @@ public class GameLoop : MonoBehaviour
 
         int ActorID = turnOrder[currentTurn];
         gs = gs.SetCurrentActor(ActorID);
+        BattleManager.batman.QueueEvent(new OutputEvent(gs));
         if (gs.currentActor.status.downed == true)
         {
             gs = gs.WithActor(gs.currentActor.WithStatus(gs.currentActor.status.Recover()));
@@ -189,7 +190,6 @@ public class GameLoop : MonoBehaviour
             return;
         } else if (gs.enemies.Any(a => a.id == ActorID)) 
         {
-            
             TransitionState(State.EnemyTurn);
             return;
         } else 
@@ -224,6 +224,8 @@ public class GameLoop : MonoBehaviour
         {
             BattleFlags flags = BattleFlags.None;
             GameState animgs = gs;
+            //BattleManager.batman.UpdateGs(gs);
+            //Debug.LogError(BattleManager.batman.gs.currentActor.id);
             gs = skill.Execute(gs, currentactor, targets, out flags);
             if ((flags & BattleFlags.CharDowned) == BattleFlags.CharDowned)
             {

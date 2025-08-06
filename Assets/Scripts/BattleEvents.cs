@@ -15,7 +15,7 @@ public class OutputEvent
     public virtual IEnumerator Execute(GameState gsIN)
     {
         Debug.Log("No override, making the character look silly by doing nothing");
-        yield break;
+        yield return null;
     }
 }
 

@@ -20,6 +20,8 @@ public class BActorInfo : MonoBehaviour
     public float blueBarHP;
     public float BarDelay;
 
+    public Portrait aPortrait;
+
     public BuffIcon atkBuffIcon;
     public BuffIcon defBuffIcon;
     public BuffIcon spdBuffIcon;
@@ -46,6 +48,7 @@ public class BActorInfo : MonoBehaviour
         this.redBarHP = battleActor.hp;
         this.blueBarHP = battleActor.hp;
         this.bActorLastHP = battleActor.hp;
+        aPortrait.battleActor = battleActor;
         BattleManager.batman.onAnimationEnd += (ae) => { slowBarLock = false; };
         BattleManager.batman.repaintUI += (ui) => 
         {

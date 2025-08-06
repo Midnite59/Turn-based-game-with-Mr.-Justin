@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8552208908334075014}
   - component: {fileID: 3332756381799493793}
   - component: {fileID: 1032422313337458927}
+  - component: {fileID: 6511031323965608566}
   m_Layer: 0
   m_Name: Portrait
   m_TagString: Untagged
@@ -57,7 +58,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: 1b8a1aa0a5d69d247a49392b6f796b87, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -72,6 +73,21 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!114 &6511031323965608566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 962972954935175204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13ebe6f34ad62ae49b4ef18b9f9f6135, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shrinkFactor: 0.67
+  lerpT: 0.5
+  battleActor: {fileID: 0}
 --- !u!1 &1595376820686917430
 GameObject:
   m_ObjectHideFlags: 0
@@ -230,6 +246,7 @@ MonoBehaviour:
   greenBarHP: 0
   blueBarHP: 0
   BarDelay: 0
+  aPortrait: {fileID: 6511031323965608566}
   atkBuffIcon: {fileID: 8256307919270037690}
   defBuffIcon: {fileID: 4806093345732583869}
   spdBuffIcon: {fileID: 1130703211186951754}
