@@ -25,3 +25,4 @@ MonoBehaviour:
   fallback: {fileID: 11400000, guid: d8b5124648e2edb4b8f5706ba9da3bb1, type: 2}
   characterArt: 5
   prefab: {fileID: 7729801854867531800, guid: 2926ea9cce061e5448d1b648f762d7c0, type: 3}
+  skipSkill: {fileID: 11400000, guid: 01ca8bcc28fa23b4a8c3532a4d901251, type: 2}

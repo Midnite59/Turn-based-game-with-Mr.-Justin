@@ -19,6 +19,8 @@ public class BattleActor : MonoBehaviour
     public CharSkill skill1;
     public CharSkill skill2;
 
+    public Stance stance;
+
     public Vector3 headPos;
 
     [Header(". . Torso Head RHand LHand Rfoot Lfoot .")]

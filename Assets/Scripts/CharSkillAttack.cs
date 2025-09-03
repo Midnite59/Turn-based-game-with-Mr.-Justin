@@ -40,7 +40,7 @@ public class CharSkillAttack : CharSkill
     }
     public override GameState Execute(GameState state, Actor user, List<Actor> targets, out BattleFlags flags)
     {
-        flags = BattleFlags.None;
+        state = base.Execute(state, user, targets, out flags);
         //Debug.Log(user.name + " (" + user.id + ") attacked " + string.Join(", ", targets.Select(a => a.name + " (" + a.id + ")").ToList()));
         foreach (var target in targets)
         {

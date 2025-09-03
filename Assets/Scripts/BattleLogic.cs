@@ -99,7 +99,7 @@ namespace BattleLogic
     [Flags]
     public enum BattleFlags
     {
-        None, CharDowned
+        None, CharDowned, CharSkipped
     }
     public enum TargetType
     {
@@ -390,12 +390,28 @@ namespace BattleLogic
 
         public GameState RegainSP()
         {
-            BattleRandom rand = random;
             float enemySP = enemyStancePoints;
             float allySP = allies.Aggregate(allyStancePoints, (sp, actor) => sp + actor.stats.eff >= 6 ? sp : sp + actor.stats.eff);
             // Skill point blackjack
-            return new GameState(allies, enemies, currentActor, currentStance, allySP, enemySP, rand);
+            return new GameState(allies, enemies, currentActor, currentStance, allySP, enemySP, random);
         }
+
+        public GameState UseSP(float cost, Actor user)
+        {
+            float allySP = allyStancePoints;
+            float enemySP = enemyStancePoints;
+            if (enemies.Select(a => a.id).Contains(user.id))
+            {
+                enemySP -= cost;
+            }
+            else
+            {
+                allySP -= cost;
+            }
+            
+            return new GameState(allies, enemies, currentActor, currentStance, allySP, enemySP, random);
+        }
+
     }
     public class TypeCombo 
     {

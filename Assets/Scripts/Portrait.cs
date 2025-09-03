@@ -15,8 +15,12 @@ public class Portrait : MonoBehaviour
 
     public BattleActor battleActor;
 
+    [Range (0, 1)]
+    public float outlineWhiteness;
+
     Vector2 tv2; // rectTransform.sizeDelta
     Color tc; // rawImage.color
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -47,12 +51,23 @@ public class Portrait : MonoBehaviour
         rectTransform.sizeDelta = Vector2.Lerp(rectTransform.sizeDelta, tv2, lerpT);
     }
 
+    Color GetOutLine(Color main)
+    {
+        float nr = Mathf.Lerp(main.r, 1, outlineWhiteness);
+        float ng = Mathf.Lerp(main.g, 1, outlineWhiteness);
+        float nb = Mathf.Lerp(main.b, 1, outlineWhiteness);
+        return new Color(nr, ng, nb);
+    }
+
     public void Activate()
     {
         //turn size normal
         //fix colors
         tc = Color.white;
         tv2 = ogDimensions;
+        Color mainCol = BattleManager.sglt.GetColor(battleActor.stance);
+        rawImage.material.color = mainCol;
+        rawImage.material.SetColor("_OutColor", GetOutLine(mainCol));
 
     }
 
@@ -62,6 +77,7 @@ public class Portrait : MonoBehaviour
         //shrink
         tc = Color.black;
         tv2 = shrunkDimensions;
+        rawImage.material.SetColor("_OutColor", Color.clear);
 
     }
 }

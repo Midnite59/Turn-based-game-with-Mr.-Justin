@@ -5,7 +5,6 @@ using UnityEngine;
 using BattleLogic;
 using System.Linq;
 using System.Collections.Immutable;
-using static Unity.IO.LowLevel.Unsafe.AsyncReadManagerMetrics;
 
 public class GameLoop : MonoBehaviour
 {
@@ -209,7 +208,8 @@ public class GameLoop : MonoBehaviour
             turnOrder.Add(fastest.id);
             fastest = new { id = fastest.id, spd = fastest.spd - 100 };
             spdIDs = spdIDs.Select(a => a.id == fastest.id ? fastest: a);
-        } 
+        }
+        gs = gs.RegainSP();
         
     }
     public void TakeTurn(CharSkill skill, List<int> targetIDs)

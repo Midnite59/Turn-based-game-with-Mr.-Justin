@@ -40,7 +40,7 @@ public class HealActor: CharSkill
     }
     public override GameState Execute(GameState state, Actor user, List<Actor> targets, out BattleFlags flags)
     {
-        flags = BattleFlags.None;
+        state = base.Execute(state, user, targets, out flags);
         foreach (var target in targets)
         {
             int level = 1;

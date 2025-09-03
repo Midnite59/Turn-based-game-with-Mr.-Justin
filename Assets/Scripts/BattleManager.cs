@@ -93,6 +93,7 @@ public class BattleManager : MonoBehaviour
             allyTeam.batactors[i].basic = allies[i].GetBasic();
             allyTeam.batactors[i].skill1 = allies[i].GetSkill1();
             allyTeam.batactors[i].skill2 = allies[i].GetSkill2();
+            allyTeam.batactors[i].stance = allies[i].characterArt;
         }
         for (int i = 0; i < enemies.Count; i++)
         {
@@ -104,6 +105,7 @@ public class BattleManager : MonoBehaviour
             enemyTeam.batactors[i].basic = enemies[i].GetBasic();
             enemyTeam.batactors[i].skill1 = enemies[i].GetSkill1();
             enemyTeam.batactors[i].skill2 = enemies[i].GetSkill2();
+            enemyTeam.batactors[i].stance = enemies[i].characterArt;
         }
         /*
         foreach (BattleActor actor in allyTeam.batactors)

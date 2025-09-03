@@ -14,6 +14,7 @@ public class CharAttr : ScriptableObject
     public CharSkill fallback = null;
     public Stance characterArt;
     public BattleActor prefab;
+    public BasicSkipSkill skipSkill;
 
 
     public CharSkill GetBasic() 
@@ -27,5 +28,9 @@ public class CharAttr : ScriptableObject
     public CharSkill GetSkill2()
     {
         try { return skills[2]; } catch (ArgumentOutOfRangeException) { return fallback; }
+    }
+    public CharSkill GetSkipSkill()
+    {
+        return skipSkill;
     }
 }

@@ -57,8 +57,8 @@ public class BActorInfo : MonoBehaviour
                 RepaintBuffs(ui.gsOUT);
             }
         };
-        stanceIcon.sprite = BattleManager.sglt.GetImage(BattleManager.batman.gs.GetActor(battleActor.id).stance);
-        stanceIcon.color = BattleManager.sglt.GetColor(BattleManager.batman.gs.GetActor(battleActor.id).stance);
+        stanceIcon.sprite = BattleManager.sglt.GetImage(battleActor.stance);
+        stanceIcon.color = BattleManager.sglt.GetColor(battleActor.stance);
     }
 
     private void RepaintBuffs(GameState gs)

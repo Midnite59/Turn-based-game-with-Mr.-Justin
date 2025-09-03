@@ -14,7 +14,7 @@ public class BuffActor : CharSkill
     public int duration;
     public override GameState Execute(GameState state, Actor user, List<Actor> targets, out BattleFlags flags)
     {
-        flags = BattleFlags.None;
+        state = base.Execute(state, user, targets, out flags);
         foreach (var target in targets)
         {
             state = state.WithActor(target.WithBuff(new Buff(duration, effect, user.id)));

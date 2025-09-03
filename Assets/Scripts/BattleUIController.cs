@@ -99,6 +99,10 @@ public class BattleUIController : MonoBehaviour
         skill1Button.gameObject.SetActive(true);
         skill2Button.gameObject.SetActive(true);
 
+        basicButton.interactable = gameloop.currentAttr.GetBasic().IsUsable(gameloop.gs, gameloop.gs.currentActor);
+        skill1Button.interactable = gameloop.currentAttr.GetSkill1().IsUsable(gameloop.gs, gameloop.gs.currentActor);
+        skill2Button.interactable = gameloop.currentAttr.GetSkill2().IsUsable(gameloop.gs, gameloop.gs.currentActor);
+
         UIEnabled = true;
     }
     void AllyTurnEnd()

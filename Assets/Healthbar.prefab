@@ -88,6 +88,7 @@ MonoBehaviour:
   shrinkFactor: 0.67
   lerpT: 0.5
   battleActor: {fileID: 0}
+  outlineWhiteness: 0.6
 --- !u!1 &1595376820686917430
 GameObject:
   m_ObjectHideFlags: 0

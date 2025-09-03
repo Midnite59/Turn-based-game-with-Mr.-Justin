@@ -16,7 +16,7 @@ MonoBehaviour:
   icon: {fileID: 0}
   skilltype: Skill1
   art: 0
-  cost: 0
+  cost: 1
   minhealamount: 19
   healpower: 1
   hitSplit:

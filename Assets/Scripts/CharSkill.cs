@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using BattleLogic;
+using System.Linq;
 
 //[CreateAssetMenu(menuName = "Battle Logic/Skill")]
 public class CharSkill : ScriptableObject
@@ -18,7 +19,14 @@ public class CharSkill : ScriptableObject
     }
     public virtual bool HasEnoughResources(GameState state, Actor user)
     {
-        return true;
+        if (state.enemies.Select(a => a.id).Contains(user.id)) 
+        {
+            return state.enemyStancePoints >= cost;
+        }
+        else
+        {
+            return state.allyStancePoints >= cost;
+        }
     }
     public virtual bool HasValidTargets(GameState state, Actor user)
     {
@@ -44,8 +52,10 @@ public class CharSkill : ScriptableObject
     }
     public virtual GameState Execute(GameState state, Actor user, List<Actor> targets, out BattleFlags flags)
     {
-        Debug.LogError("You did not set the override, dummy!");
-        throw new NotImplementedException("Make sure you fill in all of the parameters.");
+        flags = BattleFlags.None;
+        return state.UseSP(cost, user);
+        //Debug.LogError("You did not set the override, dummy!");
+        //throw new NotImplementedException("Make sure you fill in all of the parameters.");
     }
     public virtual OutputEvent GetEvent(GameState gsOUT) 
     {
