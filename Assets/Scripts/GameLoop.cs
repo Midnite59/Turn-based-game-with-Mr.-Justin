@@ -177,6 +177,7 @@ public class GameLoop : MonoBehaviour
         int ActorID = turnOrder[currentTurn];
         gs = gs.SetCurrentActor(ActorID);
         BattleManager.batman.QueueEvent(new OutputEvent(gs));
+        //BattleManager.batman.bui.skillBar.UpdateSP(gs.allyStancePoints);
         if (gs.currentActor.status.downed == true)
         {
             gs = gs.WithActor(gs.currentActor.WithStatus(gs.currentActor.status.Recover()));
@@ -210,7 +211,8 @@ public class GameLoop : MonoBehaviour
             spdIDs = spdIDs.Select(a => a.id == fastest.id ? fastest: a);
         }
         gs = gs.RegainSP();
-        
+
+
     }
     public void TakeTurn(CharSkill skill, List<int> targetIDs)
     {
@@ -240,6 +242,7 @@ public class GameLoop : MonoBehaviour
                     }
                 }
             }
+            BattleManager.batman.bui.skillBar.UpdateSP(gs.allyStancePoints);
             skill.Animate(animgs, gs, currentactor.id, targetIDs);
         } else
         {

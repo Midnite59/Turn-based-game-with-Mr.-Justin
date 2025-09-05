@@ -16,6 +16,8 @@ public class BattleUIController : MonoBehaviour
 
     public List<BActorInfo> allyHealthBars;
 
+    public SPBar skillBar;
+
     public enum SelectedMove { Basic, Skill1, Skill2 }
 
     public SelectedMove selectedMove;

@@ -6,8 +6,18 @@ public class SPBar : MonoBehaviour
 {
     public int maxSP;
     public SPIcon iconPF;
-    public float skillPoints { get { return BattleManager.batman.gs.allyStancePoints; } }
+    float skillPoints;
     public List<SPIcon> sPIcons;
+    public float currentSP;
+    public float glowSP;
+
+    [Range(0f, 1f)]
+    public float lerpT;
+
+    public void UpdateSP(float sp)
+    {
+        skillPoints = sp;
+    }
 
     void Awake()
     {
@@ -22,13 +32,14 @@ public class SPBar : MonoBehaviour
     }
     private void Update()
     {
+        currentSP = Mathf.Lerp(currentSP, skillPoints, lerpT);
         Repaint();
     }
     public void Repaint()
     {
         foreach (SPIcon icon in sPIcons) 
         {
-            icon.Repaint(skillPoints);
+            icon.Repaint(glowSP, currentSP);
         }
     }
 }

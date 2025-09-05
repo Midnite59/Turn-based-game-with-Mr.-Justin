@@ -786,6 +786,9 @@ MonoBehaviour:
   maxSP: 6
   iconPF: {fileID: -8103026554137926534, guid: 9d5d758c78b1d8d4dac8d02034b2c133, type: 3}
   sPIcons: []
+  currentSP: 0
+  glowSP: 0
+  lerpT: 0.047
 --- !u!114 &7956080595068485738
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -804,7 +807,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 0
-  m_Spacing: 0
+  m_Spacing: 1
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
@@ -945,6 +948,7 @@ MonoBehaviour:
   - {fileID: 8104650947454430611}
   - {fileID: 8670099266776747236}
   - {fileID: 457017842184640385}
+  skillBar: {fileID: 6307366393021560269}
   selectedMove: 0
   deadzone: 0
   stateStance: {fileID: 235314134906044527}

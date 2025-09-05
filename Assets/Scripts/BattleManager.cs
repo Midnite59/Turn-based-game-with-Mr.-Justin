@@ -234,6 +234,7 @@ public class BattleManager : MonoBehaviour
                         SelectTargets();
                         ShowTargets(BattleManager.batman.realTargets);
                         batcam.FocusAlly(GetBattleActor(gs.currentActor.id), true);
+                        BattleManager.batman.bui.skillBar.UpdateSP(gs.allyStancePoints);
                     }
                 }
                 
