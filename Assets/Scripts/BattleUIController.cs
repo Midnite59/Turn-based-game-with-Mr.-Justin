@@ -198,9 +198,21 @@ public class BattleUIController : MonoBehaviour
         basicButton.onClick.RemoveAllListeners();
         switch (selectedMove)
         {
-            case SelectedMove.Basic: basicButton.onClick.AddListener(() => gameloop.TakeTurn(gameloop.currentAttr.GetBasic(), BattleManager.batman.realTargets)); BattleManager.batman.selectedSkill = gameloop.currentAttr.GetBasic(); break;
-            case SelectedMove.Skill1: basicButton.onClick.AddListener(() => gameloop.TakeTurn(gameloop.currentAttr.GetSkill1(), BattleManager.batman.realTargets)); BattleManager.batman.selectedSkill = gameloop.currentAttr.GetSkill1(); break;
-            case SelectedMove.Skill2: basicButton.onClick.AddListener(() => gameloop.TakeTurn(gameloop.currentAttr.GetSkill2(), BattleManager.batman.realTargets)); BattleManager.batman.selectedSkill = gameloop.currentAttr.GetSkill2(); break;
+            case SelectedMove.Basic: 
+                basicButton.onClick.AddListener(() => gameloop.TakeTurn(gameloop.currentAttr.GetBasic(), BattleManager.batman.realTargets)); 
+                BattleManager.batman.selectedSkill = gameloop.currentAttr.GetBasic();
+                basicButton.interactable = gameloop.currentAttr.GetBasic().IsUsable(gameloop.gs, gameloop.gs.currentActor);
+                break;
+            case SelectedMove.Skill1: 
+                basicButton.onClick.AddListener(() => gameloop.TakeTurn(gameloop.currentAttr.GetSkill1(), BattleManager.batman.realTargets)); 
+                BattleManager.batman.selectedSkill = gameloop.currentAttr.GetSkill1();
+                basicButton.interactable = gameloop.currentAttr.GetSkill1().IsUsable(gameloop.gs, gameloop.gs.currentActor);
+                break;
+            case SelectedMove.Skill2: 
+                basicButton.onClick.AddListener(() => gameloop.TakeTurn(gameloop.currentAttr.GetSkill2(), BattleManager.batman.realTargets)); 
+                BattleManager.batman.selectedSkill = gameloop.currentAttr.GetSkill2();
+                basicButton.interactable = gameloop.currentAttr.GetSkill2().IsUsable(gameloop.gs, gameloop.gs.currentActor);
+                break;
         }
 
     }

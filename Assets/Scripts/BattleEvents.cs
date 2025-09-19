@@ -55,10 +55,12 @@ public class AnimationEvent : OutputEvent
     bool? boolValue;
     float? floatValue;
     int? intValue;
+    //public event Action camAction = () => {};
     //trigger? triggerValue;
     public override IEnumerator Execute(GameState gsIN) 
     {
         BattleActor batactor = BattleManager.batman.GetBattleActor(userid);
+        //camAction.Invoke();
         if (boolValue.HasValue) 
         {
             batactor.animator.SetBool(paramname, boolValue.Value);
@@ -77,6 +79,25 @@ public class AnimationEvent : OutputEvent
         }
             //Debug.Log("Execute() Triggered");
             yield return new WaitForSeconds(delay);
+        yield break;
+    }
+}
+
+public class CameraEvent : OutputEvent 
+{   
+    public CameraEvent(GameState gsOUT) : base(gsOUT) { }
+    public event Action camAction = () => { };
+    public float waitTime;
+
+    public CameraEvent(GameState gsOUT, Action action, float waitTime = 0) : base(gsOUT)
+    {
+        camAction += action;
+        this.waitTime = waitTime;
+    }
+    public override IEnumerator Execute(GameState gsIN)
+    {
+        camAction.Invoke();
+        yield return new WaitForSeconds(waitTime);
         yield break;
     }
 }

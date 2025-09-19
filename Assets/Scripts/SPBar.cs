@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class SPBar : MonoBehaviour
@@ -9,7 +10,7 @@ public class SPBar : MonoBehaviour
     float skillPoints;
     public List<SPIcon> sPIcons;
     public float currentSP;
-    public float glowSP;
+    float glowSP;
 
     [Range(0f, 1f)]
     public float lerpT;
@@ -32,11 +33,13 @@ public class SPBar : MonoBehaviour
     }
     private void Update()
     {
+        glowSP = Mathf.Lerp(glowSP, BattleManager.batman.selectedSkill != null ? BattleManager.batman.selectedSkill.cost : 0f, lerpT); 
         currentSP = Mathf.Lerp(currentSP, skillPoints, lerpT);
         Repaint();
     }
     public void Repaint()
     {
+        
         foreach (SPIcon icon in sPIcons) 
         {
             icon.Repaint(glowSP, currentSP);

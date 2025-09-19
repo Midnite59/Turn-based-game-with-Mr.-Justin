@@ -13,10 +13,6 @@ public class CharSkillAttack : CharSkill
     [Header("Adds up to one!!")]
     public List<float> hitSplit;
     public int hitamount { get { return hitSplit.Count(); } }
-    private void Awake()
-    {
-        targetType = TargetType.SingleEnemy;
-    }
     public List<AnimHit> GetHits(GameState gsIN, int user, List<int> targets)
     {
         List<int> damages = new List<int>();
@@ -55,7 +51,20 @@ public class CharSkillAttack : CharSkill
     }
     public override void Animate(GameState gsIN, GameState gsOUT, int userid, List<int> targetids)
     {
-        BattleManager.batman.QueueEvent(new AttackAnimationEvent(gsOUT, userid, skilltype), GetHits(gsIN, userid, targetids));
+        AttackAnimationEvent oevent = new AttackAnimationEvent(gsOUT, userid, skilltype);
+        if (targetType == TargetType.SingleEnemy)
+        {
+            if (gsIN.allies.Any(a => { return a.id == userid; }))
+            {
+                BattleManager.batman.QueueEvent(new CameraEvent(gsIN, () => { BattleManager.batman.batcam.Focus1v1(BattleManager.batman.GetBattleActor(userid), BattleManager.batman.GetBattleActor(targetids[0])); }));
+            }
+            else
+            {
+                BattleManager.batman.QueueEvent(new CameraEvent(gsIN, () => { BattleManager.batman.batcam.Focus1v1(BattleManager.batman.GetBattleActor(targetids[0]), BattleManager.batman.GetBattleActor(userid)); }));
+            }
+            
+        }
+        BattleManager.batman.QueueEvent(oevent, GetHits(gsIN, userid, targetids));
     }
 
 }

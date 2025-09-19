@@ -16,7 +16,7 @@ MonoBehaviour:
   icon: {fileID: 0}
   skilltype: BasicAttack
   art: 0
-  cost: 0
+  cost: 0.5
   power: 15
   hitSplit:
   - 0.3

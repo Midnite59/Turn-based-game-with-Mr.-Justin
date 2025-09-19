@@ -641,14 +641,15 @@ MonoBehaviour:
   focusActor: {fileID: 0}
   dynamicTransforms: []
   lookat: {fileID: 419310031}
-  distanceToAlly: 4
+  distanceToAlly: 1.99
   offset: {x: 0, y: 0, z: 0}
   defaultEnemyWeight: 1
-  selectedEnemyWeight: 8
+  selectedEnemyWeight: 2.5
   selectedAllyWeight: 8
   lerpSpeed: 0.444
   allyTargetPovOffset: {x: 0, y: 2, z: 6.5}
   selectedAllyWeightEnemyPov: 2
+  magna: 1
 --- !u!1183024399 &419310031
 LookAtConstraint:
   m_ObjectHideFlags: 0

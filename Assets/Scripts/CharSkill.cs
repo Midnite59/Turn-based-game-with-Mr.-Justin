@@ -30,7 +30,7 @@ public class CharSkill : ScriptableObject
     }
     public virtual bool HasValidTargets(GameState state, Actor user)
     {
-        return true;
+        return targetType != TargetType.None;
     }
     public bool IsUsable(GameState state, Actor user)
     {

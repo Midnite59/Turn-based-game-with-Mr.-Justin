@@ -16,6 +16,6 @@ MonoBehaviour:
   icon: {fileID: 0}
   skilltype: Skill1
   art: 0
-  cost: 0.5
+  cost: 0.8
   effect: {fileID: 11400000, guid: ca157c8df3ee50b4aaa857cb3c956b52, type: 2}
   duration: 2

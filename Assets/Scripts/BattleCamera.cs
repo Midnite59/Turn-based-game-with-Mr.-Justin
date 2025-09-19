@@ -35,6 +35,8 @@ public class BattleCamera : MonoBehaviour
 
     public Dictionary<Transform, float> weightKeys;
 
+    public float magna=1;
+
 
     // Start is called before the first frame update
     void Awake()
@@ -160,10 +162,11 @@ public class BattleCamera : MonoBehaviour
 
         if (enemyTeam.batactors.Contains(BattleManager.batman.GetBattleActor(BattleManager.batman.selectTarget)))
         {
-            Vector3 enemycenter = enemyTeam.batactors.Aggregate(Vector3.zero, (total, next) => total += next.transform.position, (total) => total / enemyTeam.batactors.Count);
-            Vector3 head = ally.headPos;
+            //Vector3 enemycenter = enemyTeam.batactors.Aggregate(Vector3.zero, (total, next) => total += next.transform.position, (total) => total / enemyTeam.batactors.Count);
+            Vector3 enemycenter = enemyTeam.batactors.OrderBy(a => a.transform.position.x).First().transform.position + Vector3.left * magna;
+            Vector3 head = ally.headPos + Vector3.right * magna;
             Vector3 direction = (head - enemycenter).normalized;
-            anchorPosition = head + direction * distanceToAlly + offset;
+            anchorPosition = head + direction * distanceToAlly;
 
             foreach (BattleActor actor in enemyTeam.batactors)
             {
@@ -198,6 +201,53 @@ public class BattleCamera : MonoBehaviour
 
 
     }
+    public void Focus1v1(BattleActor ally, BattleActor enemy, bool force = false)
+    {
+        focusActor = ally;
+        List<FocusWeight> focusWeights = new List<FocusWeight>();
+            Vector3 head = ally.headPos + Vector3.right * magna;
+            Vector3 eHead = enemy.headPos + Vector3.left * magna;
+            Vector3 direction = (head - eHead).normalized;
+            anchorPosition = head + direction * distanceToAlly;
+
+            focusWeights.Add(new FocusWeight(BattleActor.FocusPart.Root, selectedEnemyWeight, enemy.id));
+            focusWeights.Add(new FocusWeight(BattleActor.FocusPart.Torso, selectedAllyWeight, ally.id));
+
+        if (force)
+        {
+            SetLAConstraint(focusWeights.ToArray());
+            transform.position = anchorPosition;
+        }
+        else
+        {
+            ChangeLAConstraint(focusWeights.ToArray());
+        }
+
+
+    }
+
+    public void FocusEnemy(BattleActor enemy, bool force = true)
+    {
+        List<FocusWeight> focusWeights = new List<FocusWeight>();
+        Vector3 eHead = enemy.headPos;
+        anchorPosition = eHead + Vector3.back * distanceToAlly;
+
+        focusWeights.Add(new FocusWeight(BattleActor.FocusPart.Torso, selectedEnemyWeight, enemy.id));
+        focusWeights.Add(new FocusWeight(BattleActor.FocusPart.Head, selectedEnemyWeight, enemy.id));
+
+        if (force)
+        {
+            SetLAConstraint(focusWeights.ToArray());
+            transform.position = anchorPosition;
+        }
+        else
+        {
+            ChangeLAConstraint(focusWeights.ToArray());
+        }
+
+
+    }
+
     public void ChangeLAConstraint(params FocusWeight[] focusWeights)
     {
         List<Transform> transforms = weightKeys.Keys.ToList();
@@ -205,10 +255,17 @@ public class BattleCamera : MonoBehaviour
         {
             weightKeys[wk] = 0;
         }
+        List<ConstraintSource> sources = new List<ConstraintSource>();
+        lookat.GetSources(sources);
         foreach (FocusWeight focusWeight in focusWeights)
         {
+            if (!sources.Any(a => a.sourceTransform == focusWeight.transform)) 
+            {
+                sources.Add(new ConstraintSource { sourceTransform = focusWeight.transform, weight = 0 });
+            }
             weightKeys[focusWeight.transform] = focusWeight.weight;
         }
+        lookat.SetSources(sources);
     }
 
     public void SetLAConstraint(params FocusWeight[] focusWeights)

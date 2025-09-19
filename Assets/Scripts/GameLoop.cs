@@ -177,11 +177,15 @@ public class GameLoop : MonoBehaviour
         int ActorID = turnOrder[currentTurn];
         gs = gs.SetCurrentActor(ActorID);
         BattleManager.batman.QueueEvent(new OutputEvent(gs));
+        if (gs.enemies.Any(a => a.id == ActorID))
+        {
+            BattleManager.batman.QueueEvent(new CameraEvent(gs, () => { BattleManager.batman.batcam.FocusEnemy(BattleManager.batman.GetBattleActor(ActorID)); }, 0.5f));
+        }
         //BattleManager.batman.bui.skillBar.UpdateSP(gs.allyStancePoints);
         if (gs.currentActor.status.downed == true)
         {
             gs = gs.WithActor(gs.currentActor.WithStatus(gs.currentActor.status.Recover()));
-            BattleManager.batman.QueueEvent(new AnimationEvent(gs, ActorID, "Down", 2, false));
+            BattleManager.batman.QueueEvent(new AnimationEvent(gs, ActorID, "Down", 0.5f, false));
         }
         if (gs.allies.Any(a => a.id == ActorID))
         {
@@ -229,6 +233,7 @@ public class GameLoop : MonoBehaviour
             //BattleManager.batman.UpdateGs(gs);
             //Debug.LogError(BattleManager.batman.gs.currentActor.id);
             gs = skill.Execute(gs, currentactor, targets, out flags);
+            BattleManager.batman.selectedSkill = null;
             if ((flags & BattleFlags.CharDowned) == BattleFlags.CharDowned)
             {
                 //Debug.Log(String.Join(", " ,targets.Select(a => a.name)) + " was downed :O");

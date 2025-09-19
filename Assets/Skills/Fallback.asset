@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetType: 0
   icon: {fileID: 0}
+  skilltype: BasicAttack
   art: 0
-  dmg: 0
-  hitamount: 2
+  cost: 67
+  power: 0
+  hitSplit: []
