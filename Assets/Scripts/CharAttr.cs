@@ -14,7 +14,7 @@ public class CharAttr : ScriptableObject
     public CharSkill fallback = null;
     public Stance characterArt;
     public BattleActor prefab;
-    public BasicSkipSkill skipSkill;
+    public SkipSkill skipSkill;
 
 
     public CharSkill GetBasic() 

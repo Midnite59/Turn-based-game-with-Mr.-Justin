@@ -173,28 +173,47 @@ public class GameLoop : MonoBehaviour
                 }
             }
 
-
+        bool hasRecovered = false;
         int ActorID = turnOrder[currentTurn];
         gs = gs.SetCurrentActor(ActorID);
         BattleManager.batman.QueueEvent(new OutputEvent(gs));
         if (gs.enemies.Any(a => a.id == ActorID))
         {
-            BattleManager.batman.QueueEvent(new CameraEvent(gs, () => { BattleManager.batman.batcam.FocusEnemy(BattleManager.batman.GetBattleActor(ActorID)); }, 0.5f));
+            BattleManager.batman.QueueEvent(new CameraEvent(gs, () => { BattleManager.batman.batcam.FocusEnemy(BattleManager.batman.GetBattleActor(ActorID)); }, 0.3f));
         }
         //BattleManager.batman.bui.skillBar.UpdateSP(gs.allyStancePoints);
         if (gs.currentActor.status.downed == true)
         {
             gs = gs.WithActor(gs.currentActor.WithStatus(gs.currentActor.status.Recover()));
             BattleManager.batman.QueueEvent(new AnimationEvent(gs, ActorID, "Down", 0.5f, false));
+            hasRecovered = true;
         }
         if (gs.allies.Any(a => a.id == ActorID))
         {
-            //Debug.Log("oops");
-            TransitionState(State.AllyTurn);
+            if (attrList[ActorID].skills.All(s => s.cost > gs.allyStancePoints))
+            {
+                //TODO: We need some targeting here
+                BattleManager.batman.QueueEvent(new CameraEvent(gs, () => { BattleManager.batman.batcam.SkipAlly(BattleManager.batman.GetBattleActor(ActorID)); }, 0.7f));
+                TakeTurn(attrList[ActorID].GetSkipSkill(), new List<int>());
+            }
+            else
+            {
+                //Debug.Log("oops");
+                TransitionState(State.AllyTurn);
+            }
             return;
         } else if (gs.enemies.Any(a => a.id == ActorID)) 
         {
-            TransitionState(State.EnemyTurn);
+            if (attrList[ActorID].skills.All(s => s.cost > gs.enemyStancePoints))
+            {
+                //TODO: We need some targeting here
+                BattleManager.batman.QueueEvent(new CameraEvent(gs, () => { BattleManager.batman.batcam.FocusEnemy(BattleManager.batman.GetBattleActor(ActorID)); }, hasRecovered ? 0.8f : 0.4f));
+                TakeTurn(attrList[ActorID].GetSkipSkill(), new List<int>());
+            }
+            else
+            {
+                TransitionState(State.EnemyTurn);
+            }
             return;
         } else 
         { 
@@ -232,7 +251,7 @@ public class GameLoop : MonoBehaviour
             GameState animgs = gs;
             //BattleManager.batman.UpdateGs(gs);
             //Debug.LogError(BattleManager.batman.gs.currentActor.id);
-            gs = skill.Execute(gs, currentactor, targets, out flags);
+            gs = skill. Execute(gs, currentactor, targets, out flags);
             BattleManager.batman.selectedSkill = null;
             if ((flags & BattleFlags.CharDowned) == BattleFlags.CharDowned)
             {

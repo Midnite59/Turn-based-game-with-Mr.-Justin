@@ -7,6 +7,16 @@ public class SPIcon : MonoBehaviour
 {
     public float minSP;
     public float maxSP;
+
+    public Color glow1;
+    public Color glow2;
+
+    public float gTime;
+
+    public AnimationCurve acurve;
+
+    private float timer;
+
     float SPdiff { get {  return maxSP - minSP; } }
     public Image img;
     public Image gImg;
@@ -16,6 +26,13 @@ public class SPIcon : MonoBehaviour
         gImg.transform.localScale = Vector3.one * glowValue;
         float value = Mathf.Clamp01(((currentSP-glowSP) - minSP) / SPdiff);
         img.transform.localScale = Vector3.one * value;
-
+    }
+    public void Update()
+    {
+        timer += Time.deltaTime;
+        if (timer >= gTime) {
+            timer -= gTime;
+        }
+        gImg.color = Color.Lerp(glow1,glow2,acurve.Evaluate(timer / (gTime * 0.5f)));
     }
 }

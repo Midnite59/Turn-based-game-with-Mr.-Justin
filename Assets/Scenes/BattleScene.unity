@@ -646,7 +646,7 @@ MonoBehaviour:
   defaultEnemyWeight: 1
   selectedEnemyWeight: 2.5
   selectedAllyWeight: 8
-  lerpSpeed: 0.444
+  lerpSpeed: 0.164
   allyTargetPovOffset: {x: 0, y: 2, z: 6.5}
   selectedAllyWeightEnemyPov: 2
   magna: 1

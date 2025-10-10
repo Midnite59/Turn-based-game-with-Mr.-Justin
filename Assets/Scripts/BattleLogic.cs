@@ -390,7 +390,7 @@ namespace BattleLogic
 
         public GameState RegainSP()
         {
-            float enemySP = enemyStancePoints;
+            float enemySP = enemies.Aggregate(enemyStancePoints, (sp, actor) => sp + actor.stats.eff >= 6 ? sp : sp + actor.stats.eff);
             float allySP = allies.Aggregate(allyStancePoints, (sp, actor) => sp + actor.stats.eff >= 6 ? sp : sp + actor.stats.eff);
             // Skill point blackjack
             return new GameState(allies, enemies, currentActor, currentStance, allySP, enemySP, random);

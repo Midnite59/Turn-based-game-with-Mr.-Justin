@@ -248,6 +248,28 @@ public class BattleCamera : MonoBehaviour
 
     }
 
+    public void SkipAlly(BattleActor ally, bool force = true)
+    {
+        List<FocusWeight> focusWeights = new List<FocusWeight>();
+        Vector3 Head = ally.headPos;
+        anchorPosition = Head + Vector3.forward * distanceToAlly;
+
+        focusWeights.Add(new FocusWeight(BattleActor.FocusPart.Torso, selectedEnemyWeight, ally.id));
+        focusWeights.Add(new FocusWeight(BattleActor.FocusPart.Head, selectedEnemyWeight, ally.id));
+
+        if (force)
+        {
+            SetLAConstraint(focusWeights.ToArray());
+            transform.position = anchorPosition;
+        }
+        else
+        {
+            ChangeLAConstraint(focusWeights.ToArray());
+        }
+
+
+    }
+
     public void ChangeLAConstraint(params FocusWeight[] focusWeights)
     {
         List<Transform> transforms = weightKeys.Keys.ToList();
