@@ -22,6 +22,8 @@ public class GameManager : MonoBehaviour
 
     public Camera rtCam;
 
+    bool loaded = false;
+
     private void Awake()
     {
         if (instance == null) 
@@ -59,7 +61,7 @@ public class GameManager : MonoBehaviour
     public void LoadBattleScene() 
     {
         SceneManager.LoadScene("BattleScene", LoadSceneMode.Additive);
-        SceneManager.sceneLoaded += (scene, mode) => { Overworld.SetActive(false); };
+        SceneManager.sceneLoaded += (scene, mode) => { Overworld.SetActive(false); loaded = true; };
     }
 
     public void OnLevelLoaded(Scene scene, LoadSceneMode mode)
@@ -74,6 +76,7 @@ public class GameManager : MonoBehaviour
     }
     private IEnumerator BattleRoutine(EncountersOhNo encounter) 
     {
+        loaded = false;
         rtCam.gameObject.SetActive(true);
         rtCam.targetTexture = rTexture;
         yield return null;
@@ -84,9 +87,30 @@ public class GameManager : MonoBehaviour
         rtCanvas.SetActive(true);
         rtCam.gameObject.SetActive(false);
         LoadBattleScene();
-        yield return new WaitForSeconds(1);
+        float t = 0;
+        while (t <= 1)
+        {
+            rtImage.material.SetFloat("_ColorProgress", t);
+            t += Time.deltaTime;
+            yield return null;
+        }
+        rtImage.material.SetFloat("_ColorProgress", 1);
         gameloop.CreateBattle(team.allies, encounter.enemies, team.allyhealths);
+        t = 0;
+        while (!loaded) 
+        {
+            yield return null;
+        }
+        yield return new WaitForSeconds(0.5f);
+        while (t <= 1)
+        {
+            rtImage.material.SetFloat("_AlphaProgress", t);
+            t += Time.deltaTime;
+            yield return null;
+        }
         yield return new WaitForEndOfFrame();
+        rtImage.material.SetFloat("_ColorProgress", 0);
+        rtImage.material.SetFloat("_AlphaProgress", 0);
         rtCanvas.SetActive(false);
     }
 }
