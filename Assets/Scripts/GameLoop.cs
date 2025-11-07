@@ -34,7 +34,9 @@ public class GameLoop : MonoBehaviour
     public event Action interuptionsEnd = () => { };
     public event Action cutsceneStart = () => { };
     public event Action cutsceneEnd = () => { };
+    public event Action battleOverStart = () => { };
     public event Action battleOverWin = () => { };
+    public event Action battleOverLose = () => { };
 
     public System.Random random = new System.Random();
 
@@ -42,7 +44,6 @@ public class GameLoop : MonoBehaviour
 
     public bool battleResult;
 
-    public event Action battleOverLose = () => { };
     public static GameLoop instance;
 
     // Start is called before the first frame update
@@ -50,6 +51,7 @@ public class GameLoop : MonoBehaviour
     {
         instance = this;
         enemyTurnStart += EnemyTurnVeryBasic;
+        battleOverStart += () => { BattleManager.batman.QueueEvent(new CameraEvent(gs, () => { }, 3f)); BattleManager.batman.QueueEvent(new CameraEvent(gs, () => { EndBattle(); }, 1f)); };
         //Debug.Log(instance);
     }
 
@@ -103,7 +105,7 @@ public class GameLoop : MonoBehaviour
             case State.EnemyTurn: enemyTurnStart.Invoke(); break;
             case State.AllyTurn: allyTurnStart.Invoke(); break;
             case State.EndOfRound: endOfRoundStart.Invoke(); RoundEnd(); break;
-            case State.BattleOver: if (battleResult) battleOverWin.Invoke(); else battleOverLose.Invoke(); break;
+            case State.BattleOver: battleOverStart.Invoke(); break;
             case State.Interruptions: interuptionsStart.Invoke(); break;
             case State.Cutscene: cutsceneStart.Invoke(); break;
         }
@@ -144,6 +146,19 @@ public class GameLoop : MonoBehaviour
         SetTurnOrder();
         BattleManager.batman.StartBatman(gs);
         StartTurn();
+    }
+
+    public void EndBattle() 
+    {
+        //TODO: We would put a runnaway here.
+        if (battleResult)
+        {
+            battleOverWin.Invoke();
+        }
+        else 
+        {
+            battleOverLose.Invoke(); 
+        }
     }
 
     public void RoundEnd() 
@@ -256,7 +271,7 @@ public class GameLoop : MonoBehaviour
             if ((flags & BattleFlags.CharDowned) == BattleFlags.CharDowned)
             {
                 //Debug.Log(String.Join(", " ,targets.Select(a => a.name)) + " was downed :O");
-                gs = gs.WithStance(skill.art == Stance.None ? gs.GetActor(ActorID).stance : skill.art);
+                //gs = gs.WithStance(skill.art == Stance.None ? gs.GetActor(ActorID).stance : skill.art);
 
                 foreach (Actor actor in targetsIE)
                 {
@@ -265,6 +280,7 @@ public class GameLoop : MonoBehaviour
                         BattleManager.batman.QueueEvent(new AnimationEvent(gs, actor.id, "Down", 0, true));
                     }
                 }
+                gs = gs.WithStance(skill.art == Stance.None ? gs.GetActor(ActorID).stance : skill.art);
             }
             BattleManager.batman.bui.skillBar.UpdateSP(gs.allyStancePoints);
             skill.Animate(animgs, gs, currentactor.id, targetIDs);

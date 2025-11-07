@@ -9,23 +9,24 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public GameObject BattleBackground;
     public GameObject Overworld;
-
     public TeamSetup team;
-
     public GameLoop gameloop;
 
-    private RenderTexture rTexture;
-
-    public RawImage rtImage;
-
-    public GameObject rtCanvas;
-
-    public Camera rtCam;
-
+    private RenderTexture transRTexture;
+    public RawImage transRTImage;
+    public GameObject transRTCanvas;
+    public Camera transRTCam;
     bool loaded = false;
+    public AnimationCurve transCurve;
+    public float transitionSeconds = 1;
+
+    public Camera hiddenCam;
+    private RenderTexture hiddenRTexture;
+
 
     private void Awake()
     {
+        Application.targetFrameRate = 60;
         if (instance == null) 
         {
             instance = this;
@@ -44,24 +45,35 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         //Invoke("LoadBattleScene", 5);
-        rTexture = new RenderTexture(Camera.main.pixelWidth, Camera.main.pixelHeight, 16);
-        rTexture.Create();
-        rTexture.Release();
-        rtCanvas.SetActive(false);
+        transRTexture = new RenderTexture(Camera.main.pixelWidth, Camera.main.pixelHeight, 16);
+        transRTexture.Create();
+        transRTexture.Release();
+        transRTCanvas.SetActive(false);
+        hiddenRTexture = new RenderTexture(Camera.main.pixelWidth, Camera.main.pixelHeight, 16);
+        hiddenRTexture.Create();
+        hiddenRTexture.Release();
+        hiddenCam.targetTexture = hiddenRTexture;
+        transRTImage.material.SetTexture("_NotMainTex", hiddenRTexture);
     }
 
 
     // Update is called once per frame
     void Update()
     {
-
+        //Debug.Log(Time.deltaTime);
     }
 
 
     public void LoadBattleScene() 
     {
-        SceneManager.LoadScene("BattleScene", LoadSceneMode.Additive);
+        SceneManager.LoadSceneAsync("BattleScene", LoadSceneMode.Additive);
         SceneManager.sceneLoaded += (scene, mode) => { Overworld.SetActive(false); loaded = true; };
+    }
+
+    public void UnloadBattleScene()
+    {
+        SceneManager.UnloadSceneAsync("BattleScene");
+        SceneManager.sceneUnloaded += (scene) => { Overworld.SetActive(true); loaded = true; };
     }
 
     public void OnLevelLoaded(Scene scene, LoadSceneMode mode)
@@ -72,45 +84,63 @@ public class GameManager : MonoBehaviour
     }
     public void StartBattle(EncountersOhNo encounter)
     {
-        StartCoroutine(BattleRoutine(encounter));
+        StartCoroutine(BattleRoutine(encounter, false));
     }
-    private IEnumerator BattleRoutine(EncountersOhNo encounter) 
+    public void EndBattle(EncountersOhNo encounter)
+    {
+        StartCoroutine(BattleRoutine(encounter, true));
+    }
+    private IEnumerator BattleRoutine(EncountersOhNo encounter, bool bEnd = false) 
     {
         loaded = false;
-        rtCam.gameObject.SetActive(true);
-        rtCam.targetTexture = rTexture;
+        transRTCam.gameObject.SetActive(true);
+        transRTCam.CopyFrom(Camera.main);
+        transRTCam.targetTexture = transRTexture;
         yield return null;
-        rtCam.transform.position = Camera.main.transform.position;
-        rtCam.transform.rotation = Camera.main.transform.rotation;
+        transRTCam.transform.position = Camera.main.transform.position;
+        transRTCam.transform.rotation = Camera.main.transform.rotation;
+        //transRTCam.fieldOfView = Camera.main.fieldOfView;
         yield return new WaitForEndOfFrame();
-        rtImage.texture = rTexture;
-        rtCanvas.SetActive(true);
-        rtCam.gameObject.SetActive(false);
-        LoadBattleScene();
-        float t = 0;
+        transRTImage.texture = transRTexture;
+        transRTCanvas.SetActive(true);
+        transRTCam.gameObject.SetActive(false);
+        if (!bEnd)
+        {
+            LoadBattleScene();
+        }
+        else 
+        {
+            UnloadBattleScene();
+        }
+            float t = 0;
         while (t <= 1)
         {
-            rtImage.material.SetFloat("_ColorProgress", t);
-            t += Time.deltaTime;
+            transRTImage.material.SetFloat("_ColorProgress", transCurve.Evaluate(t));
+            t += Time.deltaTime / transitionSeconds;
             yield return null;
         }
-        rtImage.material.SetFloat("_ColorProgress", 1);
-        gameloop.CreateBattle(team.allies, encounter.enemies, team.allyhealths);
+        transRTImage.material.SetFloat("_ColorProgress", 1);
+        if (!bEnd)
+        {
+            gameloop.CreateBattle(team.allies, encounter.enemies, team.allyhealths);
+            gameloop.battleOverWin += () => { EndBattle(encounter); };
+            encounter.gameObject.SetActive(false);
+        }
         t = 0;
         while (!loaded) 
         {
             yield return null;
         }
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(bEnd ? 3.0f : 0.5f);
         while (t <= 1)
         {
-            rtImage.material.SetFloat("_AlphaProgress", t);
-            t += Time.deltaTime;
+            transRTImage.material.SetFloat("_AlphaProgress", transCurve.Evaluate(t));
+            t += Time.deltaTime / transitionSeconds;
             yield return null;
         }
         yield return new WaitForEndOfFrame();
-        rtImage.material.SetFloat("_ColorProgress", 0);
-        rtImage.material.SetFloat("_AlphaProgress", 0);
-        rtCanvas.SetActive(false);
+        transRTImage.material.SetFloat("_ColorProgress", 0);
+        transRTImage.material.SetFloat("_AlphaProgress", 0);
+        transRTCanvas.SetActive(false);
     }
 }

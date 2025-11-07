@@ -43,7 +43,7 @@ public class BattleManager : MonoBehaviour
 
     public event Action<AnimationEvent> onAnimationEnd = (ae) => { };
     public event Action<UIEvent> repaintUI = (ui) => { };
-    public event Action eventEnd = () => { };
+    public event Action eventEnd = () => { Debug.Log("eend"); };
 
     // Start is called before the first frame update
     void Awake()
@@ -203,7 +203,8 @@ public class BattleManager : MonoBehaviour
             if (currentEvent != null) 
             {
                 UpdateGs(outputevents[0].gsOUT);
-                Debug.Log(curActorID);
+                //Debug.Log(curActorID);
+                Debug.Log(outputevents[0]+ ". Has ended");
                 if (outputevents[0] is AnimationEvent)
                 {
                     onAnimationEnd.Invoke(outputevents[0] as AnimationEvent);
@@ -213,6 +214,7 @@ public class BattleManager : MonoBehaviour
                     repaintUI.Invoke(outputevents[0] as UIEvent);
                 }
                 outputevents.RemoveAt(0);
+                
                 currentEvent = null;
                 eventEnd.Invoke();
             }
