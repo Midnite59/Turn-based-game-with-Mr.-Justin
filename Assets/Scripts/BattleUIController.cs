@@ -94,7 +94,7 @@ public class BattleUIController : MonoBehaviour
     {
         //Debug.Log("added listnars");
         basicButton.onClick.AddListener(() => gameloop.TakeTurn(gameloop.currentAttr.GetBasic(), BattleManager.batman.realTargets));
-        basicButton.onClick.AddListener(() => Debug.Break());
+        //basicButton.onClick.AddListener(() => Debug.Break());
         skill1Button.onClick.AddListener(() => Skill1Button());
         skill2Button.onClick.AddListener(() => Skill2Button());
 
