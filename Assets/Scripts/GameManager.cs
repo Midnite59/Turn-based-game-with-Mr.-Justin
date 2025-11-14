@@ -102,6 +102,7 @@ public class GameManager : MonoBehaviour
         //transRTCam.fieldOfView = Camera.main.fieldOfView;
         yield return new WaitForEndOfFrame();
         transRTImage.texture = transRTexture;
+        transRTImage.material.SetColor("_Color", !bEnd ? Color.black : Color.white);
         transRTCanvas.SetActive(true);
         transRTCam.gameObject.SetActive(false);
         if (!bEnd)
