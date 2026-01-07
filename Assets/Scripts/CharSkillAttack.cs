@@ -21,13 +21,16 @@ public class CharSkillAttack : CharSkill
             int dmg = Helper.CalcDmg(gsIN.GetActor(target), power, gsIN.GetActor(user), ref gsIN, out _, art != Stance.None ? art : null);
             damages.Add(dmg);
         }
+        List<int> spareDamages = new List<int>(damages);
         List<AnimHit> hits = new List<AnimHit>();
         for (int i = 0; i < hitamount; i++) 
         {
             List<AnimHurt> hurts = new List<AnimHurt>();
             for (int j = 0; j < targets.Count(); j++)  
             {
-                hurts.Add(new AnimHurt(targets[j], (int)(damages[j] * hitSplit[i]), gsIN.GetActor(user).stance));
+                int splitDamage = (int)(damages[j] * hitSplit[i]);
+                hurts.Add(new AnimHurt(targets[j], i >= hitamount - 1 ? spareDamages[j] : splitDamage, gsIN.GetActor(user).stance));
+                spareDamages[j] = spareDamages[j] - splitDamage;
             }
             hits.Add(new AnimHit(hurts));
         }

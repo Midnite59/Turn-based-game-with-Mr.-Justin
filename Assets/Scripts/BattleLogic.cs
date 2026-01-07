@@ -149,11 +149,6 @@ namespace BattleLogic
         public Actor TakeDmg(float damage, BattleFlags flags)
         {
             ActorStatus newStatus = status;
-
-            if (status.downed)
-            {
-                damage *= 1.3f;
-            }
             if ((flags & BattleFlags.CharDowned) == BattleFlags.CharDowned)
             {
                 newStatus = newStatus.Down();
@@ -164,6 +159,7 @@ namespace BattleLogic
                 GameLoop.instance.EventStack(new BattleEvent(BattleEvent.Type.Dead, id));
                 newStatus = newStatus.Die();
             }
+            Debug.LogWarning(name + " took " + damage + " damage. HP left: " + newHP + ".");
             return new Actor(name, stats, id, newHP, stance, newStatus, buffs);  
         }
         public Actor HealDmg(float damage)
@@ -228,6 +224,7 @@ namespace BattleLogic
         public float enemyStancePoints;
         public IEnumerable<Actor> actors
         { get {  return allies.Concat(enemies); } }
+        [SerializeField]
         private BattleRandom random;
         
         //public ImmutabeList<Action> effects;
@@ -486,14 +483,18 @@ namespace BattleLogic
             }
             if (damagedTC.weaknesses.Contains(stance))
             {
-                dmg *= 1.5f;
                 //Debug.Log("It's super effective!!");
 
                 if (!target.status.downed)
                 {
+                    dmg *= 1.5f;
                     flags = BattleFlags.CharDowned;
                     GameLoop.instance.EventStack(new BattleEvent(BattleEvent.Type.Down, target.id));
                     //Debug.Log(target.name + " was downed :O");
+                }
+                else
+                {
+                    dmg *= 1.1f;
                 }
             }
             return Mathf.RoundToInt(dmg);

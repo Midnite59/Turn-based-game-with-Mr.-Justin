@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using DataStorage;
 
 public class GameManager : MonoBehaviour
 {
@@ -23,27 +24,34 @@ public class GameManager : MonoBehaviour
     public Camera hiddenCam;
     private RenderTexture hiddenRTexture;
 
+    public PermData data;
+
 
     private void Awake()
     {
         Application.targetFrameRate = 60;
         if (instance == null) 
         {
+            Debug.Log("Gamemanager set to this object (" + gameObject.GetHashCode() + ")");
             instance = this;
             DontDestroyOnLoad(gameObject);
+            SceneManager.sceneLoaded += OnLevelLoaded;
         } 
         else
         {
+            Debug.Log("Unity found you! You faker! Faker? I think you are the fake game manager around here. (Destroying object) (" + gameObject.GetHashCode() + ")");
             Destroy(gameObject);
         }
-        SceneManager.sceneLoaded += OnLevelLoaded;
+        
+
+        Debug.Log(JsonUtility.ToJson(data));
     }
 
 
     // Start is called before the first frame update
     void Start()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         //Invoke("LoadBattleScene", 5);
         transRTexture = new RenderTexture(Camera.main.pixelWidth, Camera.main.pixelHeight, 16);
         transRTexture.Create();

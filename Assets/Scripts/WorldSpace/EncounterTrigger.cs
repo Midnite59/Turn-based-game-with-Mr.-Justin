@@ -4,7 +4,7 @@ using UnityEngine;
 [RequireComponent(typeof(EncountersOhNo))]
 public class EncounterTrigger : MonoBehaviour
 {
-    Collider collider;
+    new Collider collider;
     EncountersOhNo encounter;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()

@@ -16,11 +16,9 @@ namespace BattleLogic
 {
 
     using System;
-    using System.Runtime;
-    using System.Runtime.CompilerServices;
-    using System.Globalization;
     using System.Diagnostics.Contracts;
     using UnityEngine;
+    using static UnityEngine.Rendering.DebugUI;
 
     [System.Runtime.InteropServices.ComVisible(true)]
     [Serializable]
@@ -37,8 +35,11 @@ namespace BattleLogic
         //
         // Member Variables
         //
+        [SerializeField]
         private int inext;
+        [SerializeField]
         private int inextp;
+        [SerializeField]
         private int[] SeedArray = new int[56];
 
         //
@@ -247,6 +248,14 @@ namespace BattleLogic
 
             BattleRandom randomcopy = new BattleRandom(inext, inextp, SeedArray);
             value = randomcopy.Next(Mathf.RoundToInt(min * 100), Mathf.RoundToInt(max * 100)) / 100f;
+            return randomcopy;
+        }
+        public BattleRandom BranchRandom(out BattleRandom branchedRandom) 
+        {
+            int newseed;
+            BattleRandom randomcopy = new BattleRandom(inext, inextp, SeedArray);
+            newseed = randomcopy.Next();
+            branchedRandom = new BattleRandom(newseed);
             return randomcopy;
         }
     }
