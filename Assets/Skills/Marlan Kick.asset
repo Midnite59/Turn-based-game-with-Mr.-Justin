@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8017707a65b7e3c479342446a8e32eff, type: 3}
   m_Name: Marlan Kick
   m_EditorClassIdentifier: 
-  prefStance: 1
   targetType: 2
-  dmg: 30
+  icon: {fileID: 0}
+  skilltype: BasicAttack
+  art: 0
+  cost: 0
+  power: 30
   sacrifice: 10

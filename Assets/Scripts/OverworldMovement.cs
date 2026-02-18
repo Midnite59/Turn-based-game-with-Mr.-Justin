@@ -30,8 +30,8 @@ public class OverworldMovement : MonoBehaviour
     void FixedUpdate()
     {
         Vector3 movement = Vector3.zero;
-        movement += Input.GetAxis("Vertical") * Vector3.ProjectOnPlane(Vector3.ProjectOnPlane(cameraPos.forward, Vector3.up), lastNormal).normalized;
-        movement += Input.GetAxis("Horizontal") * Vector3.ProjectOnPlane(Vector3.ProjectOnPlane(cameraPos.right, Vector3.up), lastNormal).normalized;
+        movement += Input.GetAxis("Vertical") * Vector3.Cross(cameraPos.right, lastNormal).normalized;
+        movement += Input.GetAxis("Horizontal") * Vector3.Cross(lastNormal, Vector3.ProjectOnPlane(cameraPos.forward, Vector3.up)).normalized;
         movement = movement.normalized;
         //transform.Translate(movement*Time.fixedDeltaTime);
         RaycastHit hitInfo;
@@ -45,6 +45,9 @@ public class OverworldMovement : MonoBehaviour
         Debug.DrawRay(castStart, Vector3.ProjectOnPlane(cameraPos.forward, Vector3.up).normalized, Color.blue, 1);
         Debug.DrawRay(castStart, Vector3.ProjectOnPlane(Vector3.ProjectOnPlane(cameraPos.forward, Vector3.up), lastNormal).normalized, Color.red, 1);
         Debug.DrawRay(castStart, lastNormal.normalized, Color.white, 1);
+        //Debug.DrawRay(castStart, Vector3.Cross(cameraPos.forward, lastNormal).normalized, Color.cyan, 1);
+        Debug.DrawRay(castStart, Vector3.Cross(cameraPos.right, lastNormal).normalized, Color.magenta, 1);
+        Debug.DrawRay(castStart, Vector3.Cross(lastNormal,Vector3.ProjectOnPlane(cameraPos.forward, Vector3.up)).normalized, Color.yellow, 1);
         snap = true;
     }
     IEnumerator LateFixedUpdate()

@@ -269,6 +269,11 @@ MonoBehaviour:
     m_RotationOrder: 4
   transitionSeconds: 0.67
   hiddenCam: {fileID: 7975245142892444314}
+  data:
+    currentRun:
+      characters: []
+    unlockedZones: 0
+    characterFlags: 0
 --- !u!114 &3786984925233556366
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -320,6 +325,10 @@ MonoBehaviour:
     currentStance: 0
     allyStancePoints: 0
     enemyStancePoints: 0
+    random:
+      inext: 0
+      inextp: 21
+      SeedArray: 000000008dc1d86bbdf9c138d646385b419c0217cd70701c2a30735835ee2d589cae1762a345ac3a846f2e1e8938422b7bef30334be9a372656067062eb9fb5a0df21d291752557f7469ae5a88c6fd2dea4fc01a5d529e5e36487015a24847087f51d40cfa971b64e1db0e0ca627cd57e32235030eb07d24061780592703854a97b9dd4bd6bab7007965b201c5ca2811355aa801dc2a634516807d23b14c1d1f6ce2cd49524d44156addf54dbe106e378245502348c2f92d4672384d81c7c209f93115583cbd1552bd62ab59e9872e6292a94d068a4f6a2485fdb60d9879bc61
   battleResult: 0
 --- !u!114 &8753719683184857470
 MonoBehaviour:

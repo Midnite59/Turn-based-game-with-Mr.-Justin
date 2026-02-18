@@ -1318,6 +1318,7 @@ MonoBehaviour:
   basic: {fileID: 0}
   skill1: {fileID: 0}
   skill2: {fileID: 0}
+  stance: 0
   headPos: {x: 0, y: 0, z: 0}
   focusTForms:
   - {fileID: 1066381030987824752}

@@ -13,7 +13,7 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1274598094997741247, guid: cf12533979f42bd408329a1098521535, type: 3}
-      propertyPath: m_Materials.Array.data[0]
+      propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 514a110fd8cebc7409a58ceee6620da7, type: 2}
     - target: {fileID: 2418910785981240075, guid: cf12533979f42bd408329a1098521535, type: 3}
@@ -86,7 +86,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5602460700406069197, guid: cf12533979f42bd408329a1098521535, type: 3}
       propertyPath: m_Name
-      value: Abnorman
+      value: Abnorman2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
