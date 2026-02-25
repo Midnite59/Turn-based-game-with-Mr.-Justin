@@ -71,14 +71,14 @@ MonoBehaviour:
     weight: -1
     weightPerDepth: 1
   - block: {fileID: 3926343896737556006, guid: 58532209d19efd046a47e8d47fb9c319, type: 3}
-    weight: 1
+    weight: 8
     weightPerDepth: 0
   - block: {fileID: 215172982368332660, guid: d5e8b2a17a741a74c8058368bf0963eb, type: 3}
-    weight: 1
+    weight: 8
     weightPerDepth: 0
   - block: {fileID: 6294029412043678902, guid: d77d812396f99914e9c773a7e42e0160, type: 3}
-    weight: 1
+    weight: 8
     weightPerDepth: 0
   - block: {fileID: 469515281154974049, guid: 9fa67277a1ce29149855430d1deb2073, type: 3}
-    weight: 1
+    weight: 8
     weightPerDepth: 0

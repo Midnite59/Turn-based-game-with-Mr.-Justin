@@ -23,7 +23,7 @@ public class DungeonPalette : ScriptableObject
             float finalWeight = Mathf.Max(weight + (weightPerDepth * age), 0);
             if (age >= depth - 1) 
             {
-                return block.anchors.Count(a => a.anchorObject.isDoor) == 1 ? finalWeight : 0;
+                return block.anchors.Count(a => !a.anchorObject.isWall) == 1 ? finalWeight : 0;
             }
             return finalWeight;
         }

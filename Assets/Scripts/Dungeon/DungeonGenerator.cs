@@ -99,8 +99,22 @@ public class DungeonGenerator : MonoBehaviour
             if (blockPositions.ContainsKey(key)) 
             {
                     metas = metas.Where(m => m.block.anchors.First(a => a.direction == direction).anchorObject.type == blockPositions[key].anchors.First(a => a.oppositeDirection == direction).anchorObject.type);
+
             }
         }
+        if (metas.Count() == 0) 
+        {
+            foreach (AnchorDirection direction in directions)
+            {
+                Vector3Int key = GetNextGridPosition(position, direction);
+                if (blockPositions.ContainsKey(key))
+                {
+                    metas = metas.Where(m => m.block.anchors.First(a => a.direction == direction).anchorObject.type == blockPositions[key].anchors.First(a => a.oppositeDirection == direction).anchorObject.type || m.block.anchors.First(a => a.direction == direction).anchorObject.type == DungeonBorderAnchorObject.ConnectorType.Wall);
+
+                }
+            }
+        }
+        Debug.Log(metas);
         return metas;
     }
 }
