@@ -37,7 +37,10 @@ public class DungeonBlock : MonoBehaviour
         {
             if (anchor.connection != null) 
             {
-                Debug.DrawLine(transform.position, anchor.transform.position, !anchor.anchorObject.isWall ? Color.green : Color.clear);
+                if (!anchor.anchorObject.isWall)
+                {
+                    Debug.DrawLine(transform.position, anchor.transform.position, anchor.anchorObject.type == anchor.connection.anchorObject.type ? Color.green : Color.red);
+                }
             }
             else if (!anchor.anchorObject.isWall)
             {
@@ -45,6 +48,17 @@ public class DungeonBlock : MonoBehaviour
             }
         }
     }
+
+    public DungeonBorderAnchor GetAnchor(DungeonBorderAnchor.AnchorDirection direction) 
+    {
+        return anchors.First(a => a.direction == direction);
+    }
+
+    public DungeonBorderAnchor GetAnchorOpp(DungeonBorderAnchor.AnchorDirection direction)
+    {
+        return anchors.First(a => a.oppositeDirection == direction);
+    }
+
     void Update()
     {
         DrawConnections();

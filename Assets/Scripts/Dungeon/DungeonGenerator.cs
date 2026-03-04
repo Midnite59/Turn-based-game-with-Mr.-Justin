@@ -2,8 +2,10 @@ using BattleLogic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.Overlays;
 using UnityEngine;
 using static DungeonBorderAnchor;
+using static DungeonBorderAnchorObject;
 
 public class DungeonGenerator : MonoBehaviour
 {
@@ -48,6 +50,8 @@ public class DungeonGenerator : MonoBehaviour
                 block.ConnectAnchors(block.anchors.First(a => a.direction == anchor.oppositeDirection), anchor);
                 blockPositions[GetGridPosition(block)] = block;
                 blockAges[block] = blockAges[room] + 1;
+                block.name += " " + blockAges[block];
+                block.name += " " + GetGridPosition(block);
                 ConnectToNeighbors(block);
                 openRooms.Add(block);
             }
@@ -61,13 +65,10 @@ public class DungeonGenerator : MonoBehaviour
         Vector3 diff = block.transform.position - transform.position;
         return new Vector3Int(Mathf.RoundToInt(diff.x/blockWidth), Mathf.RoundToInt(diff.y/blockHeight), Mathf.RoundToInt(diff.z/blockWidth));
     }
-    Vector3Int GetNextGridPosition(DungeonBlock block, AnchorDirection direction)
-    {
-        return GetNextGridPosition(GetGridPosition(block), direction);
-    }
-    Vector3Int GetNextGridPosition(Vector3Int blockPosition, AnchorDirection direction)
+    Vector3Int GetNextGridPosition(DungeonBlock block, AnchorDirection direction, Vector3Int blockPosition)
     {
         Vector3Int offset;
+        int heightOffset = Mathf.RoundToInt(block.GetAnchor(direction).transform.position.y / blockHeight);
         switch (direction)
         {
             case AnchorDirection.North: offset = Vector3Int.forward; break;
@@ -76,7 +77,11 @@ public class DungeonGenerator : MonoBehaviour
             case AnchorDirection.West: offset = Vector3Int.left; break;
             default: throw new System.ArgumentException("You put none in GetNextGridPosition's direction! D:");
         }
-        return blockPosition + offset;
+        return blockPosition + offset + (Vector3Int.up * heightOffset);
+    }
+    Vector3Int GetNextGridPosition(DungeonBlock block, AnchorDirection direction) 
+    {
+        return GetNextGridPosition(block, direction, GetGridPosition(block));
     }
     void ConnectToNeighbors(DungeonBlock block) 
     {
@@ -95,23 +100,36 @@ public class DungeonGenerator : MonoBehaviour
         IEnumerable<AnchorDirection> directions = new List<AnchorDirection>{AnchorDirection.North, AnchorDirection.South, AnchorDirection.East, AnchorDirection.West};
         foreach (AnchorDirection direction in directions) 
         {
-            Vector3Int key = GetNextGridPosition(position, direction);
-            if (blockPositions.ContainsKey(key)) 
-            {
-                    metas = metas.Where(m => m.block.anchors.First(a => a.direction == direction).anchorObject.type == blockPositions[key].anchors.First(a => a.oppositeDirection == direction).anchorObject.type);
-
-            }
+                metas = metas.Where(m =>
+                {
+                    Vector3Int key = GetNextGridPosition(m.block, direction, position);
+                    if (blockPositions.ContainsKey(key))
+                    {
+                        return m.block.GetAnchor(direction).anchorObject.type == blockPositions[key].GetAnchorOpp(direction).anchorObject.type;
+                    }
+                    else 
+                    {
+                        return true;
+                    }
+                });
         }
         if (metas.Count() == 0) 
         {
+            metas = palette.blockMetas;
             foreach (AnchorDirection direction in directions)
             {
-                Vector3Int key = GetNextGridPosition(position, direction);
-                if (blockPositions.ContainsKey(key))
+                metas = metas.Where(m =>
                 {
-                    metas = metas.Where(m => m.block.anchors.First(a => a.direction == direction).anchorObject.type == blockPositions[key].anchors.First(a => a.oppositeDirection == direction).anchorObject.type || m.block.anchors.First(a => a.direction == direction).anchorObject.type == DungeonBorderAnchorObject.ConnectorType.Wall);
-
-                }
+                    Vector3Int key = GetNextGridPosition(m.block, direction, position);
+                    if (blockPositions.ContainsKey(key))
+                    {
+                        return m.block.GetAnchor(direction).anchorObject.type == ConnectorType.Wall || m.block.GetAnchor(direction).anchorObject.type == blockPositions[key].GetAnchorOpp(direction).anchorObject.type;
+                    }
+                    else
+                    {
+                        return true;
+                    }
+                });
             }
         }
         Debug.Log(metas);
