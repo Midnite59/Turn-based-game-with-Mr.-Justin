@@ -1,8 +1,8 @@
 using BattleLogic;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.Overlays;
 using UnityEngine;
 using static DungeonBorderAnchor;
 using static DungeonBorderAnchorObject;
@@ -20,15 +20,17 @@ public class DungeonGenerator : MonoBehaviour
     public Dictionary<DungeonBlock, int> blockAges;
     public Dictionary<Vector3Int, DungeonBlock> blockPositions;
 
+    private IEnumerable<AnchorDirection> directions = new List<AnchorDirection>() { AnchorDirection.North, AnchorDirection.South, AnchorDirection.East, AnchorDirection.West };
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         blockAges = new Dictionary<DungeonBlock, int>();
         blockPositions = new Dictionary<Vector3Int, DungeonBlock>();
-        Generate(defaultStartingRoom, defaultPalette);
+        StartCoroutine(Generate(defaultStartingRoom, defaultPalette));
     }
 
-    void Generate(DungeonBlock startingRoomPF, DungeonPalette palette) 
+    IEnumerator Generate(DungeonBlock startingRoomPF, DungeonPalette palette) 
     {
         List<DungeonBlock> closedRooms = new List<DungeonBlock>();
         List<DungeonBlock> openRooms = new List<DungeonBlock>();
@@ -48,16 +50,23 @@ public class DungeonGenerator : MonoBehaviour
                 DungeonBlock block = Instantiate(palette.GetNextBlock(random, out random, this, room, FilterBlocks(GetNextGridPosition(room, anchor.direction), palette).ToList()), transform);
                 //DungeonBlock block = Instantiate(startingRoomPF, transform);
                 block.ConnectAnchors(block.anchors.First(a => a.direction == anchor.oppositeDirection), anchor);
-                blockPositions[GetGridPosition(block)] = block;
+                //blockPositions[GetGridPosition(block)] = block;
+                foreach (Vector3Int position in GetGridPositions(block)) 
+                {
+                    blockPositions[position] = block;
+                }
                 blockAges[block] = blockAges[room] + 1;
                 block.name += " " + blockAges[block];
                 block.name += " " + GetGridPosition(block);
                 ConnectToNeighbors(block);
                 openRooms.Add(block);
+                yield return null;
+                Debug.Break();
             }
             openRooms.Remove(room);
             closedRooms.Add(room);
         }
+        yield break;
     }
 
     Vector3Int GetGridPosition(DungeonBlock block) 
@@ -65,10 +74,33 @@ public class DungeonGenerator : MonoBehaviour
         Vector3 diff = block.transform.position - transform.position;
         return new Vector3Int(Mathf.RoundToInt(diff.x/blockWidth), Mathf.RoundToInt(diff.y/blockHeight), Mathf.RoundToInt(diff.z/blockWidth));
     }
+
+    IEnumerable<Vector3Int> GetGridPositions(DungeonBlock block)
+    {
+        return GetGridPositions(block, GetGridPosition(block));
+    }
+    IEnumerable<Vector3Int> GetGridPositions(DungeonBlock block, Vector3Int position)
+    {
+        List<Vector3Int> positions = new List<Vector3Int>() { position };
+        foreach (AnchorDirection direction in directions) 
+        {
+            int heightOffset = Mathf.RoundToInt((block.GetAnchor(direction).transform.position.y / blockHeight) - block.transform.position.y);
+            if (heightOffset != 0) 
+            {
+                Vector3Int newPosition = position + (Vector3Int.up * heightOffset);
+                if (!positions.Contains(newPosition)) 
+                {
+                    positions.Add(newPosition);
+                }
+            }
+        }
+        return positions;
+    }
+
     Vector3Int GetNextGridPosition(DungeonBlock block, AnchorDirection direction, Vector3Int blockPosition)
     {
         Vector3Int offset;
-        int heightOffset = Mathf.RoundToInt(block.GetAnchor(direction).transform.position.y / blockHeight);
+        int heightOffset = Mathf.RoundToInt((block.GetAnchor(direction).transform.position.y / blockHeight) - block.transform.position.y);
         switch (direction)
         {
             case AnchorDirection.North: offset = Vector3Int.forward; break;
@@ -97,7 +129,7 @@ public class DungeonGenerator : MonoBehaviour
     IEnumerable<DungeonPalette.BlockMeta> FilterBlocks(Vector3Int position, DungeonPalette palette) 
     {
         IEnumerable<DungeonPalette.BlockMeta> metas = palette.blockMetas;
-        IEnumerable<AnchorDirection> directions = new List<AnchorDirection>{AnchorDirection.North, AnchorDirection.South, AnchorDirection.East, AnchorDirection.West};
+        //IEnumerable<AnchorDirection> directions = new List<AnchorDirection>{AnchorDirection.North, AnchorDirection.South, AnchorDirection.East, AnchorDirection.West};
         foreach (AnchorDirection direction in directions) 
         {
                 metas = metas.Where(m =>

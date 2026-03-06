@@ -95,5 +95,5 @@ MonoBehaviour:
     weight: 2
     weightPerDepth: 0
   - block: {fileID: 1341139459039853047, guid: 62ad8e9079f90da4ab6203ceab35d1d9, type: 3}
-    weight: 0
+    weight: 1
     weightPerDepth: 0
