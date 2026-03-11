@@ -58,34 +58,34 @@ public class DungeonBorderAnchor : AnchorPoint<DungeonBorderAnchorObject>
         {
             bestDot = dot;
             bestDirection = AnchorDirection.North;
-            Debug.Log(name + " north'd of parent " + this.parent);
+            //Debug.Log(name + " north'd of parent " + this.parent);
         }
         dot = Vector3.Dot(anchorDirection, Vector3.back);
         if (dot > bestDot)
         {
             bestDot = dot;
             bestDirection = AnchorDirection.South;
-            Debug.Log(name + " south'd of parent " + this.parent);
+            //Debug.Log(name + " south'd of parent " + this.parent);
         }
         dot = Vector3.Dot(anchorDirection, Vector3.right);
         if (dot > bestDot)
         {
             bestDot = dot;
             bestDirection = AnchorDirection.East;
-            Debug.Log(name + " east'd of parent " + this.parent);
+            //Debug.Log(name + " east'd of parent " + this.parent);
         }
         dot = Vector3.Dot(anchorDirection, Vector3.left);
         if (dot > bestDot)
         {
             bestDot = dot;
             bestDirection = AnchorDirection.West;
-            Debug.Log(name + " west'd of parent " + this.parent);
+            //Debug.Log(name + " west'd of parent " + this.parent);
         }
-        Debug.Log(name + " bestdirection is " + bestDirection + ", direction is " + direction);
+        //Debug.Log(name + " bestdirection is " + bestDirection + ", direction is " + direction);
         if (direction == AnchorDirection.None && bestDirection != AnchorDirection.None)
         {
             direction = bestDirection;
-            Debug.Log(name + " bestdirection assigned as " + bestDirection);
+            //Debug.Log(name + " bestdirection assigned as " + bestDirection);
         }
         anchorObject = GetComponentInChildren<DungeonBorderAnchorObject>();
     }
