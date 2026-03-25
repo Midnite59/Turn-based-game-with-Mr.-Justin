@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4674892255845230762}
   - component: {fileID: 8860034868489506486}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: NorthSouthWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58,7 +58,7 @@ GameObject:
   - component: {fileID: 3198353253155916554}
   - component: {fileID: 2853432375147603709}
   - component: {fileID: 4447053010219785473}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}

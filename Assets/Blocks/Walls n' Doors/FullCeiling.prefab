@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8801110800428975493}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FullCeiling
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 3220080013572871208}
   - component: {fileID: 1873974184593681335}
   - component: {fileID: 4198570269722569694}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Quad
   m_TagString: Untagged
   m_Icon: {fileID: 0}

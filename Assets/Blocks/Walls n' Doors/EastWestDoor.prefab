@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2481950137266801628}
   - component: {fileID: 2419488976840534069}
   - component: {fileID: 7282552919614386142}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -123,7 +123,7 @@ GameObject:
   - component: {fileID: 588992209686391051}
   - component: {fileID: 2580431761492584662}
   - component: {fileID: 147614507990696935}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: U
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -234,7 +234,7 @@ GameObject:
   - component: {fileID: 1129874548254539638}
   - component: {fileID: 6842037441114834045}
   - component: {fileID: 3329455260276281236}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -343,7 +343,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7662572724334906356}
   - component: {fileID: 6785172290594913443}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: EastWestDoor
   m_TagString: Untagged
   m_Icon: {fileID: 0}

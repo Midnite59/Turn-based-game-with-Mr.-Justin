@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8180346116894650704}
   - component: {fileID: 1986862831682158380}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: NorthSouthDoor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -60,7 +60,7 @@ GameObject:
   - component: {fileID: 6649009497959585604}
   - component: {fileID: 9096724519445736790}
   - component: {fileID: 7906934278387521105}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: U
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -171,7 +171,7 @@ GameObject:
   - component: {fileID: 3557294036629336680}
   - component: {fileID: 2765269235702742572}
   - component: {fileID: 5124863658246221217}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -282,7 +282,7 @@ GameObject:
   - component: {fileID: 6691494203080587378}
   - component: {fileID: 7382260479642498211}
   - component: {fileID: 2534781038869348947}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: L
   m_TagString: Untagged
   m_Icon: {fileID: 0}

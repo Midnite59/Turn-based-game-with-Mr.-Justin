@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7003136422485878439}
   - component: {fileID: 7760496489242494193}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SouthAnchor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -60,7 +60,7 @@ GameObject:
   - component: {fileID: 2618804745667187532}
   - component: {fileID: 5723529493092605522}
   - component: {fileID: 4892237394744598334}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Quad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -170,7 +170,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4547348857391077755}
   - component: {fileID: 9104303070788441817}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: DungeonBlock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -225,7 +225,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4929948397886413942}
   - component: {fileID: 1966750606553607284}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WestAnchor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -273,7 +273,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4464217037360274052}
   - component: {fileID: 1519890463022125252}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: EastAnchor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -320,7 +320,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 744511140798328107}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: CeilingAnchor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -353,7 +353,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6236301667261331113}
   - component: {fileID: 8788243863875123191}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: NorthAnchor
   m_TagString: Untagged
   m_Icon: {fileID: 0}

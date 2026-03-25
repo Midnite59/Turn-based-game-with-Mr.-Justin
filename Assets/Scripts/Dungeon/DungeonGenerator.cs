@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UIElements;
 using static DungeonBorderAnchor;
 using static DungeonBorderAnchorObject;
 
@@ -55,6 +56,7 @@ public class DungeonGenerator : MonoBehaviour
                 //blockPositions[GetGridPosition(block)] = block;
                 foreach (Vector3Int position in GetGridPositions(block)) 
                 {
+                    //Debug.LogError(position);
                     blockPositions[position] = block;
                 }
                 blockAges[block] = blockAges[room] + 1;
@@ -70,10 +72,20 @@ public class DungeonGenerator : MonoBehaviour
         yield break;
     }
 
+    Vector3Int GetGridPosition(Vector3 position)
+    {
+        return new Vector3Int(Mathf.RoundToInt(position.x / blockWidth), Mathf.RoundToInt(position.y / blockHeight), Mathf.RoundToInt(position.z / blockWidth));
+    }
+
+    Vector3 GetPositionFromGrid(Vector3Int gridPosition) 
+    {
+        return new Vector3(gridPosition.x * blockWidth, gridPosition.y * blockHeight, gridPosition.z * blockWidth) + transform.position;
+    }
+
     Vector3Int GetGridPosition(DungeonBlock block) 
     {
         Vector3 diff = block.transform.position - transform.position;
-        return new Vector3Int(Mathf.RoundToInt(diff.x/blockWidth), Mathf.RoundToInt(diff.y/blockHeight), Mathf.RoundToInt(diff.z/blockWidth));
+        return GetGridPosition(diff);
     }
 
     IEnumerable<Vector3Int> GetGridPositions(DungeonBlock block)
@@ -85,7 +97,7 @@ public class DungeonGenerator : MonoBehaviour
         List<Vector3Int> positions = new List<Vector3Int>() { position };
         foreach (AnchorDirection direction in directions) 
         {
-            int heightOffset = Mathf.RoundToInt((block.GetAnchor(direction).transform.position.y / blockHeight) - block.transform.position.y);
+            int heightOffset = Mathf.RoundToInt((block.GetAnchor(direction).transform.position.y - block.transform.position.y) / blockHeight);
             if (heightOffset != 0) 
             {
                 Vector3Int newPosition = position + (Vector3Int.up * heightOffset);
@@ -136,6 +148,13 @@ public class DungeonGenerator : MonoBehaviour
         {
                 metas = metas.Where(m =>
                 {
+                    foreach (Vector3Int gpos in GetGridPositions(m.block, position))
+                    {
+                        if (blockPositions.ContainsKey(gpos))
+                        {
+                            return false;
+                        }
+                    }
                     Vector3Int key = GetNextGridPosition(m.block, direction, position);
                     if (blockPositions.ContainsKey(key))
                     {
@@ -154,6 +173,13 @@ public class DungeonGenerator : MonoBehaviour
             {
                 metas = metas.Where(m =>
                 {
+                    foreach (Vector3Int gpos in GetGridPositions(m.block, position))
+                    {
+                        if (blockPositions.ContainsKey(gpos))
+                        {
+                            return false;
+                        }
+                    }
                     Vector3Int key = GetNextGridPosition(m.block, direction, position);
                     if (blockPositions.ContainsKey(key))
                     {
@@ -168,5 +194,29 @@ public class DungeonGenerator : MonoBehaviour
         }
         //Debug.Log(metas);
         return metas;
+    }
+
+    void DrawLocations() 
+    {
+        foreach (DungeonBlock block in blockPositions.Values.ToHashSet()) 
+        {
+            Vector3Int gridPos = GetGridPosition(block);
+            Color col = new Color((gridPos.x * .1f) + 0.5f, (gridPos.y * .25f) + 0.5f, (gridPos.z * .1f) + 0.5f);
+            foreach (Vector3Int gridPoss in GetGridPositions(block)) 
+            {
+                DrawLocation(col, gridPoss);
+            }
+        }
+    }
+    private void OnDrawGizmos()
+    {
+        if (Application.isPlaying) { DrawLocations(); }
+    }
+
+    void DrawLocation(Color col, Vector3Int gridPos)
+    {
+        float a = 0.3f;
+        Gizmos.color = new Color(col.r, col.g, col.b, a);
+        Gizmos.DrawCube(GetPositionFromGrid(gridPos), Vector3.one * 10);
     }
 }
