@@ -101,6 +101,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: OpenWestDeadEnd
       objectReference: {fileID: 0}
+    - target: {fileID: 3761084734653758950, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
+      propertyPath: anchorObject
+      value: 
+      objectReference: {fileID: 5052186620187862051}
     - target: {fileID: 4547348857391077755, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
       propertyPath: m_LocalPosition.x
       value: 71.72879
@@ -141,6 +145,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6465818262119574224, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
+      propertyPath: anchorObject
+      value: 
+      objectReference: {fileID: 5103005067055444897}
     - target: {fileID: 7760496489242494193, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
       propertyPath: direction
       value: 2
@@ -157,6 +165,30 @@ PrefabInstance:
       propertyPath: anchorObject
       value: 
       objectReference: {fileID: 1196810177756412801}
+    - target: {fileID: 9104303070788441817, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
+      propertyPath: 'anchors.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1302792605459159751}
+    - target: {fileID: 9104303070788441817, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
+      propertyPath: 'anchors.Array.data[1]'
+      value: 
+      objectReference: {fileID: 9195593050810125809}
+    - target: {fileID: 9104303070788441817, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
+      propertyPath: 'anchors.Array.data[2]'
+      value: 
+      objectReference: {fileID: 3628032886855206880}
+    - target: {fileID: 9104303070788441817, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
+      propertyPath: 'anchors.Array.data[3]'
+      value: 
+      objectReference: {fileID: 2314168494051030246}
+    - target: {fileID: 9104303070788441817, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
+      propertyPath: 'anchors.Array.data[4]'
+      value: 
+      objectReference: {fileID: 6825484346385293523}
+    - target: {fileID: 9104303070788441817, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
+      propertyPath: 'anchors.Array.data[5]'
+      value: 
+      objectReference: {fileID: 5828797883588123747}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 1852382377647114421, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
@@ -182,6 +214,61 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09780d350f28bc04fa9137ce10685a9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DungeonBorderAnchorObject
+--- !u!114 &1302792605459159751 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6465818262119574224, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
+  m_PrefabInstance: {fileID: 5453649740496957463}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73cf4d603350ac3499e6f2e5c8f22137, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DungeonBorderAnchor
+--- !u!114 &2314168494051030246 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7760496489242494193, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
+  m_PrefabInstance: {fileID: 5453649740496957463}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73cf4d603350ac3499e6f2e5c8f22137, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DungeonBorderAnchor
+--- !u!114 &3628032886855206880 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8788243863875123191, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
+  m_PrefabInstance: {fileID: 5453649740496957463}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73cf4d603350ac3499e6f2e5c8f22137, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DungeonBorderAnchor
+--- !u!114 &5052186620187862051 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 987336693956711476, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
+  m_PrefabInstance: {fileID: 5453649740496957463}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09780d350f28bc04fa9137ce10685a9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DungeonBorderAnchorObject
+--- !u!114 &5103005067055444897 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 972431830536111030, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
+  m_PrefabInstance: {fileID: 5453649740496957463}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09780d350f28bc04fa9137ce10685a9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DungeonBorderAnchorObject
 --- !u!114 &5215219349431807188 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 274561070345526467, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
@@ -193,6 +280,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09780d350f28bc04fa9137ce10685a9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DungeonBorderAnchorObject
+--- !u!114 &5828797883588123747 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1966750606553607284, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
+  m_PrefabInstance: {fileID: 5453649740496957463}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73cf4d603350ac3499e6f2e5c8f22137, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DungeonBorderAnchor
 --- !u!114 &6241787087910707448 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2103191756642275567, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
@@ -204,3 +302,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09780d350f28bc04fa9137ce10685a9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DungeonBorderAnchorObject
+--- !u!114 &6825484346385293523 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1519890463022125252, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
+  m_PrefabInstance: {fileID: 5453649740496957463}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73cf4d603350ac3499e6f2e5c8f22137, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DungeonBorderAnchor
+--- !u!114 &9195593050810125809 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3761084734653758950, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
+  m_PrefabInstance: {fileID: 5453649740496957463}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73cf4d603350ac3499e6f2e5c8f22137, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DungeonBorderAnchor

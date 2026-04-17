@@ -4,11 +4,35 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using UnityEngine;
 using System.Linq;
+using AnchorDirection = DungeonBorderAnchor.AnchorDirection;
 
 public class DungeonBlock : MonoBehaviour
 {
     public List<DungeonBorderAnchor> anchors;
+    public int exits 
+    { 
+        get 
+        { 
+            return anchors.Count(a => a.connection == null && !a.anchorObject.isWall); 
+        } 
+    }
     //public int age;
+
+    [Serializable]
+    public class Neighbor 
+    {
+        public DungeonBlock prefab;
+        public AnchorDirection direction;
+
+        public Neighbor(DungeonBlock prefab, AnchorDirection direction) 
+        {
+            this.prefab = prefab;
+            this.direction = direction;
+        }
+
+    }
+
+    public List<Neighbor> neighbors;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -17,6 +41,7 @@ public class DungeonBlock : MonoBehaviour
     }
     public void Setup()
     {
+        anchors.Clear();
         anchors.AddRange(GetComponentsInChildren<DungeonBorderAnchor>().Where(a => !anchors.Contains(a)));
         anchors.ForEach(a => a.SetParent(this));
     }

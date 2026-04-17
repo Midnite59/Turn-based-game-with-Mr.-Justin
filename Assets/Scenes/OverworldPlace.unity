@@ -167,7 +167,7 @@ MonoBehaviour:
   defaultPalette: {fileID: 11400000, guid: 021226b57dfd1e449a9fd10255aa1fce, type: 2}
   blockWidth: 30
   blockHeight: 15
-  depth: 10
+  depth: 3
 --- !u!1 &166047455
 GameObject:
   m_ObjectHideFlags: 0

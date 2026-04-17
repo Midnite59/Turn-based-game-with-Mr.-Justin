@@ -21,10 +21,11 @@ public class DungeonPalette : ScriptableObject
             int age = dungeonGenerator.blockAges[dungeonBlock];
             int depth = dungeonGenerator.depth;
             float finalWeight = Mathf.Max(weight + (weightPerDepth * age), 0);
-            if (age >= depth - 1) 
+            Debug.Log(dungeonBlock.name + " " + block.name + " " + weight + " " + finalWeight);
+            /*if (age >= depth - 1) 
             {
                 return block.anchors.Count(a => !a.anchorObject.isWall) == 1 ? finalWeight : 0;
-            }
+            }*/
             return finalWeight;
         }
 

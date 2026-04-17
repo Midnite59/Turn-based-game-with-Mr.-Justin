@@ -60,6 +60,7 @@ GameObject:
   - component: {fileID: 2618804745667187532}
   - component: {fileID: 5723529493092605522}
   - component: {fileID: 4892237394744598334}
+  - component: {fileID: 987336693956711476}
   m_Layer: 8
   m_Name: Quad
   m_TagString: Untagged
@@ -75,12 +76,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1856989615465435509}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 30, y: 30, z: 30}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4547348857391077755}
+  m_Father: {fileID: 39001472560500651}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!33 &2618804745667187532
 MeshFilter:
@@ -160,6 +161,19 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &987336693956711476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1856989615465435509}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09780d350f28bc04fa9137ce10685a9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DungeonBorderAnchorObject
+  type: 0
 --- !u!1 &2456652259576702667
 GameObject:
   m_ObjectHideFlags: 0
@@ -190,8 +204,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 6112049332342499617}
   - {fileID: 744511140798328107}
+  - {fileID: 39001472560500651}
   - {fileID: 6236301667261331113}
   - {fileID: 7003136422485878439}
   - {fileID: 4464217037360274052}
@@ -215,6 +229,9 @@ MonoBehaviour:
   - {fileID: 7760496489242494193}
   - {fileID: 1519890463022125252}
   - {fileID: 1966750606553607284}
+  - {fileID: 6465818262119574224}
+  - {fileID: 3761084734653758950}
+  neighbors: []
 --- !u!1 &2639913865098009206
 GameObject:
   m_ObjectHideFlags: 0
@@ -320,6 +337,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 744511140798328107}
+  - component: {fileID: 6465818262119574224}
   m_Layer: 8
   m_Name: CeilingAnchor
   m_TagString: Untagged
@@ -343,6 +361,69 @@ Transform:
   - {fileID: 8719534983982540705}
   m_Father: {fileID: 4547348857391077755}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6465818262119574224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4147441020955001295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73cf4d603350ac3499e6f2e5c8f22137, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DungeonBorderAnchor
+  anchorObject: {fileID: 0}
+  direction: 5
+  _connection: {fileID: 0}
+--- !u!1 &6648355378713591445
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 39001472560500651}
+  - component: {fileID: 3761084734653758950}
+  m_Layer: 0
+  m_Name: FloorAnchor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &39001472560500651
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6648355378713591445}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 30, y: 30, z: 30}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6112049332342499617}
+  m_Father: {fileID: 4547348857391077755}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3761084734653758950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6648355378713591445}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73cf4d603350ac3499e6f2e5c8f22137, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DungeonBorderAnchor
+  anchorObject: {fileID: 0}
+  direction: 6
+  _connection: {fileID: 0}
 --- !u!1 &7765603121643361065
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using static DungeonBorderAnchor;
 using static DungeonBorderAnchorObject;
+using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
 public class DungeonGenerator : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class DungeonGenerator : MonoBehaviour
     public float blockHeight = 15;
 
     public int depth = 10;
+
+    public int exitsAtEnd = 3;
 
     public Dictionary<DungeonBlock, int> blockAges;
     public Dictionary<Vector3Int, DungeonBlock> blockPositions;
@@ -37,6 +40,9 @@ public class DungeonGenerator : MonoBehaviour
         List<DungeonBlock> closedRooms = new List<DungeonBlock>();
         List<DungeonBlock> openRooms = new List<DungeonBlock>();
 
+        int exitsStopped = 0;
+        int exitsWorking = 0;
+
         BattleRandom random = new BattleRandom();
         DungeonBlock startingRoom = Instantiate(startingRoomPF, transform);
         blockPositions[GetGridPosition(startingRoom)] = startingRoom;
@@ -46,19 +52,45 @@ public class DungeonGenerator : MonoBehaviour
         {
             DungeonBlock room = openRooms.First(r => blockAges[r] < depth);
             foreach (var anchor in room.anchors)
-            {   
+            {
                 if (!room.HasDoor(anchor.direction)) continue;
                 if (blockPositions.ContainsKey(GetNextGridPosition(room, anchor.direction))) continue;
-                Debug.Log(GetGridPosition(room));
-                DungeonBlock block = Instantiate(palette.GetNextBlock(random, out random, this, room, FilterBlocks(GetNextGridPosition(room, anchor.direction), palette).ToList()), transform);
-                //DungeonBlock block = Instantiate(startingRoomPF, transform);
-                block.ConnectAnchors(block.anchors.First(a => a.direction == anchor.oppositeDirection), anchor);
-                //blockPositions[GetGridPosition(block)] = block;
-                foreach (Vector3Int position in GetGridPositions(block)) 
+                exitsWorking = blockAges.Aggregate(0, (sum, ba) => { return ba.Value < depth ? sum + ba.Key.exits : sum; });
+                exitsStopped = blockAges.Aggregate(0, (sum, ba) => { return ba.Value >= depth ? sum + ba.Key.exits : sum; });
+                int minExits = 0;
+                int maxExits = 0;
+
+                int MaxMinExits = ((exitsWorking - 1) * 3);
+
+                if (blockAges[room] + 1 >= depth)
                 {
-                    //Debug.LogError(position);
-                    blockPositions[position] = block;
+                    maxExits = exitsAtEnd - exitsStopped;
+                    minExits = Math.Max(0, maxExits - MaxMinExits);
+
                 }
+                else 
+                {
+                    //TODO
+                }
+                    Debug.Log(GetGridPosition(room));
+                DungeonBlock block = Instantiate(palette.GetNextBlock(random, out random, this, room, FilterBlocks(GetNextGridPosition(room, anchor.direction), palette).ToList()), transform);
+                List<DungeonBlock.Neighbor> neighbors = new List<DungeonBlock.Neighbor>(block.neighbors);
+                block.ConnectAnchors(block.anchors.First(a => a.direction == anchor.oppositeDirection), anchor);
+                while (neighbors.Count > 0) 
+                {
+                    DungeonBlock neighborBlock = Instantiate(neighbors[0].prefab, transform);
+                    Debug.Log(neighborBlock.name);
+                    DungeonBorderAnchor neighborAnchor = block.anchors.First(a => a.direction == neighbors[0].direction);
+                    neighborBlock.ConnectAnchors(neighborBlock.anchors.First(a => a.direction == neighborAnchor.oppositeDirection), neighborAnchor);
+                    neighbors.RemoveAt(0);
+                    blockPositions[GetGridPosition(neighborBlock)] = neighborBlock;
+                    blockAges[neighborBlock] = blockAges[room] + 1;
+                    neighborBlock.name += " " + blockAges[neighborBlock];
+                    neighborBlock.name += " " + GetGridPosition(neighborBlock);
+                    ConnectToNeighbors(neighborBlock);
+                    openRooms.Add(neighborBlock);
+                }
+                blockPositions[GetGridPosition(block)] = block;
                 blockAges[block] = blockAges[room] + 1;
                 block.name += " " + blockAges[block];
                 block.name += " " + GetGridPosition(block);
@@ -94,39 +126,46 @@ public class DungeonGenerator : MonoBehaviour
     }
     IEnumerable<Vector3Int> GetGridPositions(DungeonBlock block, Vector3Int position)
     {
-        List<Vector3Int> positions = new List<Vector3Int>() { position };
-        foreach (AnchorDirection direction in directions) 
+        var open = block.neighbors.Select(n => new { neighbor = n, position }).ToList();
+        List<DungeonBlock.Neighbor> closed = new() { new DungeonBlock.Neighbor(block, AnchorDirection.None) };
+
+        List<Vector3Int> gridPositions = new List<Vector3Int>() {position};
+        while (open.Count() > 0) 
         {
-            int heightOffset = Mathf.RoundToInt((block.GetAnchor(direction).transform.position.y - block.transform.position.y) / blockHeight);
-            if (heightOffset != 0) 
+            var nPos = open[0];
+            Vector3Int gPos = GetNextGridPosition(nPos.neighbor.direction, nPos.position);
+            open = open.Concat(nPos.neighbor.prefab.neighbors.Where(n => !closed.Any(c => c.prefab == n.prefab)).Select(n => new { neighbor = n, position = gPos})).ToList();
+            open.RemoveAt(0);
+            closed.Add(nPos.neighbor);
+            if (gridPositions.Contains(gPos)) 
             {
-                Vector3Int newPosition = position + (Vector3Int.up * heightOffset);
-                if (!positions.Contains(newPosition)) 
-                {
-                    positions.Add(newPosition);
-                }
+                //Debug.LogWarning("Oh no!");
+                continue;
             }
+            gridPositions.Add(gPos);
         }
-        return positions;
+
+        return gridPositions;
     }
 
-    Vector3Int GetNextGridPosition(DungeonBlock block, AnchorDirection direction, Vector3Int blockPosition)
+    Vector3Int GetNextGridPosition(AnchorDirection direction, Vector3Int blockPosition)
     {
         Vector3Int offset;
-        int heightOffset = Mathf.RoundToInt((block.GetAnchor(direction).transform.position.y - block.transform.position.y) / blockHeight);
         switch (direction)
         {
             case AnchorDirection.North: offset = Vector3Int.forward; break;
             case AnchorDirection.South: offset = Vector3Int.back; break;
             case AnchorDirection.East: offset = Vector3Int.right; break;
             case AnchorDirection.West: offset = Vector3Int.left; break;
+            case AnchorDirection.Up: offset = Vector3Int.up; break;
+            case AnchorDirection.Down: offset = Vector3Int.down; break;
             default: throw new System.ArgumentException("You put none in GetNextGridPosition's direction! D:");
         }
-        return blockPosition + offset + (Vector3Int.up * heightOffset);
+        return blockPosition + offset;
     }
     Vector3Int GetNextGridPosition(DungeonBlock block, AnchorDirection direction) 
     {
-        return GetNextGridPosition(block, direction, GetGridPosition(block));
+        return GetNextGridPosition(direction, GetGridPosition(block));
     }
     void ConnectToNeighbors(DungeonBlock block) 
     {
@@ -141,71 +180,53 @@ public class DungeonGenerator : MonoBehaviour
     }
     IEnumerable<DungeonPalette.BlockMeta> FilterBlocks(Vector3Int position, DungeonPalette palette) 
     {
-        Debug.LogWarning(position);
+        //Debug.LogWarning(position);
         IEnumerable<DungeonPalette.BlockMeta> metas = palette.blockMetas;
         //IEnumerable<AnchorDirection> directions = new List<AnchorDirection>{AnchorDirection.North, AnchorDirection.South, AnchorDirection.East, AnchorDirection.West};
-        foreach (AnchorDirection direction in directions) 
-        {
-                metas = metas.Where(m =>
-                {
-                    foreach (Vector3Int gpos in GetGridPositions(m.block, position))
-                    {
-                        if (blockPositions.ContainsKey(gpos))
-                        {
-                            return false;
-                        }
-                    }
-                    Vector3Int key = GetNextGridPosition(m.block, direction, position);
-                    if (blockPositions.ContainsKey(key))
-                    {
-                        return m.block.GetAnchor(direction).anchorObject.type == blockPositions[key].GetAnchorOpp(direction).anchorObject.type;
-                    }
-                    else 
-                    {
-                        return true;
-                    }
-                });
-        }
+        metas = GetValidBlocks(metas, position);
         if (metas.Count() == 0) 
         {
             metas = palette.blockMetas;
-            foreach (AnchorDirection direction in directions)
-            {
-                metas = metas.Where(m =>
-                {
-                    foreach (Vector3Int gpos in GetGridPositions(m.block, position))
-                    {
-                        if (blockPositions.ContainsKey(gpos))
-                        {
-                            return false;
-                        }
-                    }
-                    Vector3Int key = GetNextGridPosition(m.block, direction, position);
-                    if (blockPositions.ContainsKey(key))
-                    {
-                        return m.block.GetAnchor(direction).anchorObject.type == ConnectorType.Wall || m.block.GetAnchor(direction).anchorObject.type == blockPositions[key].GetAnchorOpp(direction).anchorObject.type;
-                    }
-                    else
-                    {
-                        return true;
-                    }
-                });
-            }
+            metas = GetValidBlocks(metas, position, true);
         }
         //Debug.Log(metas);
         return metas;
     }
 
+    IEnumerable<DungeonPalette.BlockMeta> GetValidBlocks(IEnumerable<DungeonPalette.BlockMeta> metas, Vector3Int position, bool force = false) 
+    {
+        foreach (AnchorDirection direction in directions)
+        {
+            metas = metas.Where(m =>
+            {
+                foreach (Vector3Int gpos in GetGridPositions(m.block, position))
+                {
+                    if (blockPositions.ContainsKey(gpos))
+                    {
+                        return false;
+                    }
+                }
+                Vector3Int key = GetNextGridPosition(direction, position);
+                if (blockPositions.ContainsKey(key))
+                {
+                    return (force ? !m.block.GetAnchor(direction).anchorObject.isWall : false) || m.block.GetAnchor(direction).anchorObject.type == blockPositions[key].GetAnchorOpp(direction).anchorObject.type;
+                }
+                else
+                {
+                    return true;
+                }
+            });
+        }
+        return metas;
+    }
+
     void DrawLocations() 
     {
-        foreach (DungeonBlock block in blockPositions.Values.ToHashSet()) 
+        foreach (DungeonBlock block in blockPositions.Values) 
         {
             Vector3Int gridPos = GetGridPosition(block);
             Color col = new Color((gridPos.x * .1f) + 0.5f, (gridPos.y * .25f) + 0.5f, (gridPos.z * .1f) + 0.5f);
-            foreach (Vector3Int gridPoss in GetGridPositions(block)) 
-            {
-                DrawLocation(col, gridPoss);
-            }
+            DrawLocation(col, GetGridPosition(block));
         }
     }
     private void OnDrawGizmos()

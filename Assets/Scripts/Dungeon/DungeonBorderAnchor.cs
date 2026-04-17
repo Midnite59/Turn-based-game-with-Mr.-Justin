@@ -6,7 +6,7 @@ public class DungeonBorderAnchor : AnchorPoint<DungeonBorderAnchorObject>
     protected DungeonBlock parent;
     public enum AnchorDirection
     {
-        None, North, South, East, West
+        None, North, South, East, West, Up, Down
     }
     public AnchorDirection direction;
     public AnchorDirection oppositeDirection { 
@@ -18,6 +18,8 @@ public class DungeonBorderAnchor : AnchorPoint<DungeonBorderAnchorObject>
                 case AnchorDirection.South: return AnchorDirection.North;
                 case AnchorDirection.East: return AnchorDirection.West;
                 case AnchorDirection.West: return AnchorDirection.East;
+                case AnchorDirection.Up: return AnchorDirection.Down;
+                case AnchorDirection.Down: return AnchorDirection.Up;
                 default : return AnchorDirection.None;
             }
         } 
