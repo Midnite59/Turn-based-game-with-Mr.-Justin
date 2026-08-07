@@ -288,7 +288,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   allies:
   - {fileID: 11400000, guid: 9dc9a4338cd437d4bbb2a058c841950b, type: 2}
-  - {fileID: 11400000, guid: 4eb09dce7e3840f4f98eb9f6bd57c945, type: 2}
+  - {fileID: 11400000, guid: 4bde5c25d2499c94ca73947ba80e5af0, type: 2}
   - {fileID: 11400000, guid: 5853f1d03274fbb4fb3499355f77cc6c, type: 2}
   - {fileID: 11400000, guid: 21c9a60e9d3273c48b579a9cbb786295, type: 2}
   allyhealths: []

@@ -21,7 +21,7 @@ public class DungeonPalette : ScriptableObject
             int age = dungeonGenerator.blockAges[dungeonBlock];
             int depth = dungeonGenerator.depth;
             float finalWeight = Mathf.Max(weight + (weightPerDepth * age), 0);
-            Debug.Log(dungeonBlock.name + " " + block.name + " " + weight + " " + finalWeight);
+            //Debug.Log(dungeonBlock.name + " " + block.name + " " + weight + " " + finalWeight);
             /*if (age >= depth - 1) 
             {
                 return block.anchors.Count(a => !a.anchorObject.isWall) == 1 ? finalWeight : 0;
@@ -30,23 +30,27 @@ public class DungeonPalette : ScriptableObject
         }
 
     }
-    public List<BlockMeta> blockMetas;
+    public List<BlockMeta> blockMetas = new List<BlockMeta>();
 
     public DungeonBlock GetNextBlock(BattleRandom randomIN, out BattleRandom randomOUT, DungeonGenerator dungeonGenerator, DungeonBlock dungeonBlock, List<BlockMeta> bMetas = null) 
     {
         bMetas ??= blockMetas;
         randomOUT = randomIN.NextRandom(0, bMetas.Sum(b => b.getInContext(dungeonGenerator, dungeonBlock)), out float value);
         int index = 0;
-        while (value > 0) 
+        while (value > 0)
         {
             value -= bMetas[index].getInContext(dungeonGenerator, dungeonBlock);
-            if (value <= 0) 
+            if (value <= 0)
             {
                 return bMetas[index].block;
             }
             index++;
         }
-        return bMetas.Last().block;
+        if (bMetas.Count > 0) 
+        {
+            return bMetas.First().block;
+        }
+        throw new ArgumentOutOfRangeException("Nothing in bMetas (after failsafe). Block: " + dungeonBlock + ", BlockMetas: " + string.Join(", ", bMetas.Select(bm => bm.block.name + "Meta")));
     }
     public void BakeBlocks() 
     {

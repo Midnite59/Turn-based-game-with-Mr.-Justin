@@ -264,7 +264,7 @@ PrefabInstance:
       objectReference: {fileID: 1094481183142232929, guid: 8a4e0fbd7c0230e42b2c53007e703419, type: 3}
     - target: {fileID: 9104303070788441817, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
       propertyPath: neighbors.Array.data[0].direction
-      value: 6
+      value: -9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:

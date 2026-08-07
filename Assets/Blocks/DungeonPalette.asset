@@ -14,22 +14,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DungeonPalette
   blockMetas:
   - block: {fileID: 5670587309298776784, guid: 812ddb79039339c4dbe64c488bcecff6, type: 3}
-    weight: -1
+    weight: -5
     weightPerDepth: 1
   - block: {fileID: 1280910587171859931, guid: 05c78cff8dc18da40ade8974d29b4945, type: 3}
-    weight: -1
+    weight: -5
     weightPerDepth: 1
   - block: {fileID: 1901837094437641947, guid: f1dd7617ef6336a4eae6f7a2319a8c76, type: 3}
-    weight: -1
+    weight: -5
     weightPerDepth: 1
   - block: {fileID: 4839966589827211423, guid: 9cc99913ec2be124ba345e8a5508ec47, type: 3}
-    weight: -1
+    weight: -5
     weightPerDepth: 1
   - block: {fileID: 6226053284379739314, guid: eebbbedd8278f724db693bd1e7c474ff, type: 3}
-    weight: 3
+    weight: 2
     weightPerDepth: 0
   - block: {fileID: 613317641391468398, guid: fcd51f9e3816d7245aa5f2cb02bee0bf, type: 3}
-    weight: 3
+    weight: 2
     weightPerDepth: 0
   - block: {fileID: 5382654090192267716, guid: 60d6e58e3529f0947aaa1712438a6f57, type: 3}
     weight: 4
@@ -44,31 +44,31 @@ MonoBehaviour:
     weight: 4
     weightPerDepth: 0
   - block: {fileID: 5343156944148461170, guid: 0754f962227186b43bc6fa87732b5382, type: 3}
-    weight: 2
-    weightPerDepth: 0
-  - block: {fileID: 84566979515763439, guid: 7367b36b38d52144ea4ce943f03490fa, type: 3}
-    weight: 2
-    weightPerDepth: 0
-  - block: {fileID: 9036962055836468326, guid: d6de5e7b9c8b79d48a41fc4e845023fc, type: 3}
-    weight: 2
-    weightPerDepth: 0
-  - block: {fileID: 649723561090592508, guid: c2567bc2e7b84314ea363bcdd1edc24a, type: 3}
-    weight: 2
-    weightPerDepth: 0
-  - block: {fileID: 5148901659744211164, guid: 17ed8bbfa66d69c4d9a99c2e30d04c24, type: 3}
     weight: 5
     weightPerDepth: -1
+  - block: {fileID: 84566979515763439, guid: 7367b36b38d52144ea4ce943f03490fa, type: 3}
+    weight: 5
+    weightPerDepth: -1
+  - block: {fileID: 9036962055836468326, guid: d6de5e7b9c8b79d48a41fc4e845023fc, type: 3}
+    weight: 5
+    weightPerDepth: -1
+  - block: {fileID: 649723561090592508, guid: c2567bc2e7b84314ea363bcdd1edc24a, type: 3}
+    weight: 5
+    weightPerDepth: -1
+  - block: {fileID: 5148901659744211164, guid: 17ed8bbfa66d69c4d9a99c2e30d04c24, type: 3}
+    weight: 5
+    weightPerDepth: -2
   - block: {fileID: 6052275595830459891, guid: 766845309600cf0478287a45dca20f60, type: 3}
-    weight: -1
+    weight: -5
     weightPerDepth: 1
   - block: {fileID: 1298860223592704361, guid: a88350cab309af548ace9f77ae2c0564, type: 3}
-    weight: -1
+    weight: -5
     weightPerDepth: 1
   - block: {fileID: 7653496393246457953, guid: bd22af6d8ef2f084d9c1d756b6ea14c4, type: 3}
-    weight: -1
+    weight: -5
     weightPerDepth: 1
   - block: {fileID: 3888782328892171982, guid: 89d1ec02dee7d8e4c992440f3a3c77a0, type: 3}
-    weight: -1
+    weight: -5
     weightPerDepth: 1
   - block: {fileID: 3926343896737556006, guid: 58532209d19efd046a47e8d47fb9c319, type: 3}
     weight: 2
@@ -97,24 +97,12 @@ MonoBehaviour:
   - block: {fileID: 1094481183142232929, guid: 05f0b3faaab8a264783ba4534c93c540, type: 3}
     weight: 2
     weightPerDepth: 0
-  - block: {fileID: 1094481183142232929, guid: d3f8b4797f70b004d8ee3500d8141078, type: 3}
-    weight: 2
-    weightPerDepth: 0
   - block: {fileID: 1094481183142232929, guid: 8a4e0fbd7c0230e42b2c53007e703419, type: 3}
-    weight: 2
-    weightPerDepth: 0
-  - block: {fileID: 1094481183142232929, guid: 50b7f6c0aeb867b45ad7dd81781d5d78, type: 3}
     weight: 2
     weightPerDepth: 0
   - block: {fileID: 1094481183142232929, guid: 497adc679a958ca47be0223bfb66e12c, type: 3}
     weight: 2
     weightPerDepth: 0
-  - block: {fileID: 1094481183142232929, guid: 4e67e5b2619b512498bc5b34235843ca, type: 3}
-    weight: 2
-    weightPerDepth: 0
   - block: {fileID: 1094481183142232929, guid: 60cda390c0f272943937ed21ecd8adb9, type: 3}
-    weight: 2
-    weightPerDepth: 0
-  - block: {fileID: 1094481183142232929, guid: 0c59abf4370ff564b81ac05150629d1e, type: 3}
     weight: 2
     weightPerDepth: 0

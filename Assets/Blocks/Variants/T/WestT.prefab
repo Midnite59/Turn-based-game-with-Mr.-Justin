@@ -229,7 +229,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1519890463022125252, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
       propertyPath: direction
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1519890463022125252, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
       propertyPath: anchorObject
@@ -237,7 +237,7 @@ PrefabInstance:
       objectReference: {fileID: 6474663252305068332}
     - target: {fileID: 1966750606553607284, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
       propertyPath: direction
-      value: 4
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 1966750606553607284, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
       propertyPath: anchorObject
@@ -246,6 +246,10 @@ PrefabInstance:
     - target: {fileID: 2456652259576702667, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
       propertyPath: m_Name
       value: WestT
+      objectReference: {fileID: 0}
+    - target: {fileID: 3761084734653758950, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
+      propertyPath: direction
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 3761084734653758950, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
       propertyPath: anchorObject
@@ -292,12 +296,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6465818262119574224, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
+      propertyPath: direction
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 6465818262119574224, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
       propertyPath: anchorObject
       value: 
       objectReference: {fileID: 8800727309430897555}
     - target: {fileID: 7760496489242494193, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
       propertyPath: direction
-      value: 2
+      value: -3
       objectReference: {fileID: 0}
     - target: {fileID: 7760496489242494193, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
       propertyPath: anchorObject
@@ -305,7 +313,7 @@ PrefabInstance:
       objectReference: {fileID: 4136648202027380398}
     - target: {fileID: 8788243863875123191, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
       propertyPath: direction
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8788243863875123191, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
       propertyPath: anchorObject

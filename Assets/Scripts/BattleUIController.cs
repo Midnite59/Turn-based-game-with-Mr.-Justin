@@ -13,6 +13,11 @@ public class BattleUIController : MonoBehaviour
     public Button skill1Button;
     public Button skill2Button;
     public List<int> targets;
+    public void Instaend(bool result) 
+    {
+        gameloop.battleResult = result;
+        gameloop.EndBattle();
+    }
 
     public List<BActorInfo> allyHealthBars;
 

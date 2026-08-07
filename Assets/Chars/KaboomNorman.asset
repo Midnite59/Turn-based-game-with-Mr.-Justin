@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c9eb213c02df014faa91c9eaf8abeaa, type: 3}
+  m_Name: KaboomNorman
+  m_EditorClassIdentifier: Assembly-CSharp::CharAttr
+  charname: Kaboom Norman
+  stats:
+    Maxhp: 100
+    atk: 8.5
+    def: 7
+    eff: 1
+    spd: 80
+  skills:
+  - {fileID: 11400000, guid: 7f8f43fa7ace6214ab10e81781d93267, type: 2}
+  - {fileID: 11400000, guid: df88f53f40b87b74091a0ab8733bcffe, type: 2}
+  fallback: {fileID: 11400000, guid: d8b5124648e2edb4b8f5706ba9da3bb1, type: 2}
+  characterArt: 1
+  prefab: {fileID: 6094909670292179794, guid: 622f4768deb9efc428143870497ac0e3, type: 3}
+  skipSkill: {fileID: 11400000, guid: 01ca8bcc28fa23b4a8c3532a4d901251, type: 2}

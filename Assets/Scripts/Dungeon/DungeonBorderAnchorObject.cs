@@ -22,4 +22,13 @@ public class DungeonBorderAnchorObject : AnchorObject
     {
         
     }
+
+    public void Lock() 
+    {
+        if (type == ConnectorType.Wall) 
+        {
+            Debug.LogError("Your trying to lock... a wall... What?");
+        }
+        type = ConnectorType.Wall;
+    }
 }

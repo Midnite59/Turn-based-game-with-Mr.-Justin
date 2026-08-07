@@ -231,6 +231,8 @@ MonoBehaviour:
   - {fileID: 1966750606553607284}
   - {fileID: 6465818262119574224}
   - {fileID: 3761084734653758950}
+  points: []
+  entrance: {fileID: 0}
   neighbors: []
 --- !u!1 &2639913865098009206
 GameObject:

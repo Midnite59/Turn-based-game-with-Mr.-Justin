@@ -1,21 +1,21 @@
 using UnityEngine;
 using UnityEditor;
 
-[CustomEditor(typeof(DungeonPalette))]
-public class DungeonPaletteEditor : Editor
+[CustomEditor(typeof(ExitDoor))]
+public class ExitDoorEditor : Editor
 {
-    protected DungeonPalette palette;
+    protected ExitDoor door;
     private void OnEnable()
     {
-        palette = (DungeonPalette)target;
+        door = (ExitDoor)target;
     }
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
-        if (GUILayout.Button("Bake Blocks"))
+        if (GUILayout.Button("Open"))
         {
-            palette.BakeBlocks();
-            AssetDatabase.ForceReserializeAssets();
+            Debug.Log("I... Have... OPENED");
+            door.Open();
         }
     }
 }

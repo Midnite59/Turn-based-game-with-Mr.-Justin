@@ -58,6 +58,7 @@ public class BattleManager : MonoBehaviour
         }
         outputevents = new List<OutputEvent>();
         hitqueue = new List<AnimHit>();
+        GameLoop.instance.currentState = GameLoop.State.StartBattle;
     }
 
     // Update is called once per frame

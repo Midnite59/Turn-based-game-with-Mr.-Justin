@@ -406,6 +406,11 @@ namespace BattleLogic
             return new GameState(allies, enemies, currentActor, currentStance, allySP, enemySP, random);
         }
 
+        public GameState Kamakaze() 
+        {
+            return WithEnemies(enemies.Select(e => e.TakeDmg(e.hp - 1, BattleFlags.None)).ToImmutableList());
+        }
+
     }
     public class TypeCombo 
     {

@@ -1,5 +1,52 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6838557938393223609
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3424084973104638461}
+  - component: {fileID: 7863365565593286837}
+  m_Layer: 0
+  m_Name: Object
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3424084973104638461
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6838557938393223609}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -8, y: 0, z: -8}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1149103774779995506}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7863365565593286837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6838557938393223609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 934658bf1b81a2c4b8e151aa875dbf7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DungeonBlockAnchor
+  anchorObject: {fileID: 4291215505336402993, guid: f60b1c3bf59c78847b287ce836bbf796, type: 3}
+  accTypes: 1
+  parent: {fileID: 5670587309298776784}
 --- !u!1001 &3524350910216055817
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10,7 +57,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1519890463022125252, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
       propertyPath: direction
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1519890463022125252, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
       propertyPath: anchorObject
@@ -18,7 +65,7 @@ PrefabInstance:
       objectReference: {fileID: 3685753932033306826}
     - target: {fileID: 1966750606553607284, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
       propertyPath: direction
-      value: 4
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 1966750606553607284, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
       propertyPath: anchorObject
@@ -27,6 +74,10 @@ PrefabInstance:
     - target: {fileID: 2456652259576702667, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
       propertyPath: m_Name
       value: NorthDeadEnd
+      objectReference: {fileID: 0}
+    - target: {fileID: 3761084734653758950, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
+      propertyPath: direction
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 3761084734653758950, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
       propertyPath: anchorObject
@@ -73,12 +124,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6465818262119574224, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
+      propertyPath: direction
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 6465818262119574224, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
       propertyPath: anchorObject
       value: 
       objectReference: {fileID: 4438235739328868287}
     - target: {fileID: 7760496489242494193, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
       propertyPath: direction
-      value: 2
+      value: -3
       objectReference: {fileID: 0}
     - target: {fileID: 7760496489242494193, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
       propertyPath: anchorObject
@@ -86,12 +141,20 @@ PrefabInstance:
       objectReference: {fileID: 3303684688944692454}
     - target: {fileID: 8788243863875123191, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
       propertyPath: direction
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8788243863875123191, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
       propertyPath: anchorObject
       value: 
       objectReference: {fileID: 5648457297979952805}
+    - target: {fileID: 9104303070788441817, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
+      propertyPath: points.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9104303070788441817, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
+      propertyPath: 'points.Array.data[0]'
+      value: 
+      objectReference: {fileID: 7863365565593286837}
     - target: {fileID: 9104303070788441817, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
       propertyPath: 'anchors.Array.data[0]'
       value: 
@@ -120,6 +183,9 @@ PrefabInstance:
     m_RemovedGameObjects:
     - {fileID: 3041199410057950501, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
     m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 4547348857391077755, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3424084973104638461}
     - targetCorrespondingSourceObject: {fileID: 6236301667261331113, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2627839078512050393}
@@ -147,6 +213,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73cf4d603350ac3499e6f2e5c8f22137, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DungeonBorderAnchor
+--- !u!4 &1149103774779995506 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4547348857391077755, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
+  m_PrefabInstance: {fileID: 3524350910216055817}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &2737834703212035277 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1519890463022125252, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
@@ -224,6 +295,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73cf4d603350ac3499e6f2e5c8f22137, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DungeonBorderAnchor
+--- !u!114 &5670587309298776784 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9104303070788441817, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
+  m_PrefabInstance: {fileID: 3524350910216055817}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1a0c63d119f9f44b984bc56ca4c6dd0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DungeonBlock
 --- !u!114 &6583084022953912568 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7760496489242494193, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
