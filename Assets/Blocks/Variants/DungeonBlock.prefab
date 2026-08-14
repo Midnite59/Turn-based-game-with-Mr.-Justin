@@ -59,8 +59,8 @@ GameObject:
   - component: {fileID: 6112049332342499617}
   - component: {fileID: 2618804745667187532}
   - component: {fileID: 5723529493092605522}
-  - component: {fileID: 4892237394744598334}
   - component: {fileID: 987336693956711476}
+  - component: {fileID: 2762777945811101837}
   m_Layer: 8
   m_Name: Quad
   m_TagString: Untagged
@@ -139,8 +139,21 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &4892237394744598334
-MeshCollider:
+--- !u!114 &987336693956711476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1856989615465435509}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09780d350f28bc04fa9137ce10685a9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DungeonBorderAnchorObject
+  type: 0
+--- !u!65 &2762777945811101837
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -157,23 +170,9 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &987336693956711476
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1856989615465435509}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09780d350f28bc04fa9137ce10685a9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DungeonBorderAnchorObject
-  type: 0
+  serializedVersion: 3
+  m_Size: {x: 1.12, y: 1.12, z: 0.1}
+  m_Center: {x: 0, y: 0, z: 0.05}
 --- !u!1 &2456652259576702667
 GameObject:
   m_ObjectHideFlags: 0

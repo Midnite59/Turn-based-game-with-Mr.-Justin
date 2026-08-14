@@ -118,6 +118,7 @@ public class DungeonBlock : MonoBehaviour
             {
                 return exits.ToString() + "r";
             }
+            return "0";
         }
         if (exits == 3) 
         {

@@ -200,6 +200,7 @@ public class DungeonGenerator : MonoBehaviour
         {
             DungeonBlockAnchor point = Instantiate(prefabAnchor, block.transform);
             string key = block.GetKey();
+            Debug.LogWarning("Key = " + key);
             if (key != "0")
             {
                 blockObjectPair bop = blockObjects.First(bo => bo.key == key);

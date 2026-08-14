@@ -20,11 +20,11 @@ MonoBehaviour:
   - enemies:
     - {fileID: 11400000, guid: ac74156f674033c41a8bfc8bb76b97bc, type: 2}
     - {fileID: 11400000, guid: ac74156f674033c41a8bfc8bb76b97bc, type: 2}
-    weight: 1
+    weight: 2
     weightPerSegment: 0
   - enemies:
     - {fileID: 11400000, guid: ac74156f674033c41a8bfc8bb76b97bc, type: 2}
     - {fileID: 11400000, guid: ac74156f674033c41a8bfc8bb76b97bc, type: 2}
     - {fileID: 11400000, guid: ac74156f674033c41a8bfc8bb76b97bc, type: 2}
-    weight: 1
+    weight: 3
     weightPerSegment: 0

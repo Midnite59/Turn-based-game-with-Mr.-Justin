@@ -249,7 +249,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3761084734653758950, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
       propertyPath: direction
-      value: 9
+      value: -9
       objectReference: {fileID: 0}
     - target: {fileID: 3761084734653758950, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
       propertyPath: anchorObject

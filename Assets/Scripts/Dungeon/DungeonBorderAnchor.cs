@@ -69,7 +69,7 @@ public class DungeonBorderAnchor : AnchorPoint<DungeonBorderAnchorObject>
     public void SetParent(DungeonBlock parent)
     {
         this.parent = parent;
-        Vector3 anchorDirection = transform.position - parent.transform.position + Vector3.up;
+        Vector3 anchorDirection = transform.position - (parent.transform.position + Vector3.up);
         AnchorDirection bestDirection = AnchorDirection.None;
         float bestDot = 0;
         float dot = Vector3.Dot(anchorDirection, Vector3.forward);
@@ -100,13 +100,6 @@ public class DungeonBorderAnchor : AnchorPoint<DungeonBorderAnchorObject>
             bestDirection = AnchorDirection.West;
             //Debug.Log(name + " west'd of parent " + this.parent);
         }
-        dot = Vector3.Dot(anchorDirection, Vector3.up);
-        if (dot > bestDot)
-        {
-            bestDot = dot;
-            bestDirection = AnchorDirection.Up;
-            //Debug.Log(name + " up'd of parent " + this.parent);
-        }
         dot = Vector3.Dot(anchorDirection, Vector3.down);
         if (dot > bestDot)
         {
@@ -114,6 +107,14 @@ public class DungeonBorderAnchor : AnchorPoint<DungeonBorderAnchorObject>
             bestDirection = AnchorDirection.Down;
             //Debug.Log(name + " down'd of parent " + this.parent);
         }
+        dot = Vector3.Dot(anchorDirection, Vector3.up);
+        if (dot > bestDot)
+        {
+            bestDot = dot;
+            bestDirection = AnchorDirection.Up;
+            //Debug.Log(name + " up'd of parent " + this.parent);
+        }
+        
         //Debug.Log(name + " bestdirection is " + bestDirection + ", direction is " + direction);
         if (/*direction == AnchorDirection.None &&*/ bestDirection != AnchorDirection.None)
         {

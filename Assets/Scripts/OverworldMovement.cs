@@ -11,7 +11,7 @@ public class OverworldMovement : MonoBehaviour
     public Rigidbody rb;
     public new CapsuleCollider collider;
     public float floorCastDistance;
-    public float radius { get { return collider.radius; } }
+    public float radius { get { return collider.radius /* * transform.localScale.magnitude */; } }
     Vector3 lastNormal = Vector3.up;
     public float castOffset;
     public float steepSlope = 75;
