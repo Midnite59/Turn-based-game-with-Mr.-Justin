@@ -5,7 +5,7 @@ using UnityEngine.Rendering;
 
 public class OverworldMovement : MonoBehaviour
 {
-    public Vector3 footPos { get {  return transform.position + Vector3.down; } }
+    public Vector3 footPos { get {  return transform.position + collider.center + (Vector3.down * (collider.height / 2)); } }
     public float speed;
     public Transform cameraPos;
     public Rigidbody rb;
@@ -36,7 +36,7 @@ public class OverworldMovement : MonoBehaviour
         //transform.Translate(movement*Time.fixedDeltaTime);
         RaycastHit hitInfo;
         rb.linearVelocity = movement * speed;
-        if (!Physics.Raycast(castStart + movement * radius, Vector3.down, out hitInfo, fallCastDistance)) 
+        if (!Physics.Raycast(castStart + movement * (radius + speed * Time.fixedDeltaTime), Vector3.down, out hitInfo, fallCastDistance)) 
         {
             rb.linearVelocity = Vector3.zero;
         }
@@ -67,7 +67,7 @@ public class OverworldMovement : MonoBehaviour
                         Debug.DrawRay(castStart, hitInfo.distance * Vector3.down, Color.blue, 0.1f);
                         Debug.DrawRay(castStart, radius * Vector3.down, Color.green, 0.1f);
                         Debug.DrawRay(castStart, radius * -lastNormal, Color.green, 0.1f);
-                        lastNormal = hitInfo.normal;
+                        lastNormal = hitInfo.transform.up;
                         //Debug.Break();
                     }
                     transform.position += hitInfo.distance * Vector3.down;
@@ -80,7 +80,7 @@ public class OverworldMovement : MonoBehaviour
     {
         if (Vector3.Dot(Vector3.up, collision.contacts[0].normal) >= Mathf.Cos(steepSlope * Mathf.Deg2Rad))
         {
-            lastNormal = collision.contacts[0].normal;
+            lastNormal = collision.transform.up;
         }
     }
 

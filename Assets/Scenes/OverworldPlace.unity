@@ -246,8 +246,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 0.19939858, z: 1}
+  m_Center: {x: 0, y: 0.40030012, z: 7.9070084e-13}
 --- !u!23 &166047457
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -312,13 +312,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 166047455}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.38268343, y: 0, z: 0, w: 0.92387956}
-  m_LocalPosition: {x: 16.38, y: 2.28, z: -17.7874}
-  m_LocalScale: {x: 18.532362, y: 7.0111814, z: 0.20464385}
+  m_LocalRotation: {x: 0.38268343, y: 0, z: 0, w: 0.92387956}
+  m_LocalPosition: {x: 19.71, y: 2, z: -20}
+  m_LocalScale: {x: 24, y: 0.5, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: -45, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 45, y: 0, z: 0}
 --- !u!1 &232019426 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4268090563164593842, guid: 4713985f7a1c96c469b0760e5299b3fa, type: 3}
@@ -758,6 +758,8 @@ GameObject:
   - component: {fileID: 1048583797}
   - component: {fileID: 1048583801}
   - component: {fileID: 1048583806}
+  - component: {fileID: 1048583808}
+  - component: {fileID: 1048583807}
   m_Layer: 0
   m_Name: PlayerMovable
   m_TagString: Untagged
@@ -851,6 +853,40 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!135 &1048583807
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1048583796}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 3.2
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1048583808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1048583796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a5ed3d33ac243743b9d2f369cec5221, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  collider: {fileID: 1048583807}
 --- !u!1 &1304048310
 GameObject:
   m_ObjectHideFlags: 0

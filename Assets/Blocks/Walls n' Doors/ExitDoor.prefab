@@ -121,6 +121,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5284250497422710801}
   - component: {fileID: 4572626552967175756}
+  - component: {fileID: 651410652396812145}
   m_Layer: 0
   m_Name: ExitDoor
   m_TagString: Untagged
@@ -156,6 +157,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf712d1e445e02946a2c720b8b206132, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  animator: {fileID: 651410652396812145}
+--- !u!95 &651410652396812145
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6155334731585672417}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 04c2c1fa760dd794e8ce0885704532e1, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &7384065903417359199
 GameObject:
   m_ObjectHideFlags: 0

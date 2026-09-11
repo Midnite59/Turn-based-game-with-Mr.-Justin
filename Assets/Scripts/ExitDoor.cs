@@ -1,7 +1,10 @@
 using UnityEngine;
 
-public class ExitDoor : MonoBehaviour
+public class ExitDoor : MonoBehaviour, IInteractable
 {
+    bool locked { get { return GetComponentInParent<DungeonBorderAnchorObject>().isWall; } }
+    bool hasOpened = false;
+    public Animator animator;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -32,6 +35,7 @@ public class ExitDoor : MonoBehaviour
         if (gen != null)
         {
             gen.GenerateFrom(this);
+            hasOpened = true;
         }
         else 
         {
@@ -39,4 +43,20 @@ public class ExitDoor : MonoBehaviour
         }
     }
 
+    public bool Interact()
+    {
+        if (IsActive())
+        {
+            animator.SetTrigger("Open");
+            Open();
+            return true;
+        }
+        return false;
+    }
+
+    public bool IsActive()
+    {
+        return !(locked || hasOpened);
+        //throw new System.NotImplementedException("idk");
+    }
 }
