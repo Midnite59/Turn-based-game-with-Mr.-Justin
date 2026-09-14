@@ -6,6 +6,7 @@ using System.Linq;
 using UnityEngine;
 using static DungeonBorderAnchor;
 using static DungeonBorderAnchorObject;
+using static Unity.Collections.AllocatorManager;
 
 public class DungeonGenerator : MonoBehaviour
 {
@@ -24,6 +25,7 @@ public class DungeonGenerator : MonoBehaviour
     public int segment = 0; // 0 base
 
     public List<Vector3Int> exitsStopped;
+    public List<Vector3Int> exitsWorking;
     public List<DungeonBorderAnchor> exitAnchors;
 
     public Dictionary<DungeonBlock, int> blockAges;
@@ -44,6 +46,8 @@ public class DungeonGenerator : MonoBehaviour
     public EncountersOhNo encounterPrefab;
 
     public BattleRandom random = new BattleRandom();
+
+    public event Action onGenerationFinish = () => { };
 
     [Serializable]
     public class blockObjectPair 
@@ -101,7 +105,7 @@ public class DungeonGenerator : MonoBehaviour
         exitAnchors = new List<DungeonBorderAnchor>();
 
         exitsStopped = new List<Vector3Int>();
-        List<Vector3Int> exitsWorking = new List<Vector3Int>();
+        exitsWorking = new List<Vector3Int>();
 
         //BattleRandom random = new BattleRandom();
 
@@ -191,6 +195,8 @@ public class DungeonGenerator : MonoBehaviour
         BuildExits(exitAnchors);
         Debug.Log(String.Join(", ", exitAnchors));
         yield return StartCoroutine(FillSegment());
+        onGenerationFinish.Invoke();
+        onGenerationFinish = () => { };
     }
 
     IEnumerator FillSegment() 
@@ -426,19 +432,19 @@ public class DungeonGenerator : MonoBehaviour
         {
             Vector3Int gridPos = GetGridPosition(block);
             Color col = blockAges.ContainsKey(block) ? new Color(0, 0.5f + (blockAges[block] * 0.1f), 0) : Color.gray;
-            DrawLocation(col, GetGridPosition(block));
+            DrawLocation(col, GetGridPosition(block), 10);
         }
     }
     private void OnDrawGizmos()
     {
-        if (Application.isPlaying) { DrawLocations(); }
+        if (Application.isPlaying) { DrawLocations(); DrawExits(); }
     }
 
-    void DrawLocation(Color col, Vector3Int gridPos)
+    void DrawLocation(Color col, Vector3Int gridPos, float size)
     {
         float a = 0.3f;
         Gizmos.color = new Color(col.r, col.g, col.b, a);
-        Gizmos.DrawCube(GetPositionFromGrid(gridPos), Vector3.one * 10);
+        Gizmos.DrawCube(GetPositionFromGrid(gridPos), Vector3.one * size);
     }
 
     void BuildExits(IEnumerable<DungeonBorderAnchor> anchors) 
@@ -446,6 +452,20 @@ public class DungeonGenerator : MonoBehaviour
         foreach (DungeonBorderAnchor anchor in anchors) 
         {
             BuildExit(anchor);
+        }
+    }
+
+    void DrawExits()
+    {
+        foreach (Vector3Int exit in exitsWorking)
+        {
+            Color col = Color.blue;
+            DrawLocation(col, exit, 3);
+        }
+        foreach (Vector3Int exit in exitsStopped)
+        {
+            Color col = Color.red;
+            DrawLocation(col, exit, 3);
         }
     }
 

@@ -58,6 +58,7 @@ public class DungeonBlock : MonoBehaviour
         Vector3 diff = self.transform.position - transform.position;
         transform.position = other.transform.position - diff;
         self.Connect(other);
+        DrawConnections();
     }
     public bool HasDoor(DungeonBorderAnchor.AnchorDirection direction) 
     {
@@ -91,7 +92,7 @@ public class DungeonBlock : MonoBehaviour
         return anchors.First(a => a.oppositeDirection == direction);
     }
 
-    void Update()
+    void LateUpdate()
     {
         DrawConnections();
     }

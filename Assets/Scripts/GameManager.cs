@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     public GameObject Overworld;
     public TeamSetup team;
     public GameLoop gameloop;
+    public DungeonGenerator dungeonGenerator;
 
     private RenderTexture transRTexture;
     public RawImage transRTImage;

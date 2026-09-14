@@ -886,6 +886,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a5ed3d33ac243743b9d2f369cec5221, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  interactablesCount: 0
   collider: {fileID: 1048583807}
 --- !u!1 &1304048310
 GameObject:
@@ -1249,6 +1250,10 @@ PrefabInstance:
       propertyPath: BattleBackground
       value: 
       objectReference: {fileID: 1866431346}
+    - target: {fileID: -8249199771388596926, guid: 4713985f7a1c96c469b0760e5299b3fa, type: 3}
+      propertyPath: dungeonGenerator
+      value: 
+      objectReference: {fileID: 127214921}
     - target: {fileID: 6792552205298862442, guid: 4713985f7a1c96c469b0760e5299b3fa, type: 3}
       propertyPath: m_Name
       value: GameManager

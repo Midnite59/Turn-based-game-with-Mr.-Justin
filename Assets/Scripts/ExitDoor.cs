@@ -31,11 +31,13 @@ public class ExitDoor : MonoBehaviour, IInteractable
 
     public void Open()
     {
-        DungeonGenerator gen = GetComponentInParent<DungeonGenerator>();
+        //DungeonGenerator gen = GetComponentInParent<DungeonGenerator>();
+        DungeonGenerator gen = GameManager.instance.dungeonGenerator;
         if (gen != null)
         {
-            gen.GenerateFrom(this);
             hasOpened = true;
+            gen.GenerateFrom(this);
+            gen.onGenerationFinish += OnGenerationFinish;
         }
         else 
         {
@@ -47,7 +49,6 @@ public class ExitDoor : MonoBehaviour, IInteractable
     {
         if (IsActive())
         {
-            animator.SetTrigger("Open");
             Open();
             return true;
         }
@@ -58,5 +59,10 @@ public class ExitDoor : MonoBehaviour, IInteractable
     {
         return !(locked || hasOpened);
         //throw new System.NotImplementedException("idk");
+    }
+
+    void OnGenerationFinish() 
+    {
+        animator.SetTrigger("Open");
     }
 }
