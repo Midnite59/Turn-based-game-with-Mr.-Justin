@@ -82,6 +82,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1519890463022125252, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
+      propertyPath: parent
+      value: 
+      objectReference: {fileID: 5148901659744211164}
+    - target: {fileID: 1519890463022125252, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
       propertyPath: direction
       value: 1
       objectReference: {fileID: 0}
@@ -89,6 +93,10 @@ PrefabInstance:
       propertyPath: anchorObject
       value: 
       objectReference: {fileID: 949860504495734400}
+    - target: {fileID: 1966750606553607284, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
+      propertyPath: parent
+      value: 
+      objectReference: {fileID: 5148901659744211164}
     - target: {fileID: 1966750606553607284, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
       propertyPath: direction
       value: -1
@@ -101,6 +109,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: 4Way
       objectReference: {fileID: 0}
+    - target: {fileID: 3761084734653758950, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
+      propertyPath: parent
+      value: 
+      objectReference: {fileID: 5148901659744211164}
     - target: {fileID: 3761084734653758950, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
       propertyPath: direction
       value: -9
@@ -150,6 +162,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6465818262119574224, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
+      propertyPath: parent
+      value: 
+      objectReference: {fileID: 5148901659744211164}
+    - target: {fileID: 6465818262119574224, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
       propertyPath: direction
       value: 9
       objectReference: {fileID: 0}
@@ -158,6 +174,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3770265200801711539}
     - target: {fileID: 7760496489242494193, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
+      propertyPath: parent
+      value: 
+      objectReference: {fileID: 5148901659744211164}
+    - target: {fileID: 7760496489242494193, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
       propertyPath: direction
       value: -3
       objectReference: {fileID: 0}
@@ -165,6 +185,10 @@ PrefabInstance:
       propertyPath: anchorObject
       value: 
       objectReference: {fileID: 619557417956786337}
+    - target: {fileID: 8788243863875123191, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
+      propertyPath: parent
+      value: 
+      objectReference: {fileID: 5148901659744211164}
     - target: {fileID: 8788243863875123191, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
       propertyPath: direction
       value: 3
@@ -289,6 +313,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73cf4d603350ac3499e6f2e5c8f22137, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DungeonBorderAnchor
+--- !u!114 &5148901659744211164 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9104303070788441817, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
+  m_PrefabInstance: {fileID: 4119783896960124421}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1a0c63d119f9f44b984bc56ca4c6dd0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DungeonBlock
 --- !u!114 &5953402263087727348 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7760496489242494193, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}

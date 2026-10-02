@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class DungeonBorderAnchor : AnchorPoint<DungeonBorderAnchorObject>
 {
-    protected DungeonBlock parent;
+    public DungeonBlock parent;
     public enum AnchorDirection
     {
         None = 0, 

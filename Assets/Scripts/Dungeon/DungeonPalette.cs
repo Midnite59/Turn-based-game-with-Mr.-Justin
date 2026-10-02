@@ -14,13 +14,14 @@ public class DungeonPalette : ScriptableObject
     {
         public DungeonBlock block;
         public float weight;
+        public float weightAtEnd;
         public float weightPerDepth;
 
         public float getInContext(DungeonGenerator dungeonGenerator, DungeonBlock dungeonBlock) 
         {
             int age = dungeonGenerator.blockAges[dungeonBlock];
             int depth = dungeonGenerator.depth;
-            float finalWeight = Mathf.Max(weight + (weightPerDepth * age), 0);
+            float finalWeight = age < depth - 1 ? Mathf.Max(weight + (weightPerDepth * age), 0) : Mathf.Max(weightAtEnd, 0);
             //Debug.Log(dungeonBlock.name + " " + block.name + " " + weight + " " + finalWeight);
             /*if (age >= depth - 1) 
             {
@@ -48,6 +49,7 @@ public class DungeonPalette : ScriptableObject
         }
         if (bMetas.Count > 0) 
         {
+            Debug.Log("There was still metas after subtraction loop");
             return bMetas.First().block;
         }
         throw new ArgumentOutOfRangeException("Nothing in bMetas (after failsafe). Block: " + dungeonBlock + ", BlockMetas: " + string.Join(", ", bMetas.Select(bm => bm.block.name + "Meta")));

@@ -240,6 +240,7 @@ MonoBehaviour:
   Overworld: {fileID: 0}
   team: {fileID: 3786984925233556366}
   gameloop: {fileID: 8696840866156292414}
+  dungeonGenerator: {fileID: 0}
   transRTImage: {fileID: 9216556543408470117}
   transRTCanvas: {fileID: 6823566213755360242}
   transRTCam: {fileID: 2543074097618000251}

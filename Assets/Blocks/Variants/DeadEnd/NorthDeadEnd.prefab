@@ -56,6 +56,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1519890463022125252, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
+      propertyPath: parent
+      value: 
+      objectReference: {fileID: 5670587309298776784}
+    - target: {fileID: 1519890463022125252, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
       propertyPath: direction
       value: 1
       objectReference: {fileID: 0}
@@ -63,6 +67,10 @@ PrefabInstance:
       propertyPath: anchorObject
       value: 
       objectReference: {fileID: 3685753932033306826}
+    - target: {fileID: 1966750606553607284, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
+      propertyPath: parent
+      value: 
+      objectReference: {fileID: 5670587309298776784}
     - target: {fileID: 1966750606553607284, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
       propertyPath: direction
       value: -1
@@ -75,6 +83,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: NorthDeadEnd
       objectReference: {fileID: 0}
+    - target: {fileID: 3761084734653758950, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
+      propertyPath: parent
+      value: 
+      objectReference: {fileID: 5670587309298776784}
     - target: {fileID: 3761084734653758950, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
       propertyPath: direction
       value: -9
@@ -124,6 +136,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6465818262119574224, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
+      propertyPath: parent
+      value: 
+      objectReference: {fileID: 5670587309298776784}
+    - target: {fileID: 6465818262119574224, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
       propertyPath: direction
       value: 9
       objectReference: {fileID: 0}
@@ -132,6 +148,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4438235739328868287}
     - target: {fileID: 7760496489242494193, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
+      propertyPath: parent
+      value: 
+      objectReference: {fileID: 5670587309298776784}
+    - target: {fileID: 7760496489242494193, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
       propertyPath: direction
       value: -3
       objectReference: {fileID: 0}
@@ -139,6 +159,10 @@ PrefabInstance:
       propertyPath: anchorObject
       value: 
       objectReference: {fileID: 3303684688944692454}
+    - target: {fileID: 8788243863875123191, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
+      propertyPath: parent
+      value: 
+      objectReference: {fileID: 5670587309298776784}
     - target: {fileID: 8788243863875123191, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
       propertyPath: direction
       value: 3

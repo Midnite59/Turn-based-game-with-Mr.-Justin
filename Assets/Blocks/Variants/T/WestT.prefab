@@ -228,6 +228,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1519890463022125252, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
+      propertyPath: parent
+      value: 
+      objectReference: {fileID: 649723561090592508}
+    - target: {fileID: 1519890463022125252, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
       propertyPath: direction
       value: 1
       objectReference: {fileID: 0}
@@ -235,6 +239,10 @@ PrefabInstance:
       propertyPath: anchorObject
       value: 
       objectReference: {fileID: 6474663252305068332}
+    - target: {fileID: 1966750606553607284, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
+      propertyPath: parent
+      value: 
+      objectReference: {fileID: 649723561090592508}
     - target: {fileID: 1966750606553607284, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
       propertyPath: direction
       value: -1
@@ -247,6 +255,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: WestT
       objectReference: {fileID: 0}
+    - target: {fileID: 3761084734653758950, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
+      propertyPath: parent
+      value: 
+      objectReference: {fileID: 649723561090592508}
     - target: {fileID: 3761084734653758950, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
       propertyPath: direction
       value: -9
@@ -296,6 +308,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6465818262119574224, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
+      propertyPath: parent
+      value: 
+      objectReference: {fileID: 649723561090592508}
+    - target: {fileID: 6465818262119574224, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
       propertyPath: direction
       value: 9
       objectReference: {fileID: 0}
@@ -304,6 +320,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8800727309430897555}
     - target: {fileID: 7760496489242494193, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
+      propertyPath: parent
+      value: 
+      objectReference: {fileID: 649723561090592508}
+    - target: {fileID: 7760496489242494193, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
       propertyPath: direction
       value: -3
       objectReference: {fileID: 0}
@@ -311,6 +331,10 @@ PrefabInstance:
       propertyPath: anchorObject
       value: 
       objectReference: {fileID: 4136648202027380398}
+    - target: {fileID: 8788243863875123191, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
+      propertyPath: parent
+      value: 
+      objectReference: {fileID: 649723561090592508}
     - target: {fileID: 8788243863875123191, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
       propertyPath: direction
       value: 3
@@ -360,6 +384,17 @@ PrefabInstance:
       addedObject: {fileID: 7900919689218668155}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
+--- !u!114 &649723561090592508 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9104303070788441817, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}
+  m_PrefabInstance: {fileID: 8600946497587410981}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1a0c63d119f9f44b984bc56ca4c6dd0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DungeonBlock
 --- !u!114 &1056848920792928210 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8788243863875123191, guid: 9d59577a60858ce4196e04642ca87caa, type: 3}

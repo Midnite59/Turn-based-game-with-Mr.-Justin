@@ -238,6 +238,7 @@ public class GameLoop : MonoBehaviour
 
     public void SetTurnOrder()
     {
+        currentTurn = 0;
         turnOrder.Clear();
         var actors = gs.actors;
         var spdIDs = actors.Select(actor => new {id = actor.id, spd = actor.stats.spd * Helper.StageToMulti(actor.Mspd(gs))});

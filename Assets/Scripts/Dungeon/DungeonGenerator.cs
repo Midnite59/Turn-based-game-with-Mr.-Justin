@@ -39,6 +39,9 @@ public class DungeonGenerator : MonoBehaviour
     public DungeonBorderAnchorObject NSDoor;
     public DungeonBorderAnchorObject EWDoor;
 
+    public DungeonBorderAnchorObject NSWall;
+    public DungeonBorderAnchorObject EWWall;
+
     public DungeonBlockAnchor prefabAnchor;
 
     public EncounterTable encounters;
@@ -146,8 +149,8 @@ public class DungeonGenerator : MonoBehaviour
                 else
                 {
                     int exitsRemaining = exitsAtEnd - exitsWorking.Count;
-                    minExits = exitsRemaining < 0 ? 0 : 1;
-                    maxExits = exitsRemaining < 0 ? 1 : Math.Max(exitsRemaining + extraExits, 1);
+                    minExits = exitsRemaining <= 0 ? 0 : 1;
+                    maxExits = exitsRemaining + extraExits < 0 ? 1 : Math.Max(exitsRemaining + extraExits, 1);
 
                 }
                 Debug.LogWarning("exitsWorking: [" + String.Join(',', exitsWorking) + "], exitsStopped: [" + String.Join(',', exitsStopped) + "], exitsRemaining: " + (exitsAtEnd - exitsWorking.Count) + ", minExits: " + minExits + ", maxExits: " + maxExits);
@@ -191,7 +194,27 @@ public class DungeonGenerator : MonoBehaviour
             openRooms.Remove(room);
             closedRooms.Add(room);
         }
-        exitAnchors = openRooms.Aggregate(new List<DungeonBorderAnchor>(), (l, r) => { return l.Concat(r.anchors.Where(a => directions.Contains(a.direction) && a.connection == null && !a.anchorObject.isWall)).ToList(); });
+        exitAnchors = openRooms.Aggregate(new List<DungeonBorderAnchor>(), (l, r) => 
+        { 
+            return l.Concat(r.anchors.Where(a => directions.Contains(a.direction) && a.connection == null && !a.anchorObject.isWall)).ToList(); 
+        }, l => 
+        {
+            Dictionary<Vector3Int, DungeonBorderAnchor> anchorpos = new Dictionary<Vector3Int, DungeonBorderAnchor>();
+            foreach (DungeonBorderAnchor a in l) 
+            {
+                var key = GetNextGridPosition(a.parent, a.direction);
+                if (!anchorpos.ContainsKey(key))
+                {
+                    anchorpos[key] = a;
+                }
+                else 
+                {
+                    BuildWall(a.parent.GetAnchor(a.direction));
+                }
+            }
+            return anchorpos.Values.ToList();
+        });
+        
         BuildExits(exitAnchors);
         Debug.Log(String.Join(", ", exitAnchors));
         yield return StartCoroutine(FillSegment());
@@ -488,6 +511,24 @@ public class DungeonGenerator : MonoBehaviour
         ExitDoor exit = Instantiate(exitPrefab, anchor.anchorObject.transform);
         exit.transform.localPosition = Vector3.zero;
         exit.SetRotation(anchor.direction);
+    }
+
+    void BuildWall(DungeonBorderAnchor anchor)
+    {
+        // idk exit goes here
+        switch (anchor.direction)
+        {
+            case AnchorDirection.North:
+            case AnchorDirection.South:
+                anchor.BuildObject(NSWall);
+                break;
+            case AnchorDirection.East:
+            case AnchorDirection.West:
+                anchor.BuildObject(EWWall);
+                break;
+            default:
+                throw new NotImplementedException("Why are we building a wall on " + anchor.direction + "???");
+        }
     }
 
 }

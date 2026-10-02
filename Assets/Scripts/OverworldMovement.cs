@@ -36,7 +36,7 @@ public class OverworldMovement : MonoBehaviour
         //transform.Translate(movement*Time.fixedDeltaTime);
         RaycastHit hitInfo;
         rb.linearVelocity = movement * speed;
-        if (!Physics.Raycast(castStart + movement * (radius + speed * Time.fixedDeltaTime), Vector3.down, out hitInfo, fallCastDistance)) 
+        if (!Physics.Raycast(castStart + movement * (radius + speed * Time.fixedDeltaTime), Vector3.down, out hitInfo, fallCastDistance) || false /*Nobody will ever see this*/) 
         {
             rb.linearVelocity = Vector3.zero;
         }

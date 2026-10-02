@@ -158,6 +158,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DungeonBorderAnchor
   anchorObject: {fileID: 0}
+  parent: {fileID: 0}
   direction: 0
   _connection: {fileID: 0}
 --- !u!1 &4794303244110428465
@@ -205,6 +206,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DungeonBorderAnchor
   anchorObject: {fileID: 0}
+  parent: {fileID: 0}
   direction: 6
   _connection: {fileID: 0}
 --- !u!1 &4871219143948742586
@@ -252,6 +254,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DungeonBorderAnchor
   anchorObject: {fileID: 0}
+  parent: {fileID: 0}
   direction: 0
   _connection: {fileID: 0}
 --- !u!1 &7103394961003837054
@@ -359,6 +362,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DungeonBorderAnchor
   anchorObject: {fileID: 0}
+  parent: {fileID: 0}
   direction: 5
   _connection: {fileID: 0}
 --- !u!1 &7644617266105897663
@@ -406,6 +410,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DungeonBorderAnchor
   anchorObject: {fileID: 0}
+  parent: {fileID: 0}
   direction: 0
   _connection: {fileID: 0}
 --- !u!1 &7649829747399494943
@@ -453,5 +458,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DungeonBorderAnchor
   anchorObject: {fileID: 0}
+  parent: {fileID: 0}
   direction: 0
   _connection: {fileID: 0}

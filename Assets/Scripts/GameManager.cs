@@ -43,9 +43,12 @@ public class GameManager : MonoBehaviour
             Debug.Log("Unity found you! You faker! Faker? I think you are the fake game manager around here. (Destroying object) (" + gameObject.GetHashCode() + ")");
             Destroy(gameObject);
         }
-        
+        Scene battleScene = SceneManager.GetSceneByName("BattleScene");
 
         Debug.Log(JsonUtility.ToJson(data));
+
+        SceneManager.sceneLoaded += (scene, mode) => { if (scene.name == battleScene.name) { Overworld.SetActive(false); loaded = true; } };
+        SceneManager.sceneUnloaded += (scene) => { if (scene.name == battleScene.name) { Overworld.SetActive(true); loaded = true; } };
     }
 
 
@@ -76,13 +79,11 @@ public class GameManager : MonoBehaviour
     public void LoadBattleScene() 
     {
         SceneManager.LoadSceneAsync("BattleScene", LoadSceneMode.Additive);
-        SceneManager.sceneLoaded += (scene, mode) => { Overworld.SetActive(false); loaded = true; };
     }
 
     public void UnloadBattleScene()
     {
         SceneManager.UnloadSceneAsync("BattleScene");
-        SceneManager.sceneUnloaded += (scene) => { Overworld.SetActive(true); loaded = true; };
     }
 
     public void OnLevelLoaded(Scene scene, LoadSceneMode mode)
